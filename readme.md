@@ -37,16 +37,14 @@ report, 1994.
 
 [5] Anne Driemel, Sariel Har-Peled, and Carola Wenk. Approximating the Fréchet Distance
 for Realistic Curves in Near Linear Time. Discrete & Computational Geometry, 48(1):
-94–127, 2012. ISSN 1432-0444. doi: 10.1007/s00454-012-9402-z. URL http://dx.doi.
-org/10.1007/s00454-012-9402-z.
+94–127, 2012. ISSN 1432-0444. doi: 10.1007/s00454-012-9402-z. URL http://dx.doi.org/10.1007/s00454-012-9402-z.
 
 [6] K Bringmann. Why Walking the Dog Takes Time: Frechet Distance Has No Strongly
 Subquadratic Algorithms Unless SETH Fails, 2014.
 
 [7] Sean L Seyler, Avishek Kumar, M F Thorpe, and Oliver Beckstein. Path Similarity
 Analysis: A Method for Quantifying Macromolecular Pathways. PLOS Computational
-Biology, 11(10):1–37, 2015. doi: 10.1371/journal.pcbi.1004568. URL https://doi.org/
-10.1371/journal.pcbi.1004568.
+Biology, 11(10):1–37, 2015. doi: 10.1371/journal.pcbi.1004568. URL https://doi.org/10.1371/journal.pcbi.1004568.
 
 [8] Helmut Alt and Michael Godau. Computing the Fréchet Distance Between Two Polyg-
 onal Curves. International Journal of Computational Geometry & Applications, 05
