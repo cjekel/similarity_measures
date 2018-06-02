@@ -6,4 +6,4 @@ Curves in this case are:
 
 The qua
 
-![Image of two different curves](images/Fig2.eps)
+![Image of two different curves](images/Fig2.png)
