@@ -8,10 +8,12 @@ The qua
 
 # Methods covered
 - **Partial Curve Mapping**<sup>x</sup> (PCM) method: Matches the area of a subset between the two curves [1]
-- **Area method**: An algorithm for calculating the Area between two curves in 2D space [2]
+- **Area method**<sup>x</sup>: An algorithm for calculating the Area between two curves in 2D space [2]
 - **Discrete Fréchet distance**: The shortest distance in-between two curves, where you are allowed to very the speed at which you travel along each curve independently (walking dog problem) [3, 4, 5, 6, 7, 8]
 - **Dynamic Time Warping** (DTW): A non-metric distance between two time-sereis curves that has been proven useful for a variety of applications [9, 10, 11, 12, 13]
-- **Curve Length** method: Assumes that the only true independent variable of the curves is the arc-length distance along the curve from the origin [14, 15]
+- **Curve Length**<sup>x</sup> method: Assumes that the only true independent variable of the curves is the arc-length distance along the curve from the origin [14, 15]
+
+<sup>x</sup> denotes methods created specifically for material parameter identification
 
 # Example
 In the ideal case the Numerical curve would match the Experimental curve exactly. This means that the two curves would appear directly on top of each other. Our measures of similarity would return a *zero* distance between the two curves.
