@@ -7,8 +7,8 @@ def poly_area(x, y):
     A function that computes the polynomial area via the shoelace formula
 
     Input:
-    x (1D ndarray) - the x locations of a polynomial
-    y (1D ndarray) - the y locations of the polynomail
+    x (1D array) - the x locations of a polynomial
+    y (1D array) - the y locations of the polynomail
 
     Note:
     The x and y locations need to be ordered such that the first vertex
@@ -60,8 +60,8 @@ def makeQuad(x, y):
     calculates the shoelace area of the simple quadrilateral.
 
     Input:
-    x (1D ndarray) - the x locations of a quadrilateral
-    y (1D ndarray) - the y locations of a quadrilateral
+    x (1D array) - the x locations of a quadrilateral
+    y (1D array) - the y locations of a quadrilateral
 
     Note:
     This function rearranges the verticies of a quadrilateral until the
@@ -119,7 +119,7 @@ def get_arc_length(dataset):
     curve
 
     Input:
-    dataset (2D ndarray) - The dataset of the curve in 2D space. Your x
+    dataset (2D array) - The dataset of the curve in 2D space. Your x
     locations of data points should be dataset[:, 0], and the y locations of
     the data points should be dataset[:, 1]
 
@@ -129,7 +129,7 @@ def get_arc_length(dataset):
     Returns:
     arcLength (float) - the total arc length distance of your dataset (curve
     in 2D space)
-    arcLengths (1D ndarray) - a 1D array of the arc length between every two
+    arcLengths (1D array) - a 1D array of the arc length between every two
     consecutive data points
     """
     #   split the dataset into two discrete datasets, each of length m-1
@@ -152,11 +152,11 @@ def area_between_two_curves(exp_data, num_data):
     each curve has x and y data point.
 
     Input:
-    exp_data (2D ndarray) - Curve from your experimental data. Your x
+    exp_data (2D array) - Curve from your experimental data. Your x
     locations of data points should be exp_data[:, 0], and the y locations of
     the data points should be exp_data[:, 1]
 
-    num_data (2D ndarray) - Curve from your numerical data. Your x
+    num_data (2D array) - Curve from your numerical data. Your x
     locations of data points should be num_data[:, 0], and the y locations of
     the data points should be num_data[:, 1]
 
@@ -230,3 +230,97 @@ def area_between_two_curves(exp_data, num_data):
                  num_data[i-1, 1]]
         area.append(makeQuad(tempX, tempY))
     return np.sum(area)
+
+
+def get_length(x, y):
+    """
+    computes the arc length of a xy curve, the cumulative arc length of an xy,
+    and the total xy arc length of a xy curve. The euclidean distance is used
+    to determine the arc length
+
+    Input:
+    x (1D array) - the x locations of a curve
+    y (1D array) - the y locations of a curve
+
+    Useage:
+    le, le_total, le_cum = get_length(x, y)
+
+    Returns:
+    le (1D array) - the euclidean distance between every two points
+    le_total (float) - the total arc length distance of a curve
+    le_cum (1D array) - the cumulative sum of euclidean distances between
+    every two points
+    """
+    n = len(x)
+    xmax = np.max(np.abs(x))
+    ymax = np.max(np.abs(y))
+    
+    # if your max x or y value is zero... you'll get np.inf
+    # as your curve length based measure
+    if xmax == 0:
+        xmax = 1e-15
+    if ymax == 0:
+        ymax = 1e-15
+
+    le = np.zeros(n)
+    le[0] = 0.0
+    l_sum = np.zeros(n)
+    l_sum[0] = 0.0
+    for i in range(0, n-1):
+        le[i+1] = np.sqrt((((x[i+1]-x[i])/xmax)**2)+(((y[i+1]-y[i])/ymax)**2))
+        l_sum[i+1] = l_sum[i]+le[i+1]
+    return le, np.sum(le), l_sum
+
+
+def curve_length_measure(exp_data, num_data):
+    """
+    Compute the curve length based similarity measure between two curves
+    according to [2]. This implementation follows the OF2 form, which is a
+    self normalizing form based on the average value.
+
+    Input:
+    exp_data (2D array) - Curve from your experimental data. Your x
+    locations of data points should be exp_data[:, 0], and the y locations of
+    the data points should be exp_data[:, 1]
+
+    num_data (2D array) - Curve from your numerical data or computer
+    simulation. Your x locations of data points should be num_data[:, 0], and
+    the y locations of the data points should be num_data[:, 1]
+
+    Returns:
+    r (float) - curve length based similarity measure using OF2 from [2]
+
+    References:
+    [2] A Andrade-Campos, R De-Carvalho, and R A F Valente. Novel criteria for
+    determination of material model parameters. International Journal of
+    Mechanical Sciences, 54(1):294-305, 2012. ISSN 0020-7403. DOI
+    https://doi.org/10.1016/j.ijmecsci.2011.11.010 URL:
+    http://www.sciencedirect.com/science/article/pii/S0020740311002451
+    """
+    x_e = exp_data[:, 0]
+    y_e = exp_data[:, 1]
+    x_c = num_data[:, 0]
+    y_c = num_data[:, 1]
+
+    _, le_nj, le_sum = get_length(x_e, y_e)
+    _, lc_nj, lc_sum = get_length(x_c, y_c)
+    print(le_nj, le_nj)
+    print(lc_nj, lc_nj)
+
+    xmean = np.mean(x_e)
+    ymean = np.mean(y_e)
+
+    n = len(x_e)
+
+    r_sq = np.zeros(n)
+    for i in range(0, n):
+        lieq = le_sum[i]*(lc_nj/le_nj)
+        xtemp = np.interp(lieq, lc_sum, x_c)
+        ytemp = np.interp(lieq, lc_sum, y_c)
+
+        r_sq[i] = np.log(1.0 + (np.abs(xtemp-x_e[i])/xmean))**2 + \
+            np.log(1.0 + (np.abs(ytemp-y_e[i])/ymean))**2
+    return np.sqrt(np.sum(r_sq))
+
+# https://docs.python.org/3/library/sys.html#sys.setrecursionlimit
+# https://stackoverflow.com/questions/3323001/what-is-the-maximum-recursion-depth-in-python-and-how-to-increase-it
