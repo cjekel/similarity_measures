@@ -70,7 +70,7 @@ def makeQuad(x, y):
     using the shoelace formula.
 
     Output:
-    (float) - Area of quadrilateral via shoelace formula
+    area (float) - Area of quadrilateral via shoelace formula
     """
 
     # check to see if the provide point order is valid
@@ -364,7 +364,7 @@ def _c(ca, i, j, P, Q):
 def frechet_dist(P,Q):
     """
     Notes:
-    
+
 
     Thanks to MaxBareiss
     https://gist.github.com/MaxBareiss/ba2f9441d9455b56fbc9
