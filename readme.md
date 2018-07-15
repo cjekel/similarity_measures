@@ -25,7 +25,7 @@ Unfortuntey the following method is not included, however there are plenty of de
 Install with pip
 
 ```
-[sudo] pip install similarity_measures
+[sudo] pip install similaritymeasures
 ```
 or clone and install from this repo.
 
@@ -33,7 +33,7 @@ or clone and install from this repo.
 # Example useage
 ```
 import numpy as np
-import similarity_measures
+import similaritymeasures
 
 # Generate random experimental data
 x = np.random.random(100)
@@ -50,19 +50,19 @@ num_data[:, 0] = x
 num_data[:, 1] = y
 
 # quantify the difference between the two curves using PCM
-pcm = similarity_measures.pcm(exp_data, num_data)
+pcm = similaritymeasures.pcm(exp_data, num_data)
 
 # quantify the difference between the two curves using
 # Discrete Frechet distance
-df = similarity_measures.frechet_dist(exp_data, num_data)
+df = similaritymeasures.frechet_dist(exp_data, num_data)
 
 # quantify the difference between the two curves using
 # area between two curves
-area = similarity_measures.area_between_two_curves(exp_data, num_data)
+area = similaritymeasures.area_between_two_curves(exp_data, num_data)
 
 # quantify the difference between the two curves using
 # Curve Length based similarity measure
-cl = similarity_measures.curve_length_measure(exp_data, num_data)
+cl = similaritymeasures.curve_length_measure(exp_data, num_data)
 
 # print the results
 print(pcm, df, area, cl)
