@@ -27,7 +27,7 @@ Using Partial Curve Mapping. 12th AIAA Aviation Technology, Integration, and Op-
 erations (ATIO) Conference and 14th AIAA/ISSMO Multidisciplinary Analysis and
 Optimization Conference, sep 2012. doi: doi:10.2514/6.2012-5580.
 
-[2] SOON_TM
+[2] Jekel, C. F., Venter, G., Venter, M. P., Stander, N., & Haftka, R. T. (2018). Similarity measures for identifying material parameters from hysteresis loops using inverse analysis. International Journal of Material Forming. https://doi.org/10.1007/s12289-018-1421-8
 
 [3] M Maurice Fréchet. Sur quelques points du calcul fonctionnel. Rendiconti del Circol
 Matematico di Palermo (1884-1940), 22(1):1–72, 1906.
@@ -84,6 +84,20 @@ http://www.sciencedirect.com/science/article/pii/S0020740307001178.
 
 
 # Please cite
-If you've found this information helpful, please cite
+If you've found this information or library helpful, please cite
 
-SOON_TM
+Jekel, C. F., Venter, G., Venter, M. P., Stander, N., & Haftka, R. T. (2018). Similarity measures for identifying material parameters from hysteresis loops using inverse analysis. International Journal of Material Forming. https://doi.org/10.1007/s12289-018-1421-8
+
+```
+@article{Jekel2018,
+author = {Jekel, Charles F and Venter, Gerhard and Venter, Martin P and Stander, Nielen and Haftka, Raphael T},
+doi = {10.1007/s12289-018-1421-8},
+issn = {1960-6214},
+journal = {International Journal of Material Forming},
+mendeley-groups = {PhD Thesis},
+month = {jul},
+title = {{Similarity measures for identifying material parameters from hysteresis loops using inverse analysis}},
+url = {https://doi.org/10.1007/s12289-018-1421-8},
+year = {2018}
+}
+```
