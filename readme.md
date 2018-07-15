@@ -54,15 +54,18 @@ pcm = similarity_measures.pcm(exp_data, num_data)
 
 # quantify the difference between the two curves using
 # Discrete Frechet distance
-pcm = similarity_measures.frechet_dist(exp_data, num_data)
+df = similarity_measures.frechet_dist(exp_data, num_data)
 
 # quantify the difference between the two curves using
 # area between two curves
-pcm = similarity_measures.area_between_two_curves(exp_data, num_data)
+area = similarity_measures.area_between_two_curves(exp_data, num_data)
 
 # quantify the difference between the two curves using
 # Curve Length based similarity measure
-pcm = similarity_measures.curve_length_measure(exp_data, num_data)
+cl = similarity_measures.curve_length_measure(exp_data, num_data)
+
+# print the results
+print(pcm, df, area, cl)
 ```
 
 # References
