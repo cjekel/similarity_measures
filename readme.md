@@ -4,7 +4,10 @@ Curves in this case are:
 - discretized by inidviudal data points
 - are ordered from a beginning to an ending
 
-The qua
+Consider the following two curves. We want to quantify how different the Numerical curve is from the Experimental curve. Notice how there are no concurrent Stress or Strain values in the two curves. Additionally one curve has more data points than the other curves.
+![Image of two different curves](images/TwoCurves.png)
+
+In the ideal case the Numerical curve would match the Experimental curve exactly. This means that the two curves would appear directly on top of each other. Our measures of similarity would return a *zero* distance between the two curves.
 
 # Methods covered
 This library includes the following implemenations:
@@ -18,11 +21,49 @@ Unfortuntey the following method is not included, however there are plenty of de
 
 <sup>x</sup> denotes methods created specifically for material parameter identification
 
-# Example
-In the ideal case the Numerical curve would match the Experimental curve exactly. This means that the two curves would appear directly on top of each other. Our measures of similarity would return a *zero* distance between the two curves.
+# Installation 
+Install with pip
 
-Consider the following two curves. We want to quantify how different the Numerical curve is from the Experimental curve. Notice how there are no concurrent Stress or Strain values in the two curves. Additionally one curve has more data points than the other curves.
-![Image of two different curves](images/TwoCurves.png)
+```
+[sudo] pip install similarity_measures
+```
+or clone and install from this repo.
+
+
+# Example useage
+```
+import numpy as np
+import similarity_measures
+
+# Generate random experimental data
+x = np.random.random(100)
+y = np.random.random(100)
+exp_data = np.zeros((100, 2))
+exp_data[:, 0] = x
+exp_data[:, 1] = y
+
+# Generate random numerical data
+x = np.random.random(100)
+y = np.random.random(100)
+num_data = np.zeros((100, 2))
+num_data[:, 0] = x
+num_data[:, 1] = y
+
+# quantify the difference between the two curves using PCM
+pcm = similarity_measures.pcm(exp_data, num_data)
+
+# quantify the difference between the two curves using
+# Discrete Frechet distance
+pcm = similarity_measures.frechet_dist(exp_data, num_data)
+
+# quantify the difference between the two curves using
+# area between two curves
+pcm = similarity_measures.area_between_two_curves(exp_data, num_data)
+
+# quantify the difference between the two curves using
+# Curve Length based similarity measure
+pcm = similarity_measures.curve_length_measure(exp_data, num_data)
+```
 
 # References
 [1] Katharina Witowski and Nielen Stander. Parameter Identification of Hysteretic Models
