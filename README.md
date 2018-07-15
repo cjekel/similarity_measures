@@ -76,7 +76,7 @@ plt.plot(num_data[:, 0], num_data[:, 1])
 plt.show()
 ```
 
-If you are interested in setting up an optimization problem using these measures, check out [this Jupyter Notebook](Examples_of_Similarity_Measures.ipynb)
+If you are interested in setting up an optimization problem using these measures, check out [this Jupyter Notebook](https://github.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis/blob/master/Examples_of_Similarity_Measures.ipynb)
 
 # References
 [1] Katharina Witowski and Nielen Stander. Parameter Identification of Hysteretic Models
