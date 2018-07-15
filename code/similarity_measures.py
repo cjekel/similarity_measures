@@ -164,8 +164,10 @@ def area_between_two_curves(exp_data, num_data):
     area (float) - The area between your exp_data curve and the num_data curve
 
     References:
-    [1] Jekel, C.F., Venter, G., Venter, M.P. et al. Int J Mater Form (2018).
-    https://doi.org/10.1007/s12289-018-1421-8
+    [1] Jekel, C. F., Venter, G., Venter, M. P., Stander, N., & Haftka, R. T.
+    (2018). Similarity measures for identifying material parameters from
+    hysteresis loops using inverse analysis. International Journal of Material
+    Forming. https://doi.org/10.1007/s12289-018-1421-8
     """
     # Calculate the area between two curves using quadrilaterals
     # Consider the test data to be data from an experimental test as exp_data
@@ -254,7 +256,7 @@ def get_length(x, y):
     n = len(x)
     xmax = np.max(np.abs(x))
     ymax = np.max(np.abs(y))
-    
+
     # if your max x or y value is zero... you'll get np.inf
     # as your curve length based measure
     if xmax == 0:
@@ -304,8 +306,6 @@ def curve_length_measure(exp_data, num_data):
 
     _, le_nj, le_sum = get_length(x_e, y_e)
     _, lc_nj, lc_sum = get_length(x_c, y_c)
-    print(le_nj, le_nj)
-    print(lc_nj, lc_nj)
 
     xmean = np.mean(x_e)
     ymean = np.mean(y_e)
@@ -326,62 +326,198 @@ def curve_length_measure(exp_data, num_data):
 def euc_dist(pt1, pt2):
     """
     calcuates the Euclidean distance between two points
-    
+
     Thanks to MaxBareiss
     https://gist.github.com/MaxBareiss/ba2f9441d9455b56fbc9
     """
-    return ((pt2[0]-pt1[0])*(pt2[0]-pt1[0])+(pt2[1]-pt1[1])*(pt2[1]-pt1[1]))**0.5
+    euc = ((pt2[0]-pt1[0])*(pt2[0]-pt1[0])+(pt2[1]-pt1[1])*(pt2[1]-pt1[1]))
+    return np.sqrt(euc)
+
 
 def _c(ca, i, j, P, Q):
     """
-    Recursive caller for discrete frechet distance as defined in [3]
+    Recursive caller for discrete Frechet distance as defined in [3]
 
     Thanks to MaxBareiss
     https://gist.github.com/MaxBareiss/ba2f9441d9455b56fbc9
 
     References:
-    [3] Thomas Eiter and Heikki Mannila. Computing discrete Fréchet distance.
+    [3] Thomas Eiter and Heikki Mannila. Computing discrete Frechet distance.
     Technical report, 1994.
     http://www.kr.tuwien.ac.at/staff/eiter/et-archive/cdtr9464.pdf
     http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.90.937&rep=rep1&type=pdf
     """
-    if ca[i,j] > -1:
-        return ca[i,j]
+    if ca[i, j] > -1:
+        return ca[i, j]
     elif i == 0 and j == 0:
-        ca[i,j] = euc_dist(P[0],Q[0])
+        ca[i, j] = euc_dist(P[0], Q[0])
     elif i > 0 and j == 0:
-        ca[i,j] = max(_c(ca,i-1,0,P,Q),euc_dist(P[i],Q[0]))
+        ca[i, j] = max(_c(ca, i-1, 0, P, Q), euc_dist(P[i], Q[0]))
     elif i == 0 and j > 0:
-        ca[i,j] = max(_c(ca,0,j-1,P,Q),euc_dist(P[0],Q[j]))
+        ca[i, j] = max(_c(ca, 0, j-1, P, Q), euc_dist(P[0], Q[j]))
     elif i > 0 and j > 0:
-        ca[i,j] = max(min(_c(ca,i-1,j,P,Q),_c(ca,i-1,j-1,P,Q),_c(ca,i,j-1,P,Q)),euc_dist(P[i],Q[j]))
+        ca[i, j] = max(min(_c(ca, i-1, j, P, Q), _c(ca, i-1, j-1, P, Q),
+                       _c(ca, i, j-1, P, Q)), euc_dist(P[i], Q[j]))
     else:
-        ca[i,j] = float("inf")
-    return ca[i,j]
+        ca[i, j] = float("inf")
+    return ca[i, j]
 
 
-
-def frechet_dist(P,Q):
+def frechet_dist(exp_data, num_data):
     """
-    Notes:
+    Compute the Discrete Frechet Distance between two 2D curves according to
+    [3]. The Frechet distance has been defined as the walking dog problem.
+    From Wikipedia: "In mathematics, the Frechet distance is a measure of
+    similarity between curves that takes into account the location and
+    ordering of the points along the curves. It is named after Maurice Frechet.
+    https://en.wikipedia.org/wiki/Fr%C3%A9chet_distance
 
+    Input:
+    exp_data (2D array) - Curve from your experimental data. Your x
+    locations of data points should be exp_data[:, 0], and the y locations of
+    the data points should be exp_data[:, 1]
+
+    num_data (2D array) - Curve from your numerical data or computer
+    simulation. Your x locations of data points should be num_data[:, 0], and
+    the y locations of the data points should be num_data[:, 1]
+
+    Returns:
+    discrete frechet distance (float)
+
+    Notes:
+    Python has a default limit to the amount of recursive calls a single
+    function can make. If you have a large dataset, you may need to increase
+    this limit. Check out the following resources.
+
+    https://docs.python.org/3/library/sys.html#sys.setrecursionlimit
+    https://stackoverflow.com/questions/3323001/what-is-the-maximum-recursion-depth-in-python-and-how-to-increase-it
 
     Thanks to MaxBareiss
     https://gist.github.com/MaxBareiss/ba2f9441d9455b56fbc9
 
     References:
-    [3] Thomas Eiter and Heikki Mannila. Computing discrete Fréchet distance.
+    [3] Thomas Eiter and Heikki Mannila. Computing discrete Frechet distance.
     Technical report, 1994.
     http://www.kr.tuwien.ac.at/staff/eiter/et-archive/cdtr9464.pdf
     http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.90.937&rep=rep1&type=pdf
     """
     # Computes the discrete frechet distance between two polygonal lines
     # Algorithm: http://www.kr.tuwien.ac.at/staff/eiter/et-archive/cdtr9464.pdf
-    # P and Q are arrays of 2-element arrays (points)
-    ca = np.ones((len(P),len(Q)))
-    ca = np.multiply(ca,-1)
-    return _c(ca,len(P)-1,len(Q)-1,P,Q)
+    # exp_data, num_data are arrays of 2-element arrays (points)
+    ca = np.ones((len(exp_data), len(num_data)))
+    ca = np.multiply(ca, -1)
+    return _c(ca, len(exp_data)-1, len(num_data)-1, exp_data, num_data)
 
 
-# https://docs.python.org/3/library/sys.html#sys.setrecursionlimit
-# https://stackoverflow.com/questions/3323001/what-is-the-maximum-recursion-depth-in-python-and-how-to-increase-it
+def normalizeTwoCurves(x, y, w, z):
+    """
+    Normalize two curves for PCM method of [4].
+
+    Input:
+    x (1D array) - x locations for first curve
+    y (1D array) - y locations for first curve
+    w (1D array) - x locations for second curve curve
+    z (1D array) - y locations for second curve
+
+    Useage:
+    xi, eta, xiP, etaP = normalizeTwoCurves(x,y,w,z)
+
+    Refernces:
+    [4]  Katharina Witowski and Nielen Stander. "Parameter Identification of
+    Hysteretic Models Using Partial Curve Mapping", 12th AIAA Aviation
+    Technology, Integration, and Operations (ATIO) Conference and 14th
+    AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference,
+    Aviation Technology, Integration, and Operations (ATIO) Conferences.
+    https://doi.org/10.2514/6.2012-5580
+    """
+    minX = np.min(x)
+    maxX = np.max(x)
+    minY = np.min(y)
+    maxY = np.max(y)
+
+    xi = (x - minX) / (maxX - minX)
+    eta = (y - minY) / (maxY - minY)
+    xiP = (w - minX) / (maxX - minX)
+    etaP = (z - minY) / (maxY - minY)
+    return xi, eta, xiP, etaP
+
+
+def pcm(exp_data, num_data):
+    """
+    Compute the Partial Cuve Mapping (PCM) as proposed by [4].
+
+    Input:
+    exp_data (2D array) - Curve from your experimental data. Your x
+    locations of data points should be exp_data[:, 0], and the y locations of
+    the data points should be exp_data[:, 1]
+
+    num_data (2D array) - Curve from your numerical data or computer
+    simulation. Your x locations of data points should be num_data[:, 0], and
+    the y locations of the data points should be num_data[:, 1]
+
+    Refernces:
+    [4]  Katharina Witowski and Nielen Stander. "Parameter Identification of
+    Hysteretic Models Using Partial Curve Mapping", 12th AIAA Aviation
+    Technology, Integration, and Operations (ATIO) Conference and 14th
+    AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference,
+    Aviation Technology, Integration, and Operations (ATIO) Conferences.
+    https://doi.org/10.2514/6.2012-5580
+    """
+    # normalize the curves to the experimental data
+    xi1, eta1, xi2, eta2 = normalizeTwoCurves(exp_data[:, 0], exp_data[:, 1],
+                                              num_data[:, 0], num_data[:, 1])
+    # compute the arc lengths of each curve
+    le, le_nj, le_sum = get_length(xi1, eta1)
+    lc, lc_nj, lc_sum = get_length(xi2, eta2)
+    # scale each segment to the total polygon length
+    le = le / le_nj
+    le_sum = le_sum / le_nj
+    lc = lc / lc_nj
+    lc_sum = lc_sum / lc_nj
+    # right now exp_data is curve a, and num_data is curve b
+    # make sure a is shorter than a', if not swap the defintion
+    if lc_nj > le_nj:
+        # compute the arc lengths of each curve
+        le, le_nj, le_sum = get_length(xi2, eta2)
+        lc, lc_nj, lc_sum = get_length(xi1, eta1)
+        # scale each segment to the total polygon length
+        le = le / le_nj
+        le_sum = le_sum / le_nj
+        lc = lc / lc_nj
+        lc_sum = lc_sum / lc_nj
+        xi1OLD = xi1.copy()
+        eta1OLD = eta1.copy()
+        xi1 = xi2.copy()
+        eta1 = eta2.copy()
+        xi2 = xi1OLD.copy()
+        eta1OLD = eta1OLD.copy()
+    n_sum = len(le_sum)
+
+    min_offset = 0.0
+    max_offset = le_nj - lc_nj
+
+    # make sure the curves aren't the same length
+    # if they are the same length, don't loop 200 times
+    if min_offset == max_offset:
+        offsets = [min_offset]
+        pcm_dists = np.zeros(1)
+    else:
+        offsets = np.linspace(min_offset, max_offset, 200)
+        pcm_dists = np.zeros(200)
+
+    for i, offset in enumerate(offsets):
+        # create linear interpolation model for num_data based on arc length
+        # evaluate linear interpolation model based on xi and eta of exp data
+        xitemp = np.interp(le_sum+offset, lc_sum, xi2)
+        etatemp = np.interp(le_sum+offset, lc_sum, eta2)
+
+        d = np.sqrt((eta1-etatemp)**2 + (xi1-xitemp)**2)
+        d1 = d[:-1]
+
+        d2 = d[1:n_sum]
+
+        v = 0.5*(d1+d2)*le_sum[1:n_sum]
+        pcm_dists[i] = np.sum(v)
+    return np.min(pcm_dists)
+
+
