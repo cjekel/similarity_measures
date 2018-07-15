@@ -31,9 +31,11 @@ or clone and install from this repo.
 
 
 # Example useage
+This shows you how to compute the various similarity measures
 ```
 import numpy as np
 import similaritymeasures
+import matplotlib.pyplot as plt
 
 # Generate random experimental data
 x = np.random.random(100)
@@ -66,7 +68,15 @@ cl = similaritymeasures.curve_length_measure(exp_data, num_data)
 
 # print the results
 print(pcm, df, area, cl)
+
+# plot the data
+plt.figure()
+plt.plot(exp_data[:, 0], exp_data[:, 1])
+plt.plot(num_data[:, 0], num_data[:, 1])
+plt.show()
 ```
+
+If you are interested in setting up an optimization problem using these measures, check out [this Jupyter Notebook](Examples_of_Similarity_Measures.ipynb)
 
 # References
 [1] Katharina Witowski and Nielen Stander. Parameter Identification of Hysteretic Models
