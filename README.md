@@ -2,7 +2,7 @@
 
 Curves in this case are:
 - discretized by inidviudal data points
-- are ordered from a beginning to an ending
+- ordered from a beginning to an ending
 
 Consider the following two curves. We want to quantify how different the Numerical curve is from the Experimental curve. Notice how there are no concurrent Stress or Strain values in the two curves. Additionally one curve has more data points than the other curves.
 ![Image of two different curves](images/TwoCurves.png)
