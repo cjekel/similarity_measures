@@ -10,14 +10,14 @@ Consider the following two curves. We want to quantify how different the Numeric
 In the ideal case the Numerical curve would match the Experimental curve exactly. This means that the two curves would appear directly on top of each other. Our measures of similarity would return a *zero* distance between two curves that were on top of each other.
 
 # Methods covered
-This library includes the following implemenations:
+This library includes the following methods to quantify the difference (or similarity) between two curves:
 - **Partial Curve Mapping**<sup>x</sup> (PCM) method: Matches the area of a subset between the two curves [1]
 - **Area method**<sup>x</sup>: An algorithm for calculating the Area between two curves in 2D space [2]
 - **Discrete Fréchet distance**: The shortest distance in-between two curves, where you are allowed to very the speed at which you travel along each curve independently (walking dog problem) [3, 4, 5, 6, 7, 8]
 - **Curve Length**<sup>x</sup> method: Assumes that the only true independent variable of the curves is the arc-length distance along the curve from the origin [9, 10]
 
-Unfortuntey the following method is not included, however there are plenty of dedicated libraries which you can find in the references.
-- **Dynamic Time Warping** (DTW): A non-metric distance between two time-sereis curves that has been proven useful for a variety of applications [11, 12, 13, 14, 15]
+Unfortunately the following method is not included, however there are plenty of dedicated libraries which you can find in the references.
+- **Dynamic Time Warping** (DTW): A non-metric distance between two time-series curves that has been proven useful for a variety of applications [11, 12, 13, 14, 15]
 
 <sup>x</sup> denotes methods created specifically for material parameter identification
 
@@ -76,7 +76,7 @@ plt.plot(num_data[:, 0], num_data[:, 1])
 plt.show()
 ```
 
-If you are interested in setting up an optimization problem using these measures, check out [this Jupyter Notebook](https://github.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis/blob/master/Examples_of_Similarity_Measures.ipynb)
+If you are interested in setting up an optimization problem using these measures, check out [this Jupyter Notebook](https://github.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis/blob/master/Examples_of_Similarity_Measures.ipynb) which replicates Section 3.2 from [2].
 
 # References
 [1] Katharina Witowski and Nielen Stander. Parameter Identification of Hysteretic Models
