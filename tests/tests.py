@@ -28,7 +28,7 @@ class TestEverything(unittest.TestCase):
     def test_c3_c4_df(self):
         df = similaritymeasures.frechet_dist(curve3, curve4)
         self.assertTrue(df, 1.0)
-    
+
     def test_c1_c2_cl(self):
         cl = similaritymeasures.curve_length_measure(curve1, curve2)
         self.assertTrue(cl, 4.054651081081643)
