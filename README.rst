@@ -1,7 +1,7 @@
 Quantify the difference between two arbitrary curves
 ====================================================
 
-Curves in this case are: - discretized by inidviudal data points - are
+Curves in this case are: - discretized by inidviudal data points -
 ordered from a beginning to an ending
 
 Consider the following two curves. We want to quantify how different the
@@ -13,25 +13,26 @@ different curves|
 In the ideal case the Numerical curve would match the Experimental curve
 exactly. This means that the two curves would appear directly on top of
 each other. Our measures of similarity would return a *zero* distance
-between the two curves.
+between two curves that were on top of each other.
 
 Methods covered
 ===============
 
-This library includes the following implemenations: - **Partial Curve
-Mapping**\ x (PCM) method: Matches the area of a subset between the two
-curves [1] - **Area method**\ x: An algorithm for calculating the Area
-between two curves in 2D space [2] - **Discrete Fréchet distance**: The
-shortest distance in-between two curves, where you are allowed to very
-the speed at which you travel along each curve independently (walking
-dog problem) [3, 4, 5, 6, 7, 8] - **Curve Length**\ x method: Assumes
-that the only true independent variable of the curves is the arc-length
-distance along the curve from the origin [9, 10]
+This library includes the following methods to quantify the difference
+(or similarity) between two curves: - **Partial Curve Mapping**\ x (PCM)
+method: Matches the area of a subset between the two curves [1] - **Area
+method**\ x: An algorithm for calculating the Area between two curves in
+2D space [2] - **Discrete Fréchet distance**: The shortest distance
+in-between two curves, where you are allowed to very the speed at which
+you travel along each curve independently (walking dog problem) [3, 4,
+5, 6, 7, 8] - **Curve Length**\ x method: Assumes that the only true
+independent variable of the curves is the arc-length distance along the
+curve from the origin [9, 10]
 
-Unfortuntey the following method is not included, however there are
+Unfortunately the following method is not included, however there are
 plenty of dedicated libraries which you can find in the references. -
 **Dynamic Time Warping** (DTW): A non-metric distance between two
-time-sereis curves that has been proven useful for a variety of
+time-series curves that has been proven useful for a variety of
 applications [11, 12, 13, 14, 15]
 
 x denotes methods created specifically for material parameter
@@ -51,10 +52,13 @@ or clone and install from this repo.
 Example useage
 ==============
 
+This shows you how to compute the various similarity measures
+
 ::
 
     import numpy as np
     import similaritymeasures
+    import matplotlib.pyplot as plt
 
     # Generate random experimental data
     x = np.random.random(100)
@@ -87,6 +91,17 @@ Example useage
 
     # print the results
     print(pcm, df, area, cl)
+
+    # plot the data
+    plt.figure()
+    plt.plot(exp_data[:, 0], exp_data[:, 1])
+    plt.plot(num_data[:, 0], num_data[:, 1])
+    plt.show()
+
+If you are interested in setting up an optimization problem using these
+measures, check out `this Jupyter
+Notebook <https://github.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis/blob/master/Examples_of_Similarity_Measures.ipynb>`__
+which replicates Section 3.2 from [2].
 
 References
 ==========
