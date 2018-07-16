@@ -41,7 +41,7 @@ def poly_area(x, y):
     Returns:
     (float) - Area of the polynomial via the shoelace formula
 
-    Thanks to Mahdi on
+    Thanks to Mahdi for this one line code
     https://stackoverflow.com/questions/24467972/calculate-area-of-polygon-given-x-y-coordinates
     """
     return 0.5*np.abs(np.dot(x, np.roll(y, 1))-np.dot(y, np.roll(x, 1)))
@@ -511,12 +511,14 @@ def pcm(exp_data, num_data):
         le_sum = le_sum / le_nj
         lc = lc / lc_nj
         lc_sum = lc_sum / lc_nj
+        # swap xi1, eta1 with xi2, eta2
         xi1OLD = xi1.copy()
         eta1OLD = eta1.copy()
         xi1 = xi2.copy()
         eta1 = eta2.copy()
         xi2 = xi1OLD.copy()
         eta1OLD = eta1OLD.copy()
+
     n_sum = len(le_sum)
 
     min_offset = 0.0
