@@ -11,12 +11,14 @@ In the ideal case the Numerical curve would match the Experimental curve exactly
 
 # Methods covered
 This library includes the following methods to quantify the difference (or similarity) between two curves:
+
 - **Partial Curve Mapping**<sup>x</sup> (PCM) method: Matches the area of a subset between the two curves [1]
 - **Area method**<sup>x</sup>: An algorithm for calculating the Area between two curves in 2D space [2]
 - **Discrete Fréchet distance**: The shortest distance in-between two curves, where you are allowed to very the speed at which you travel along each curve independently (walking dog problem) [3, 4, 5, 6, 7, 8]
 - **Curve Length**<sup>x</sup> method: Assumes that the only true independent variable of the curves is the arc-length distance along the curve from the origin [9, 10]
 
 Unfortunately the following method is not included, however there are plenty of dedicated libraries which you can find in the references.
+
 - **Dynamic Time Warping** (DTW): A non-metric distance between two time-series curves that has been proven useful for a variety of applications [11, 12, 13, 14, 15]
 
 <sup>x</sup> denotes methods created specifically for material parameter identification
@@ -27,8 +29,11 @@ Install with pip
 ```
 [sudo] pip install similaritymeasures
 ```
-or clone and install from this repo.
-
+or clone and install from source.
+```
+git clone https://github.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis
+[sudo] pip install ./Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis
+```
 
 # Example useage
 This shows you how to compute the various similarity measures
