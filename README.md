@@ -16,10 +16,7 @@ This library includes the following methods to quantify the difference (or simil
 - **Area method**<sup>x</sup>: An algorithm for calculating the Area between two curves in 2D space [2]
 - **Discrete Fréchet distance**: The shortest distance in-between two curves, where you are allowed to very the speed at which you travel along each curve independently (walking dog problem) [3, 4, 5, 6, 7, 8]
 - **Curve Length**<sup>x</sup> method: Assumes that the only true independent variable of the curves is the arc-length distance along the curve from the origin [9, 10]
-
-Unfortunately the following method is not included, however there are plenty of dedicated libraries which you can find in the references.
-
-- **Dynamic Time Warping** (DTW): A non-metric distance between two time-series curves that has been proven useful for a variety of applications [11, 12, 13, 14, 15]
+- **Dynamic Time Warping** (DTW): A non-metric distance between two time-series curves that has been proven useful for a variety of applications [11, 12, 13, 14, 15, 16]
 
 <sup>x</sup> denotes methods created specifically for material parameter identification
 
@@ -71,8 +68,12 @@ area = similaritymeasures.area_between_two_curves(exp_data, num_data)
 # Curve Length based similarity measure
 cl = similaritymeasures.curve_length_measure(exp_data, num_data)
 
+# quantify the difference between the two curves using
+# Dynamic Time Warping distance
+cl = similaritymeasures.dtw(exp_data, num_data)
+
 # print the results
-print(pcm, df, area, cl)
+print(pcm, df, area, cl, dtw)
 
 # plot the data
 plt.figure()
@@ -82,6 +83,9 @@ plt.show()
 ```
 
 If you are interested in setting up an optimization problem using these measures, check out [this Jupyter Notebook](https://github.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis/blob/master/Examples_of_Similarity_Measures.ipynb) which replicates Section 3.2 from [2].
+
+# Changelog
+Version 0.2.0 now includes DTW! See [CHANGELOG.md](https://github.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis/blob/master/CHANGLOG.md) for full details.
 
 # References
 [1] Katharina Witowski and Nielen Stander. Parameter Identification of Hysteretic Models
@@ -143,6 +147,10 @@ incomplete time series with dynamic time warping: an algorithm and an applica-
 tion to post-stroke rehabilitation. Artificial Intelligence in Medicine, 45(1):11–34,
 2009. ISSN 0933-3657. doi: https://doi.org/10.1016/j.artmed.2008.11.007. URL
 http://www.sciencedirect.com/science/article/pii/S0933365708001772.
+
+[16] Senin, P., 2008. Dynamic time warping algorithm review. Information and 
+Computer Science Department University of Hawaii at Manoa Honolulu, USA, 855, pp.1-23.
+http://seninp.github.io/assets/pubs/senin_dtw_litreview_2008.pdf
 
 
 # Please cite

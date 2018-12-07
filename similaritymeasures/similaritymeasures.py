@@ -549,3 +549,27 @@ def pcm(exp_data, num_data):
     return np.min(pcm_dists)
 
 
+def dtw(exp_data, num_data):
+    r"""
+    This is a generaic dtw algorithm from [1]_.
+
+    References
+    ----------
+    .. [1] Senin, P., 2008. Dynamic time warping algorithm review. Information
+        and Computer Science Department University of Hawaii at Manoa Honolulu,
+        USA, 855, pp.1-23.
+        http://seninp.github.io/assets/pubs/senin_dtw_litreview_2008.pdf
+    """
+    c = distance.cdist(exp_data, num_data)
+
+    d = np.zeros(c.shape)
+    d[0, 0] = c[0, 0]
+    n, m = c.shape
+    for i in range(1, n):
+        d[i, 0] = d[i-1, 0] + c[i, 0]
+    for j in range(1, m):
+        d[0, j] = d[0, j-1] + c[0, j]
+    for i in range(1, n):
+        for j in range(1, m):
+            d[i, j] = c[i, j] + min((d[i-1, j], d[i, j-1], d[i-1, j-1]))
+    return d[-1, -1]
