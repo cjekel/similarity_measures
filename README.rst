@@ -32,13 +32,9 @@ This library includes the following methods to quantify the difference
 -  **Curve Length**\ x method: Assumes that the only true independent
    variable of the curves is the arc-length distance along the curve
    from the origin [9, 10]
-
-Unfortunately the following method is not included, however there are
-plenty of dedicated libraries which you can find in the references.
-
 -  **Dynamic Time Warping** (DTW): A non-metric distance between two
    time-series curves that has been proven useful for a variety of
-   applications [11, 12, 13, 14, 15]
+   applications [11, 12, 13, 14, 15, 16]
 
 x denotes methods created specifically for material parameter
 identification
@@ -99,8 +95,12 @@ This shows you how to compute the various similarity measures
     # Curve Length based similarity measure
     cl = similaritymeasures.curve_length_measure(exp_data, num_data)
 
+    # quantify the difference between the two curves using
+    # Dynamic Time Warping distance
+    dtw = similaritymeasures.dtw(exp_data, num_data)
+
     # print the results
-    print(pcm, df, area, cl)
+    print(pcm, df, area, cl, dtw)
 
     # plot the data
     plt.figure()
@@ -112,6 +112,13 @@ If you are interested in setting up an optimization problem using these
 measures, check out `this Jupyter
 Notebook <https://github.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis/blob/master/Examples_of_Similarity_Measures.ipynb>`__
 which replicates Section 3.2 from [2].
+
+Changelog
+=========
+
+Version 0.2.0 now includes DTW! See
+`CHANGELOG.md <https://github.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis/blob/master/CHANGLOG.md>`__
+for full details.
 
 References
 ==========
@@ -192,6 +199,11 @@ an algorithm and an applica- tion to post-stroke rehabilitation.
 Artificial Intelligence in Medicine, 45(1):11–34, 2009. ISSN 0933-3657.
 doi: https://doi.org/10.1016/j.artmed.2008.11.007. URL
 http://www.sciencedirect.com/science/article/pii/S0933365708001772.
+
+[16] Senin, P., 2008. Dynamic time warping algorithm review. Information
+and Computer Science Department University of Hawaii at Manoa Honolulu,
+USA, 855, pp.1-23.
+http://seninp.github.io/assets/pubs/senin\_dtw\_litreview\_2008.pdf
 
 Please cite
 ===========
