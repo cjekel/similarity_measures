@@ -1,7 +1,7 @@
 import numpy as np
 import unittest
 import similaritymeasures
-
+from scipy.spatial.distance import cdist
 
 class TestEverything(unittest.TestCase):
 
@@ -52,12 +52,16 @@ class TestEverything(unittest.TestCase):
     def test_P_Q_dtw_path(self):
         r, d = similaritymeasures.dtw(P, Q)
         path = similaritymeasures.dtw_path(d)
-        self.assertTrue(np.isclose(r, sum(path)))
+        c = cdist(P, Q)
+        cost = sum(c[path[:, 0], path[:, 1]])
+        self.assertTrue(np.isclose(r, cost))
 
     def test_c5_c6_dtw_path(self):
         r, d = similaritymeasures.dtw(curve5, curve6)
         path = similaritymeasures.dtw_path(d)
-        self.assertTrue(np.isclose(r, sum(path)))
+        c = cdist(curve5, curve6)
+        cost = sum(c[path[:, 0], path[:, 1]])
+        self.assertTrue(np.isclose(r, cost))
 
 
 if __name__ == '__main__':
