@@ -753,10 +753,14 @@ def dtw(exp_data, num_data):
     Retruns
     -------
     r : float
-        DTW distance
+        DTW distance.
+    d : ndarray (2D)
+        Cumulative distance matrix
 
     Notes
     -----
+    The DTW distance is d[-1, -1].
+
     Your x locations of data points should be exp_data[:, 0], and the y
     locations of the data points should be exp_data[:, 1]. Same for num_data.
 
@@ -788,7 +792,7 @@ def dtw(exp_data, num_data):
     >>> num_data = np.zeros((100, 2))
     >>> num_data[:, 0] = x
     >>> num_data[:, 1] = y
-    >>> r = dtw(exp_data, num_data)
+    >>> r, d = dtw(exp_data, num_data)
     """
     c = distance.cdist(exp_data, num_data)
 
@@ -802,4 +806,96 @@ def dtw(exp_data, num_data):
     for i in range(1, n):
         for j in range(1, m):
             d[i, j] = c[i, j] + min((d[i-1, j], d[i, j-1], d[i-1, j-1]))
-    return d[-1, -1]
+    return d[-1, -1], d
+
+
+def dtw_path(d):
+    r"""
+    Calculates the optimal DTW path from a given DTW cumulative distance
+    matrix.
+
+    This function returns the optimal DTW path using the back propagation
+    algorithm that is defined in [1]_. This path details the index from each
+    curve that is being compared.
+
+    Parameters
+    ----------
+    d : ndarray (2-D)
+        Cumulative distance matrix.
+
+    Returns
+    -------
+    path : ndarray (2-D)
+        The optimal DTW path.
+
+    Notes
+    -----
+    Note that path[:, 0] represents the indices from exp_data, while
+    path[:, 1] represents the indices from the num_data.
+
+    References
+    ----------
+    .. [1] Senin, P., 2008. Dynamic time warping algorithm review. Information
+        and Computer Science Department University of Hawaii at Manoa Honolulu,
+        USA, 855, pp.1-23.
+        http://seninp.github.io/assets/pubs/senin_dtw_litreview_2008.pdf
+
+    Examples
+    --------
+    First calculate the DTW cumulative distance matrix.
+
+    >>> # Generate random experimental data
+    >>> x = np.random.random(100)
+    >>> y = np.random.random(100)
+    >>> exp_data = np.zeros((100, 2))
+    >>> exp_data[:, 0] = x
+    >>> exp_data[:, 1] = y
+    >>> # Generate random numerical data
+    >>> x = np.random.random(100)
+    >>> y = np.random.random(100)
+    >>> num_data = np.zeros((100, 2))
+    >>> num_data[:, 0] = x
+    >>> num_data[:, 1] = y
+    >>> r, d = dtw(exp_data, num_data)
+
+    Now you can calculate the optimal DTW path
+
+    >>> path = dtw_path(d)
+
+    You can visualize the path on the cumulative distance matrix using the
+    following code.
+
+    >>> import matplotlib.pyplot as plt
+    >>> plt.figure()
+    >>> plt.imshow(d.T, origin='lower')
+    >>> plt.plot(path[:, 0], path[:, 1], '-k')
+    >>> plt.colorbar()
+    >>> plt.show()
+
+    """
+    path = []
+    i, j = d.shape
+    i = i - 1
+    j = j - 1
+    # back propagation starts from the last point,
+    # and ends at d[0, 0]
+    path.append((i, j))
+    while i > 1 or j > 1:
+        if i == 0:
+            j = j - 1
+        elif j == 0:
+            i = i - 1
+        else:
+            temp_step = min([d[i-1, j], d[i, j-1], d[i-1, j-1]])
+            if d[i-1, j] == temp_step:
+                i = i - 1
+            elif d[i, j-1] == temp_step:
+                j = j - 1
+            else:
+                i = i - 1
+                j = j - 1
+        path.append((i, j))
+    path.append((0, 0))
+    path = np.array(path)
+    # reverse the order of path, such that it starts with [0, 0]
+    return path[::-1]

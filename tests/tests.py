@@ -38,16 +38,26 @@ class TestEverything(unittest.TestCase):
         self.assertTrue(cl, 10.986122886681098)
 
     def test_P_Q_dtw(self):
-        d = similaritymeasures.dtw(P, Q)
-        self.assertTrue(d, 3.0)
+        r, _ = similaritymeasures.dtw(P, Q)
+        self.assertTrue(r, 3.0)
 
     def test_c5_c6_dtw(self):
-        d = similaritymeasures.dtw(curve5, curve6)
-        self.assertTrue(np.isclose(d, 9000.0))
+        r, _ = similaritymeasures.dtw(curve5, curve6)
+        self.assertTrue(np.isclose(r, 9000.0))
 
     def test_c5_c6_df(self):
         df = similaritymeasures.frechet_dist(curve5, curve6)
         self.assertTrue(np.isclose(df, 90.0))
+
+    def test_P_Q_dtw_path(self):
+        r, d = similaritymeasures.dtw(P, Q)
+        path = similaritymeasures.dtw_path(d)
+        self.assertTrue(np.isclose(r, sum(path)))
+
+    def test_c5_c6_dtw_path(self):
+        r, d = similaritymeasures.dtw(curve5, curve6)
+        path = similaritymeasures.dtw_path(d)
+        self.assertTrue(np.isclose(r, sum(path)))
 
 
 if __name__ == '__main__':
