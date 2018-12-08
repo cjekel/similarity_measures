@@ -83,5 +83,3 @@ if __name__ == '__main__':
     curve6 = np.array((x2, y2)).T
 
     unittest.main()
-
-

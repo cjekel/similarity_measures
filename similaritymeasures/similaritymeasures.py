@@ -26,20 +26,31 @@ from scipy.spatial import distance
 
 
 def poly_area(x, y):
-    """
-    A function that computes the polynomial area via the shoelace formula
+    r"""
+    A function that computes the polygonal area via the shoelace formula.
 
-    Input:
-    x (1D array) - the x locations of a polynomial
-    y (1D array) - the y locations of the polynomail
+    This function allows you to take the area of any polygon that is not self
+    intersecting. This is also known as Gauss's area formula. See
+    https://en.wikipedia.org/wiki/Shoelace_formula
 
-    Note:
+    Parameters
+    ----------
+    x : ndarray (1-D)
+        the x locations of a polygon
+    y : ndarray (1-D)
+        the y locations of the polygon
+
+    Returns
+    -------
+    area : float
+        the calculated polygonal area
+
+    Notes
+    -----
     The x and y locations need to be ordered such that the first vertex
     of the polynomial correspounds to x[0] and y[0], the second vertex
     x[1] and y[1] and so forth
 
-    Returns:
-    (float) - Area of the polynomial via the shoelace formula
 
     Thanks to Mahdi for this one line code
     https://stackoverflow.com/questions/24467972/calculate-area-of-polygon-given-x-y-coordinates
@@ -48,18 +59,30 @@ def poly_area(x, y):
 
 
 def is_simple_quad(ab, bc, cd, da):
-    """
-    A function that performs all of the cross products of a quadrilateral
+    r"""
+    Returns True if a quadrilateral is simple
 
-    Input (the verticies of the quadrilateral):
-    ab (list) - [x, y] location of the first vertex
-    bc (list) - [x, y] location of the second vertex
-    cd (list) - [x, y] location of the third vertex
-    da (list) - [x, y] location of the fourth vertex
+    This function performs cross products at the vertices of a quadrilateral.
+    It is possible to use the results to decide whether a quadrilateral is
+    simple or complex. This function returns True if the quadrilateral is
+    simple, and False if the quadrilateral is complex. A complex quadrilateral
+    is a self-intersecting quadrilateral.
 
-    Returns (boolean):
-    True if quadrilateral is simple
-    False if quadrilateral is complex
+    Parameters
+    ----------
+    ab : array_like
+        [x, y] location of the first vertex
+    bc : array_like
+        [x, y] location of the second vertex
+    cd : array_like
+        [x, y] location of the third vertex
+    da : array_like
+        [x, y] location of the fourth vertex
+
+    Returns
+    -------
+    simple : bool
+        True if quadrilateral is simple, False if complex
     """
     #   Compute all four cross products
     temp0 = np.cross(ab, bc)
@@ -80,23 +103,31 @@ def is_simple_quad(ab, bc, cd, da):
 
 
 def makeQuad(x, y):
-    """
-    A function that constructs a simple quadrilateral from the x and y
-    locations of the verticies of the quadrilateral. The function then
+    r"""
+    Calculate the area from the x and y locations of a quadrilateral
+
+    This function first constructs a simple quadrilateral from the x and y
+    locations of the vertices of the quadrilateral. The function then
     calculates the shoelace area of the simple quadrilateral.
 
-    Input:
-    x (1D array) - the x locations of a quadrilateral
-    y (1D array) - the y locations of a quadrilateral
+    Parameters
+    ----------
+    x : array_like
+        the x locations of a quadrilateral
+    y : array_like
+        the y locations of a quadrilateral
 
-    Note:
-    This function rearranges the verticies of a quadrilateral until the
+    Returns
+    -------
+    area : float
+        Area of quadrilateral via shoelace formula
+
+    Notes
+    -----
+    This function rearranges the vertices of a quadrilateral until the
     quadrilateral is "Simple" (meaning non-complex). Once a simple
     quadrilateral is found, the area of the quadrilateral is calculated
     using the shoelace formula.
-
-    Output:
-    area (float) - Area of quadrilateral via shoelace formula
     """
 
     # check to see if the provide point order is valid
@@ -139,24 +170,29 @@ def makeQuad(x, y):
 
 
 def get_arc_length(dataset):
-    """
-    Obtain the total arc length of a curve in 2D space (a curve of x and y) as
+    r"""
+    Obtain arc length distances between every point in 2D space
+
+    Obtains the total arc length of a curve in 2D space (a curve of x and y) as
     well as the arc lengths between each two consecutive data points of the
-    curve
+    curve.
 
-    Input:
-    dataset (2D array) - The dataset of the curve in 2D space. Your x
-    locations of data points should be dataset[:, 0], and the y locations of
-    the data points should be dataset[:, 1]
+    Parameters
+    ----------
+    dataset : ndarray (2-D)
+        The dataset of the curve in 2D space.
 
-    Useage:
-    arcLength, arcLengths = get_arc_length(dataset)
+    Returns
+    -------
+    arcLength : float
+        The sum of all consecutive arc lengths
+    arcLengths : array_like
+        A list of the arc lengths between data points
 
-    Returns:
-    arcLength (float) - the total arc length distance of your dataset (curve
-    in 2D space)
-    arcLengths (1D array) - a 1D array of the arc length between every two
-    consecutive data points
+    Notes
+    -----
+    Your x locations of data points should be dataset[:, 0], and the y
+    locations of the data points should be dataset[:, 1]
     """
     #   split the dataset into two discrete datasets, each of length m-1
     m = len(dataset)
@@ -172,28 +208,36 @@ def get_arc_length(dataset):
 
 
 def area_between_two_curves(exp_data, num_data):
-    """
-    Calculates the area between two curves according to the algorithm in [1].
-    Each curve is constructed from discretizied data points in 2D space, e.g.
-    each curve has x and y data point.
+    r"""
+    Calculates the area between two curves.
 
-    Input:
-    exp_data (2D array) - Curve from your experimental data. Your x
-    locations of data points should be exp_data[:, 0], and the y locations of
-    the data points should be exp_data[:, 1]
+    This calculates the area according to the algorithm in [1]_. Each curve is
+    constructed from discretizied data points in 2D space, e.g. each curve
+    consists of x and y data points.
 
-    num_data (2D array) - Curve from your numerical data. Your x
-    locations of data points should be num_data[:, 0], and the y locations of
-    the data points should be num_data[:, 1]
+    Parameters
+    ----------
+    exp_data : ndarray (2D)
+        Curve from your experimental data.
+    num_data : ndarray (2D)
+        Curve from your numerical data.
 
-    Returns:
-    area (float) - The area between your exp_data curve and the num_data curve
+    Returns
+    -------
+    area : float
+        The area between exp_data and num_data curves.
 
-    References:
-    [1] Jekel, C. F., Venter, G., Venter, M. P., Stander, N., & Haftka, R. T.
-    (2018). Similarity measures for identifying material parameters from
-    hysteresis loops using inverse analysis. International Journal of Material
-    Forming. https://doi.org/10.1007/s12289-018-1421-8
+    References
+    ----------
+    .. [1] Jekel, C. F., Venter, G., Venter, M. P., Stander, N., & Haftka, R.
+        T. (2018). Similarity measures for identifying material parameters from
+        hysteresis loops using inverse analysis. International Journal of
+        Material Forming. https://doi.org/10.1007/s12289-018-1421-8
+
+    Notes
+    -----
+    Your x locations of data points should be exp_data[:, 0], and the y
+    locations of the data points should be exp_data[:, 1]. Same for num_data.
     """
     # Calculate the area between two curves using quadrilaterals
     # Consider the test data to be data from an experimental test as exp_data
@@ -261,23 +305,33 @@ def area_between_two_curves(exp_data, num_data):
 
 
 def get_length(x, y):
-    """
-    computes the arc length of a xy curve, the cumulative arc length of an xy,
+    r"""
+    Compute arc lengths of an x y curve.
+
+    Computes the arc length of a xy curve, the cumulative arc length of an xy,
     and the total xy arc length of a xy curve. The euclidean distance is used
-    to determine the arc length
+    to determine the arc length.
 
-    Input:
-    x (1D array) - the x locations of a curve
-    y (1D array) - the y locations of a curve
+    Parameters
+    ----------
+    x : array_like
+        the x locations of a curve
+    y : array_like
+        the y locations of a curve
 
-    Useage:
-    le, le_total, le_cum = get_length(x, y)
+    Returns
+    -------
+    le : ndarray (1-D)
+        the euclidean distance between every two points
+    le_total : float
+        the total arc length distance of a curve
+    le_cum : ndarray (1-D)
+        the cumulative sum of euclidean distances between every two points
 
-    Returns:
-    le (1D array) - the euclidean distance between every two points
-    le_total (float) - the total arc length distance of a curve
-    le_cum (1D array) - the cumulative sum of euclidean distances between
-    every two points
+    Examples
+    --------
+    >>> le, le_total, le_cum = get_length(x, y)
+
     """
     n = len(x)
     xmax = np.max(np.abs(x))
@@ -301,29 +355,53 @@ def get_length(x, y):
 
 
 def curve_length_measure(exp_data, num_data):
-    """
-    Compute the curve length based similarity measure between two curves
-    according to [2]. This implementation follows the OF2 form, which is a
-    self normalizing form based on the average value.
+    r"""
+    Compute the curve length based distance between two curves.
 
-    Input:
-    exp_data (2D array) - Curve from your experimental data. Your x
-    locations of data points should be exp_data[:, 0], and the y locations of
-    the data points should be exp_data[:, 1]
+    This computes the curve length similarity measure according to [1]_. This
+    implementation follows the OF2 form, which is a self normalizing form
+    based on the average value.
 
-    num_data (2D array) - Curve from your numerical data or computer
-    simulation. Your x locations of data points should be num_data[:, 0], and
-    the y locations of the data points should be num_data[:, 1]
+    Parameters
+    ----------
+    exp_data : ndarray (2D)
+        Curve from your experimental data.
+    num_data : ndarray (2D)
+        Curve from your numerical data.
 
-    Returns:
-    r (float) - curve length based similarity measure using OF2 from [2]
+    Retruns
+    -------
+    r : float
+        curve length based similarity distance
 
-    References:
-    [2] A Andrade-Campos, R De-Carvalho, and R A F Valente. Novel criteria for
-    determination of material model parameters. International Journal of
-    Mechanical Sciences, 54(1):294-305, 2012. ISSN 0020-7403. DOI
-    https://doi.org/10.1016/j.ijmecsci.2011.11.010 URL:
-    http://www.sciencedirect.com/science/article/pii/S0020740311002451
+    Notes
+    -----
+    This uses the OF2 method from [1]_.
+
+    References
+    ----------
+    .. [1] A Andrade-Campos, R De-Carvalho, and R A F Valente. Novel criteria
+        for determination of material model parameters. International Journal
+        of Mechanical Sciences, 54(1):294-305, 2012. ISSN 0020-7403. DOI
+        https://doi.org/10.1016/j.ijmecsci.2011.11.010 URL:
+        http://www.sciencedirect.com/science/article/pii/S0020740311002451
+
+    Examples
+    --------
+    >>> # Generate random experimental data
+    >>> x = np.random.random(100)
+    >>> y = np.random.random(100)
+    >>> exp_data = np.zeros((100, 2))
+    >>> exp_data[:, 0] = x
+    >>> exp_data[:, 1] = y
+    >>> # Generate random numerical data
+    >>> x = np.random.random(100)
+    >>> y = np.random.random(100)
+    >>> num_data = np.zeros((100, 2))
+    >>> num_data[:, 0] = x
+    >>> num_data[:, 1] = y
+    >>> r = curve_length_measure(exp_data, num_data)
+
     """
     x_e = exp_data[:, 0]
     y_e = exp_data[:, 1]
@@ -350,10 +428,23 @@ def curve_length_measure(exp_data, num_data):
 
 
 def euc_dist(pt1, pt2):
-    """
-    calcuates the Euclidean distance between two points
+    r"""
+    Calculates the Euclidean distance between two points
 
-    Thanks to MaxBareiss
+    Parameters
+    ----------
+    pt1 : array_like
+        point one
+    pt2 : array_like
+        point two
+
+    Returns
+    -------
+    Euclidean distance
+
+    Notes
+    -----
+    This only works in 2-D space. Thanks to MaxBareiss
     https://gist.github.com/MaxBareiss/ba2f9441d9455b56fbc9
     """
     euc = ((pt2[0]-pt1[0])*(pt2[0]-pt1[0])+(pt2[1]-pt1[1])*(pt2[1]-pt1[1]))
@@ -362,16 +453,39 @@ def euc_dist(pt1, pt2):
 
 def _c(ca, i, j, P, Q):
     """
-    Recursive caller for discrete Frechet distance as defined in [3]
+    Recursive caller for discrete Frechet distance
 
-    Thanks to MaxBareiss
+    This is the recursive caller as as defined in [1]_.
+
+    Parameters
+    ----------
+    ca : array_like
+        distance like matrix
+    i : int
+        index
+    j : int
+        index
+    P : array_like
+        array containing path P
+    Q : array_like
+        array containing path Q
+
+    Returns
+    -------
+    df : float
+        discrete frechet distance
+
+    Notes
+    -----
+    This only works in 2-D space. Thanks to MaxBareiss
     https://gist.github.com/MaxBareiss/ba2f9441d9455b56fbc9
 
-    References:
-    [3] Thomas Eiter and Heikki Mannila. Computing discrete Frechet distance.
-    Technical report, 1994.
-    http://www.kr.tuwien.ac.at/staff/eiter/et-archive/cdtr9464.pdf
-    http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.90.937&rep=rep1&type=pdf
+    References
+    ----------
+    .. [1] Thomas Eiter and Heikki Mannila. Computing discrete Frechet
+        distance. Technical report, 1994.
+        http://www.kr.tuwien.ac.at/staff/eiter/et-archive/cdtr9464.pdf
+        http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.90.937&rep=rep1&type=pdf
     """
     if ca[i, j] > -1:
         return ca[i, j]
@@ -390,27 +504,40 @@ def _c(ca, i, j, P, Q):
 
 
 def frechet_dist(exp_data, num_data):
-    """
+    r"""
+    Compute the discrete Frechet distance
+
     Compute the Discrete Frechet Distance between two 2D curves according to
-    [3]. The Frechet distance has been defined as the walking dog problem.
+    [1]_. The Frechet distance has been defined as the walking dog problem.
     From Wikipedia: "In mathematics, the Frechet distance is a measure of
     similarity between curves that takes into account the location and
     ordering of the points along the curves. It is named after Maurice Frechet.
     https://en.wikipedia.org/wiki/Fr%C3%A9chet_distance
 
-    Input:
-    exp_data (2D array) - Curve from your experimental data. Your x
-    locations of data points should be exp_data[:, 0], and the y locations of
-    the data points should be exp_data[:, 1]
+    Parameters
+    ----------
+    exp_data : ndarray (2D)
+        Curve from your experimental data.
+    num_data : ndarray (2D)
+        Curve from your numerical data.
 
-    num_data (2D array) - Curve from your numerical data or computer
-    simulation. Your x locations of data points should be num_data[:, 0], and
-    the y locations of the data points should be num_data[:, 1]
+    Returns
+    -------
+    df : float
+        discrete Frechet distance
 
-    Returns:
-    discrete frechet distance (float)
+    References
+    ----------
+    .. [1] Thomas Eiter and Heikki Mannila. Computing discrete Frechet
+        distance. Technical report, 1994.
+        http://www.kr.tuwien.ac.at/staff/eiter/et-archive/cdtr9464.pdf
+        http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.90.937&rep=rep1&type=pdf
 
-    Notes:
+    Notes
+    -----
+    Your x locations of data points should be exp_data[:, 0], and the y
+    locations of the data points should be exp_data[:, 1]. Same for num_data.
+
     Python has a default limit to the amount of recursive calls a single
     function can make. If you have a large dataset, you may need to increase
     this limit. Check out the following resources.
@@ -421,11 +548,22 @@ def frechet_dist(exp_data, num_data):
     Thanks to MaxBareiss
     https://gist.github.com/MaxBareiss/ba2f9441d9455b56fbc9
 
-    References:
-    [3] Thomas Eiter and Heikki Mannila. Computing discrete Frechet distance.
-    Technical report, 1994.
-    http://www.kr.tuwien.ac.at/staff/eiter/et-archive/cdtr9464.pdf
-    http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.90.937&rep=rep1&type=pdf
+    Examples
+    --------
+    >>> # Generate random experimental data
+    >>> x = np.random.random(100)
+    >>> y = np.random.random(100)
+    >>> exp_data = np.zeros((100, 2))
+    >>> exp_data[:, 0] = x
+    >>> exp_data[:, 1] = y
+    >>> # Generate random numerical data
+    >>> x = np.random.random(100)
+    >>> y = np.random.random(100)
+    >>> num_data = np.zeros((100, 2))
+    >>> num_data[:, 0] = x
+    >>> num_data[:, 1] = y
+    >>> df = frechet_dist(exp_data, num_data)
+
     """
     # Computes the discrete frechet distance between two polygonal lines
     # Algorithm: http://www.kr.tuwien.ac.at/staff/eiter/et-archive/cdtr9464.pdf
@@ -437,24 +575,45 @@ def frechet_dist(exp_data, num_data):
 
 def normalizeTwoCurves(x, y, w, z):
     """
-    Normalize two curves for PCM method of [4].
+    Normalize two curves for PCM method.
 
-    Input:
-    x (1D array) - x locations for first curve
-    y (1D array) - y locations for first curve
-    w (1D array) - x locations for second curve curve
-    z (1D array) - y locations for second curve
+    This normalizes the two curves for PCM method following [1]_.
 
-    Useage:
-    xi, eta, xiP, etaP = normalizeTwoCurves(x,y,w,z)
+    Parameters
+    ----------
+    x : array_like (1-D)
+        x locations for first curve
+    y : array_like (1-D)
+        y locations for first curve
+    w : array_like (1-D)
+        x locations for second curve curve
+    z : array_like (1-D)
+        y locations for second curve
 
-    Refernces:
-    [4]  Katharina Witowski and Nielen Stander. "Parameter Identification of
-    Hysteretic Models Using Partial Curve Mapping", 12th AIAA Aviation
-    Technology, Integration, and Operations (ATIO) Conference and 14th
-    AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference,
-    Aviation Technology, Integration, and Operations (ATIO) Conferences.
-    https://doi.org/10.2514/6.2012-5580
+    Returns
+    -------
+    xi : array_like
+        normalized x locations for first curve
+    eta : array_like
+        normalized y locations for first curve
+    xiP : array_like
+        normalized x locations for second curve
+    etaP : array_like
+        normalized y locations for second curve
+
+    References
+    ----------
+    .. [1] Katharina Witowski and Nielen Stander. "Parameter Identification of
+        Hysteretic Models Using Partial Curve Mapping", 12th AIAA Aviation
+        Technology, Integration, and Operations (ATIO) Conference and 14th
+        AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference,
+        Aviation Technology, Integration, and Operations (ATIO) Conferences.
+        doi: doi:10.2514/6.2012-5580.
+
+    Examples
+    --------
+    >>> xi, eta, xiP, etaP = normalizeTwoCurves(x,y,w,z)
+
     """
     minX = np.min(x)
     maxX = np.max(x)
@@ -470,24 +629,52 @@ def normalizeTwoCurves(x, y, w, z):
 
 def pcm(exp_data, num_data):
     """
-    Compute the Partial Cuve Mapping (PCM) as proposed by [4].
+    Compute the Partial Curve Mapping area.
 
-    Input:
-    exp_data (2D array) - Curve from your experimental data. Your x
-    locations of data points should be exp_data[:, 0], and the y locations of
-    the data points should be exp_data[:, 1]
+    Computes the Partial Cuve Mapping (PCM) similarity measure as proposed by
+    [1]_.
 
-    num_data (2D array) - Curve from your numerical data or computer
-    simulation. Your x locations of data points should be num_data[:, 0], and
-    the y locations of the data points should be num_data[:, 1]
+    Parameters
+    ----------
+    exp_data : ndarray (2D)
+        Curve from your experimental data.
+    num_data : ndarray (2D)
+        Curve from your numerical data.
 
-    Refernces:
-    [4]  Katharina Witowski and Nielen Stander. "Parameter Identification of
-    Hysteretic Models Using Partial Curve Mapping", 12th AIAA Aviation
-    Technology, Integration, and Operations (ATIO) Conference and 14th
-    AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference,
-    Aviation Technology, Integration, and Operations (ATIO) Conferences.
-    https://doi.org/10.2514/6.2012-5580
+    Returns
+    -------
+    p : float
+        pcm area measure
+
+    Notes
+    -----
+    Your x locations of data points should be exp_data[:, 0], and the y
+    locations of the data points should be exp_data[:, 1]. Same for num_data.
+
+    References
+    ----------
+    .. [1] Katharina Witowski and Nielen Stander. "Parameter Identification of
+        Hysteretic Models Using Partial Curve Mapping", 12th AIAA Aviation
+        Technology, Integration, and Operations (ATIO) Conference and 14th
+        AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference,
+        Aviation Technology, Integration, and Operations (ATIO) Conferences.
+        doi: doi:10.2514/6.2012-5580.
+
+    Examples
+    --------
+    >>> # Generate random experimental data
+    >>> x = np.random.random(100)
+    >>> y = np.random.random(100)
+    >>> exp_data = np.zeros((100, 2))
+    >>> exp_data[:, 0] = x
+    >>> exp_data[:, 1] = y
+    >>> # Generate random numerical data
+    >>> x = np.random.random(100)
+    >>> y = np.random.random(100)
+    >>> num_data = np.zeros((100, 2))
+    >>> num_data[:, 0] = x
+    >>> num_data[:, 1] = y
+    >>> p = pcm(exp_data, num_data)
     """
     # normalize the curves to the experimental data
     xi1, eta1, xi2, eta2 = normalizeTwoCurves(exp_data[:, 0], exp_data[:, 1],
@@ -551,7 +738,34 @@ def pcm(exp_data, num_data):
 
 def dtw(exp_data, num_data):
     r"""
-    This is a generaic dtw algorithm from [1]_.
+    Compute the Dynamic Time Warping distance.
+
+    This computes a generic Dynamic Time Warping (DTW) distance and follows
+    the algorithm from [1]_.
+
+    Parameters
+    ----------
+    exp_data : ndarray (2D)
+        Curve from your experimental data.
+    num_data : ndarray (2D)
+        Curve from your numerical data.
+
+    Retruns
+    -------
+    r : float
+        DTW distance
+
+    Notes
+    -----
+    Your x locations of data points should be exp_data[:, 0], and the y
+    locations of the data points should be exp_data[:, 1]. Same for num_data.
+
+    This uses the euclidean distance for now. In the future it should be
+    possible to support other metrics.
+
+    DTW is a non-metric distance, which means DTW doesn't hold the triangle
+    inequality.
+    https://en.wikipedia.org/wiki/Triangle_inequality
 
     References
     ----------
@@ -559,6 +773,22 @@ def dtw(exp_data, num_data):
         and Computer Science Department University of Hawaii at Manoa Honolulu,
         USA, 855, pp.1-23.
         http://seninp.github.io/assets/pubs/senin_dtw_litreview_2008.pdf
+
+    Examples
+    --------
+    >>> # Generate random experimental data
+    >>> x = np.random.random(100)
+    >>> y = np.random.random(100)
+    >>> exp_data = np.zeros((100, 2))
+    >>> exp_data[:, 0] = x
+    >>> exp_data[:, 1] = y
+    >>> # Generate random numerical data
+    >>> x = np.random.random(100)
+    >>> y = np.random.random(100)
+    >>> num_data = np.zeros((100, 2))
+    >>> num_data[:, 0] = x
+    >>> num_data[:, 1] = y
+    >>> r = dtw(exp_data, num_data)
     """
     c = distance.cdist(exp_data, num_data)
 
