@@ -736,12 +736,13 @@ def pcm(exp_data, num_data):
     return np.min(pcm_dists)
 
 
-def dtw(exp_data, num_data):
+def dtw(exp_data, num_data, metric='euclidean', **kwargs):
     r"""
     Compute the Dynamic Time Warping distance.
 
     This computes a generic Dynamic Time Warping (DTW) distance and follows
-    the algorithm from [1]_.
+    the algorithm from [1]_. This can use all distance metrics that are
+    available in scipy.spatial.distance.cdist.
 
     Parameters
     ----------
@@ -749,6 +750,34 @@ def dtw(exp_data, num_data):
         Curve from your experimental data.
     num_data : ndarray (2D)
         Curve from your numerical data.
+    metric : str or callable, optional
+        The distance metric to use. Default='euclidean'. If a string, the
+        distance function can be:
+        'braycurtis', 'canberra', 'chebyshev', 'cityblock', 'correlation',
+        'cosine', 'dice', 'euclidean', 'hamming', 'jaccard', 'kulsinski',
+        'mahalanobis', 'matching', 'minkowski', 'rogerstanimoto', 'russellrao',
+        'seuclidean', 'sokalmichener', 'sokalsneath', 'sqeuclidean',
+        'wminkowski', 'yule'.
+    **kwargs : dict, optional
+        Extra arguments to `metric`: refer to each metric documentation for a
+        list of all possible arguments.
+        Some possible arguments:
+        p : scalar
+        The p-norm to apply for Minkowski, weighted and unweighted.
+        Default: 2.
+        w : ndarray
+        The weight vector for metrics that support weights (e.g., Minkowski).
+        V : ndarray
+        The variance vector for standardized Euclidean.
+        Default: var(vstack([XA, XB]), axis=0, ddof=1)
+        VI : ndarray
+        The inverse of the covariance matrix for Mahalanobis.
+        Default: inv(cov(vstack([XA, XB].T))).T
+        out : ndarray
+        The output array
+        If not None, the distance matrix Y is stored in this array.
+        Note: metric independent, it will become a regular keyword arg in a
+        future scipy version
 
     Retruns
     -------
@@ -760,6 +789,9 @@ def dtw(exp_data, num_data):
     Notes
     -----
     The DTW distance is d[-1, -1].
+
+    The latest scipy.spatial.distance.cdist infromation can be found at
+    https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.cdist.html
 
     Your x locations of data points should be exp_data[:, 0], and the y
     locations of the data points should be exp_data[:, 1]. Same for num_data.
@@ -793,8 +825,15 @@ def dtw(exp_data, num_data):
     >>> num_data[:, 0] = x
     >>> num_data[:, 1] = y
     >>> r, d = dtw(exp_data, num_data)
+
+    The euclidean distance is used by default. You can use metric and **kwargs
+    to specify different types of distance metrics. The following example uses
+    the city block or Manhattan distance between points.
+
+    >>> r, d = dtw(exp_data, num_data, metric='cityblock')
+
     """
-    c = distance.cdist(exp_data, num_data)
+    c = distance.cdist(exp_data, num_data, metric=metric, **kwargs)
 
     d = np.zeros(c.shape)
     d[0, 0] = c[0, 0]

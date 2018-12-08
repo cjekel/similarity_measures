@@ -7,8 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.1] - 2018-12-08
 ### Added
 - dtw path function
+- dtw function can now take all distance metrics in scipy.spatial.distance.cdist
+- add test functions for dtw_path
+- add test functions for passing distance metrics in dtw
 ### Changed
-- Docstrings now follow numpydoc
+- dtw function now outputs cumulative distance matrix
 
 ## [0.2.0] - 2018-12-07
 ### Added

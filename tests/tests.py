@@ -64,6 +64,18 @@ class TestEverything(unittest.TestCase):
         cost = sum(c[path[:, 0], path[:, 1]])
         self.assertTrue(np.isclose(r, cost))
 
+    def test_P_Q_dtw_cityblock(self):
+        r, _ = similaritymeasures.dtw(P, Q, metric='cityblock')
+        self.assertTrue(r, 3.0)
+
+    def test_P_Q_dtw_minkowski_p1(self):
+        r, _ = similaritymeasures.dtw(P, Q, metric='minkowski', p=1)
+        self.assertTrue(r, 3.0)
+
+    def test_P_Q_dtw_minkowski_p3(self):
+        r, _ = similaritymeasures.dtw(P, Q, metric='minkowski', p=3)
+        self.assertTrue(r, 3.0)
+
 
 if __name__ == '__main__':
     # let's just define some data
