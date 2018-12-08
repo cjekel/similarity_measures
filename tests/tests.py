@@ -3,6 +3,7 @@ import unittest
 import similaritymeasures
 from scipy.spatial.distance import cdist
 
+
 class TestEverything(unittest.TestCase):
 
     def test_c1_c2_area(self):
