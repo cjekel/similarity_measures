@@ -85,7 +85,7 @@ plt.show()
 If you are interested in setting up an optimization problem using these measures, check out [this Jupyter Notebook](https://github.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis/blob/master/Examples_of_Similarity_Measures.ipynb) which replicates Section 3.2 from [2].
 
 # Changelog
-Version 0.2.0 now includes DTW! See [CHANGELOG.md](https://github.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis/blob/master/CHANGLOG.md) for full details.
+Version 0.2.0 now includes DTW! See [CHANGELOG.md](https://github.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis/blob/master/CHANGELOG.md) for full details.
 
 # References
 [1] Katharina Witowski and Nielen Stander. Parameter Identification of Hysteretic Models

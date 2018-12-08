@@ -117,7 +117,7 @@ Changelog
 =========
 
 Version 0.2.0 now includes DTW! See
-`CHANGELOG.md <https://github.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis/blob/master/CHANGLOG.md>`__
+`CHANGELOG.md <https://github.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis/blob/master/CHANGELOG.md>`__
 for full details.
 
 References
