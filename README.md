@@ -70,7 +70,7 @@ cl = similaritymeasures.curve_length_measure(exp_data, num_data)
 
 # quantify the difference between the two curves using
 # Dynamic Time Warping distance
-cl = similaritymeasures.dtw(exp_data, num_data)
+dtw = similaritymeasures.dtw(exp_data, num_data)
 
 # print the results
 print(pcm, df, area, cl, dtw)
