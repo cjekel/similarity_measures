@@ -171,16 +171,16 @@ def makeQuad(x, y):
 
 def get_arc_length(dataset):
     r"""
-    Obtain arc length distances between every point in 2D space
+    Obtain arc length distances between every point in 2-D space
 
-    Obtains the total arc length of a curve in 2D space (a curve of x and y) as
+    Obtains the total arc length of a curve in 2-D space (a curve of x and y) as
     well as the arc lengths between each two consecutive data points of the
     curve.
 
     Parameters
     ----------
     dataset : ndarray (2-D)
-        The dataset of the curve in 2D space.
+        The dataset of the curve in 2-D space.
 
     Returns
     -------
@@ -212,14 +212,14 @@ def area_between_two_curves(exp_data, num_data):
     Calculates the area between two curves.
 
     This calculates the area according to the algorithm in [1]_. Each curve is
-    constructed from discretizied data points in 2D space, e.g. each curve
+    constructed from discretizied data points in 2-D space, e.g. each curve
     consists of x and y data points.
 
     Parameters
     ----------
-    exp_data : ndarray (2D)
+    exp_data : ndarray (2-D)
         Curve from your experimental data.
-    num_data : ndarray (2D)
+    num_data : ndarray (2-D)
         Curve from your numerical data.
 
     Returns
@@ -364,9 +364,9 @@ def curve_length_measure(exp_data, num_data):
 
     Parameters
     ----------
-    exp_data : ndarray (2D)
+    exp_data : ndarray (2-D)
         Curve from your experimental data.
-    num_data : ndarray (2D)
+    num_data : ndarray (2-D)
         Curve from your numerical data.
 
     Retruns
@@ -507,7 +507,7 @@ def frechet_dist(exp_data, num_data):
     r"""
     Compute the discrete Frechet distance
 
-    Compute the Discrete Frechet Distance between two 2D curves according to
+    Compute the Discrete Frechet Distance between two 2-D curves according to
     [1]_. The Frechet distance has been defined as the walking dog problem.
     From Wikipedia: "In mathematics, the Frechet distance is a measure of
     similarity between curves that takes into account the location and
@@ -516,9 +516,9 @@ def frechet_dist(exp_data, num_data):
 
     Parameters
     ----------
-    exp_data : ndarray (2D)
+    exp_data : ndarray (2-D)
         Curve from your experimental data.
-    num_data : ndarray (2D)
+    num_data : ndarray (2-D)
         Curve from your numerical data.
 
     Returns
@@ -636,9 +636,9 @@ def pcm(exp_data, num_data):
 
     Parameters
     ----------
-    exp_data : ndarray (2D)
+    exp_data : ndarray (2-D)
         Curve from your experimental data.
-    num_data : ndarray (2D)
+    num_data : ndarray (2-D)
         Curve from your numerical data.
 
     Returns
@@ -746,9 +746,9 @@ def dtw(exp_data, num_data, metric='euclidean', **kwargs):
 
     Parameters
     ----------
-    exp_data : ndarray (2D)
+    exp_data : ndarray (2-D)
         Curve from your experimental data.
-    num_data : ndarray (2D)
+    num_data : ndarray (2-D)
         Curve from your numerical data.
     metric : str or callable, optional
         The distance metric to use. Default='euclidean'. Refer to the
@@ -788,7 +788,7 @@ def dtw(exp_data, num_data, metric='euclidean', **kwargs):
     -------
     r : float
         DTW distance.
-    d : ndarray (2D)
+    d : ndarray (2-D)
         Cumulative distance matrix
 
     Notes
