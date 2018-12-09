@@ -173,8 +173,8 @@ def get_arc_length(dataset):
     r"""
     Obtain arc length distances between every point in 2-D space
 
-    Obtains the total arc length of a curve in 2-D space (a curve of x and y) as
-    well as the arc lengths between each two consecutive data points of the
+    Obtains the total arc length of a curve in 2-D space (a curve of x and y)
+    as well as the arc lengths between each two consecutive data points of the
     curve.
 
     Parameters
@@ -746,9 +746,9 @@ def dtw(exp_data, num_data, metric='euclidean', **kwargs):
 
     Parameters
     ----------
-    exp_data : ndarray (2-D)
+    exp_data : array_like
         Curve from your experimental data.
-    num_data : ndarray (2-D)
+    num_data : array_like
         Curve from your numerical data.
     metric : str or callable, optional
         The distance metric to use. Default='euclidean'. Refer to the
