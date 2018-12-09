@@ -747,9 +747,11 @@ def dtw(exp_data, num_data, metric='euclidean', **kwargs):
     Parameters
     ----------
     exp_data : array_like
-        Curve from your experimental data.
+        Curve from your experimental data. exp_data is of (M, N) shape, where
+        M is the number of data points, and N is the number of dimmensions
     num_data : array_like
-        Curve from your numerical data.
+        Curve from your numerical data. num_data is of (P, N) shape, where P
+        is the number of data points, and N is the number of dimmensions
     metric : str or callable, optional
         The distance metric to use. Default='euclidean'. Refer to the
         documentation for scipy.spatial.distance.cdist. Some examples:
@@ -794,6 +796,8 @@ def dtw(exp_data, num_data, metric='euclidean', **kwargs):
     Notes
     -----
     The DTW distance is d[-1, -1].
+
+    This has O(M, P) computational cost.
 
     The latest scipy.spatial.distance.cdist information can be found at
     https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.cdist.html
