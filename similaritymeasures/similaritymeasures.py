@@ -751,33 +751,38 @@ def dtw(exp_data, num_data, metric='euclidean', **kwargs):
     num_data : ndarray (2D)
         Curve from your numerical data.
     metric : str or callable, optional
-        The distance metric to use. Default='euclidean'. If a string, the
-        distance function can be:
+        The distance metric to use. Default='euclidean'. Refer to the
+        documentation for scipy.spatial.distance.cdist. Some examples:
         'braycurtis', 'canberra', 'chebyshev', 'cityblock', 'correlation',
         'cosine', 'dice', 'euclidean', 'hamming', 'jaccard', 'kulsinski',
         'mahalanobis', 'matching', 'minkowski', 'rogerstanimoto', 'russellrao',
         'seuclidean', 'sokalmichener', 'sokalsneath', 'sqeuclidean',
         'wminkowski', 'yule'.
     **kwargs : dict, optional
-        Extra arguments to `metric`: refer to each metric documentation for a
-        list of all possible arguments.
-        Some possible arguments:
+        Extra arguments to `metric`: refer to each metric documentation in
+        scipy.spatial.distance.
+
+        Some examples:
+
         p : scalar
-        The p-norm to apply for Minkowski, weighted and unweighted.
-        Default: 2.
+            The p-norm to apply for Minkowski, weighted and unweighted.
+            Default: 2.
+
         w : ndarray
-        The weight vector for metrics that support weights (e.g., Minkowski).
+            The weight vector for metrics that support weights (e.g.,
+            Minkowski).
+
         V : ndarray
-        The variance vector for standardized Euclidean.
-        Default: var(vstack([XA, XB]), axis=0, ddof=1)
+            The variance vector for standardized Euclidean.
+            Default: var(vstack([XA, XB]), axis=0, ddof=1)
+
         VI : ndarray
-        The inverse of the covariance matrix for Mahalanobis.
-        Default: inv(cov(vstack([XA, XB].T))).T
+            The inverse of the covariance matrix for Mahalanobis.
+            Default: inv(cov(vstack([XA, XB].T))).T
+
         out : ndarray
-        The output array
-        If not None, the distance matrix Y is stored in this array.
-        Note: metric independent, it will become a regular keyword arg in a
-        future scipy version
+            The output array
+            If not None, the distance matrix Y is stored in this array.
 
     Retruns
     -------
@@ -790,7 +795,7 @@ def dtw(exp_data, num_data, metric='euclidean', **kwargs):
     -----
     The DTW distance is d[-1, -1].
 
-    The latest scipy.spatial.distance.cdist infromation can be found at
+    The latest scipy.spatial.distance.cdist information can be found at
     https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.cdist.html
 
     Your x locations of data points should be exp_data[:, 0], and the y
