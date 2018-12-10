@@ -7,8 +7,12 @@ ordered from a beginning to an ending
 Consider the following two curves. We want to quantify how different the
 Numerical curve is from the Experimental curve. Notice how there are no
 concurrent Stress or Strain values in the two curves. Additionally one
-curve has more data points than the other curves. |Image of two
-different curves|
+curve has more data points than the other curves.
+
+.. figure:: https://raw.githubusercontent.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis/master/images/TwoCurves.png
+   :alt: Image of two different curves
+
+   Image of two different curves
 
 In the ideal case the Numerical curve would match the Experimental curve
 exactly. This means that the two curves would appear directly on top of
@@ -229,6 +233,3 @@ Material Forming. https://doi.org/10.1007/s12289-018-1421-8
     url = {https://doi.org/10.1007/s12289-018-1421-8},
     year = {2018}
     }
-
-.. |Image of two different curves| image:: images/TwoCurves.png
-
