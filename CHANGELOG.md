@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.3] - 2018-12-10
 ### Changed
 - fixed image link in README.rst for pypi.org
+- fix unicode Fréchet distance
 
 ## [0.2.2] - 2018-12-09
 ### Changed

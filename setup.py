@@ -1,3 +1,4 @@
+import io
 from distutils.core import setup
 setup(
     name='similaritymeasures',
@@ -9,7 +10,7 @@ setup(
     url='https://github.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis',
     license='MIT License',
     description='Quantify the difference between two arbitrary curves in 2D space',
-    long_description=open('README.rst').read(),
+    long_description=io.open('README.rst', mode='r', encoding="utf-8").read(),
     platforms=['any'],
     install_requires=[
         "numpy >= 1.14.0",
