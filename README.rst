@@ -29,19 +29,21 @@ This library includes the following methods to quantify the difference
    subset between the two curves [1]
 -  **Area method**\ x: An algorithm for calculating the Area between two
    curves in 2D space [2]
--  **Discrete Fréchet distance**: The shortest distance in-between two
-   curves, where you are allowed to very the speed at which you travel
-   along each curve independently (walking dog problem) [3, 4, 5, 6, 7,
-   8]
+-  **Discrete Fréchet distance**\ y: The shortest distance in-between
+   two curves, where you are allowed to very the speed at which you
+   travel along each curve independently (walking dog problem) [3, 4, 5,
+   6, 7, 8]
 -  **Curve Length**\ x method: Assumes that the only true independent
    variable of the curves is the arc-length distance along the curve
    from the origin [9, 10]
--  **Dynamic Time Warping** (DTW): A non-metric distance between two
+-  **Dynamic Time Warping**\ y (DTW): A non-metric distance between two
    time-series curves that has been proven useful for a variety of
    applications [11, 12, 13, 14, 15, 16]
 
 x denotes methods created specifically for material parameter
 identification
+
+y denotes that the method implemented in this library supports N-D data!
 
 Installation
 ============
@@ -120,7 +122,7 @@ which replicates Section 3.2 from [2].
 Changelog
 =========
 
-Version 0.2.0 now includes DTW! See
+Version 0.3.0: Fréchet distance now supports N-D data! See
 `CHANGELOG.md <https://github.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis/blob/master/CHANGELOG.md>`__
 for full details.
 
