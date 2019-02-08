@@ -1,10 +1,11 @@
 from __future__ import division
 import numpy as np
 from scipy.spatial import distance
+from scipy.spatial import minkowski_distance
 
 # MIT License
 #
-# Copyright (c) 2018 Charles Jekel
+# Copyright (c) 2018,2019 Charles Jekel
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -427,28 +428,28 @@ def curve_length_measure(exp_data, num_data):
     return np.sqrt(np.sum(r_sq))
 
 
-def euc_dist(pt1, pt2):
-    r"""
-    Calculates the Euclidean distance between two points
+# def euc_dist(pt1, pt2):
+#     r"""
+#     Calculates the Euclidean distance between two points
 
-    Parameters
-    ----------
-    pt1 : array_like
-        point one
-    pt2 : array_like
-        point two
+#     Parameters
+#     ----------
+#     pt1 : array_like
+#         point one
+#     pt2 : array_like
+#         point two
 
-    Returns
-    -------
-    Euclidean distance
+#     Returns
+#     -------
+#     Euclidean distance
 
-    Notes
-    -----
-    This only works in 2-D space. Thanks to MaxBareiss
-    https://gist.github.com/MaxBareiss/ba2f9441d9455b56fbc9
-    """
-    euc = ((pt2[0]-pt1[0])*(pt2[0]-pt1[0])+(pt2[1]-pt1[1])*(pt2[1]-pt1[1]))
-    return np.sqrt(euc)
+#     Notes
+#     -----
+#     This only works in 2-D space. Thanks to MaxBareiss
+#     https://gist.github.com/MaxBareiss/ba2f9441d9455b56fbc9
+#     """
+#     euc = ((pt2[0]-pt1[0])*(pt2[0]-pt1[0])+(pt2[1]-pt1[1])*(pt2[1]-pt1[1]))
+#     return np.sqrt(euc)
 
 
 def _c(ca, i, j, P, Q):
@@ -477,7 +478,7 @@ def _c(ca, i, j, P, Q):
 
     Notes
     -----
-    This only works in 2-D space. Thanks to MaxBareiss
+    This should work in N-D space. Thanks to MaxBareiss
     https://gist.github.com/MaxBareiss/ba2f9441d9455b56fbc9
 
     References
@@ -490,24 +491,27 @@ def _c(ca, i, j, P, Q):
     if ca[i, j] > -1:
         return ca[i, j]
     elif i == 0 and j == 0:
-        ca[i, j] = euc_dist(P[0], Q[0])
+        ca[i, j] = minkowski_distance(P[0], Q[0], p=pnorm)
     elif i > 0 and j == 0:
-        ca[i, j] = max(_c(ca, i-1, 0, P, Q), euc_dist(P[i], Q[0]))
+        ca[i, j] = max(_c(ca, i-1, 0, P, Q),
+                       minkowski_distance(P[i], Q[0], p=pnorm))
     elif i == 0 and j > 0:
-        ca[i, j] = max(_c(ca, 0, j-1, P, Q), euc_dist(P[0], Q[j]))
+        ca[i, j] = max(_c(ca, 0, j-1, P, Q),
+                       minkowski_distance(P[0], Q[j], p=pnorm))
     elif i > 0 and j > 0:
         ca[i, j] = max(min(_c(ca, i-1, j, P, Q), _c(ca, i-1, j-1, P, Q),
-                       _c(ca, i, j-1, P, Q)), euc_dist(P[i], Q[j]))
+                       _c(ca, i, j-1, P, Q)),
+                       minkowski_distance(P[i], Q[j], p=pnorm))
     else:
         ca[i, j] = float("inf")
     return ca[i, j]
 
 
-def frechet_dist(exp_data, num_data):
+def frechet_dist(exp_data, num_data, p=2):
     r"""
     Compute the discrete Frechet distance
 
-    Compute the Discrete Frechet Distance between two 2-D curves according to
+    Compute the Discrete Frechet Distance between two N-D curves according to
     [1]_. The Frechet distance has been defined as the walking dog problem.
     From Wikipedia: "In mathematics, the Frechet distance is a measure of
     similarity between curves that takes into account the location and
@@ -516,10 +520,15 @@ def frechet_dist(exp_data, num_data):
 
     Parameters
     ----------
-    exp_data : ndarray (2-D)
-        Curve from your experimental data.
-    num_data : ndarray (2-D)
-        Curve from your numerical data.
+    exp_data : array_like
+        Curve from your experimental data. exp_data is of (M, N) shape, where
+        M is the number of data points, and N is the number of dimmensions
+    num_data : array_like
+        Curve from your numerical data. num_data is of (P, N) shape, where P
+        is the number of data points, and N is the number of dimmensions
+    p : float, 1 <= p <= infinity
+        Which Minkowski p-norm to use. Default is p=2 (Eculidean).
+        The manhattan distance is p=1.
 
     Returns
     -------
@@ -548,6 +557,8 @@ def frechet_dist(exp_data, num_data):
     Thanks to MaxBareiss
     https://gist.github.com/MaxBareiss/ba2f9441d9455b56fbc9
 
+    This sets a global variable named pnorm, where pnorm = p.
+
     Examples
     --------
     >>> # Generate random experimental data
@@ -565,6 +576,9 @@ def frechet_dist(exp_data, num_data):
     >>> df = frechet_dist(exp_data, num_data)
 
     """
+    # set p as global variable
+    global pnorm
+    pnorm = p
     # Computes the discrete frechet distance between two polygonal lines
     # Algorithm: http://www.kr.tuwien.ac.at/staff/eiter/et-archive/cdtr9464.pdf
     # exp_data, num_data are arrays of 2-element arrays (points)
