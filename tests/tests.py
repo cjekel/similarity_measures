@@ -3,6 +3,37 @@ import unittest
 import similaritymeasures
 from scipy.spatial.distance import cdist
 
+# let's just define some data
+x1 = np.linspace(0.0, 1.0, 100)
+y1 = np.ones(100)*2
+x2 = np.linspace(0.0, 1.0, 50)
+y2 = np.ones(50)
+
+curve1 = np.array((x1, y1)).T
+curve2 = np.array((x2, y2)).T
+
+x1 = np.linspace(0.0, 1.0, 100)
+y1 = x1
+x2 = np.linspace(0.0, 1.0, 50)
+y2 = x2+1.0
+
+curve3 = np.array((x1, y1)).T
+curve4 = np.array((x2, y2)).T
+
+P = np.array([[0, 0], [1, 1], [2, 2]])
+Q = P.copy()
+Q[:, 1] = Q[:, 1] + 1
+
+r1 = 10
+r2 = 100
+theta = np.linspace(0.0, 2.0*np.pi, 100)
+x1 = np.cos(theta)*r1
+x2 = np.cos(theta)*r2
+y1 = np.sin(theta)*r1
+y2 = np.sin(theta)*r2
+curve5 = np.array((x1, y1)).T
+curve6 = np.array((x2, y2)).T
+
 
 class TestEverything(unittest.TestCase):
 
@@ -78,35 +109,5 @@ class TestEverything(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    # let's just define some data
-    x1 = np.linspace(0.0, 1.0, 100)
-    y1 = np.ones(100)*2
-    x2 = np.linspace(0.0, 1.0, 50)
-    y2 = np.ones(50)
-
-    curve1 = np.array((x1, y1)).T
-    curve2 = np.array((x2, y2)).T
-
-    x1 = np.linspace(0.0, 1.0, 100)
-    y1 = x1
-    x2 = np.linspace(0.0, 1.0, 50)
-    y2 = x2+1.0
-
-    curve3 = np.array((x1, y1)).T
-    curve4 = np.array((x2, y2)).T
-
-    P = np.array([[0, 0], [1, 1], [2, 2]])
-    Q = P.copy()
-    Q[:, 1] = Q[:, 1] + 1
-
-    r1 = 10
-    r2 = 100
-    theta = np.linspace(0.0, 2.0*np.pi, 100)
-    x1 = np.cos(theta)*r1
-    x2 = np.cos(theta)*r2
-    y1 = np.sin(theta)*r1
-    y2 = np.sin(theta)*r2
-    curve5 = np.array((x1, y1)).T
-    curve6 = np.array((x2, y2)).T
 
     unittest.main()
