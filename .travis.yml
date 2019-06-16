@@ -4,7 +4,10 @@ python:
   - "3.5"
   - "3.6"
 install:
-  - pip install .
-  - pip install flake8 nose
-script: nosetests
-before_script: flake8 similaritymeasures
+  - pip install flake8 pytest
+  - pip install . --no-cache-dir
+script: pytest tests.py
+before_script:
+  - flake8 similaritymeasures
+  - pytest --version
+  - cd tests
