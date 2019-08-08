@@ -7,9 +7,9 @@ setup(
     author_email='cjekel@gmail.com',
     packages=['similaritymeasures'],
     package_data={'similaritymeasures': ['VERSION']},
-    url='https://github.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis',
+    url='https://github.com/cjekel/similarity_measures',
     license='MIT License',
-    description='Quantify the difference between two arbitrary curves in space',
+    description='Quantify the difference between two arbitrary curves in space',  # noqa E501
     long_description=io.open('README.rst', mode='r', encoding="utf-8").read(),
     platforms=['any'],
     install_requires=[
