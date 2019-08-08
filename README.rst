@@ -9,7 +9,7 @@ Numerical curve is from the Experimental curve. Notice how there are no
 concurrent Stress or Strain values in the two curves. Additionally one
 curve has more data points than the other curves.
 
-.. figure:: https://raw.githubusercontent.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis/master/images/TwoCurves.png
+.. figure:: https://raw.githubusercontent.com/cjekel/similarity_measures/master/images/TwoCurves.png
    :alt: Image of two different curves
 
    Image of two different curves
