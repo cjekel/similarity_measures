@@ -58,8 +58,8 @@ or clone and install from source.
 
 ::
 
-    git clone https://github.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis
-    [sudo] pip install ./Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis
+    git clone https://github.com/cjekel/similarity_measures
+    [sudo] pip install ./similarity_measures
 
 Example useage
 ==============
@@ -116,14 +116,14 @@ This shows you how to compute the various similarity measures
 
 If you are interested in setting up an optimization problem using these
 measures, check out `this Jupyter
-Notebook <https://github.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis/blob/master/Examples_of_Similarity_Measures.ipynb>`__
+Notebook <https://github.com/cjekel/similarity_measures/blob/master/Examples_of_Similarity_Measures.ipynb>`__
 which replicates Section 3.2 from [2].
 
 Changelog
 =========
 
 Version 0.3.0: Fréchet distance now supports N-D data! See
-`CHANGELOG.md <https://github.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis/blob/master/CHANGELOG.md>`__
+`CHANGELOG.md <https://github.com/cjekel/similarity_measures/blob/master/CHANGELOG.md>`__
 for full details.
 
 References

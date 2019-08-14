@@ -31,8 +31,8 @@ Install with pip
 ```
 or clone and install from source.
 ```
-git clone https://github.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis
-[sudo] pip install ./Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis
+git clone https://github.com/cjekel/similarity_measures
+[sudo] pip install ./similarity_measures
 ```
 
 # Example useage
@@ -85,10 +85,10 @@ plt.plot(num_data[:, 0], num_data[:, 1])
 plt.show()
 ```
 
-If you are interested in setting up an optimization problem using these measures, check out [this Jupyter Notebook](https://github.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis/blob/master/Examples_of_Similarity_Measures.ipynb) which replicates Section 3.2 from [2].
+If you are interested in setting up an optimization problem using these measures, check out [this Jupyter Notebook](https://github.com/cjekel/similarity_measures/blob/master/Examples_of_Similarity_Measures.ipynb) which replicates Section 3.2 from [2].
 
 # Changelog
-Version 0.3.0: Fréchet distance now supports N-D data! See [CHANGELOG.md](https://github.com/cjekel/Similarity_measures_for_identifying_material_parameters_from_hysteresis_loops_using_inverse_analysis/blob/master/CHANGELOG.md) for full details.
+Version 0.3.0: Fréchet distance now supports N-D data! See [CHANGELOG.md](https://github.com/cjekel/similarity_measures/blob/master/CHANGELOG.md) for full details.
 
 # References
 [1] Katharina Witowski and Nielen Stander. Parameter Identification of Hysteretic Models
