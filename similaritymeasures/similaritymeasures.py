@@ -942,7 +942,7 @@ def dtw_path(d):
     # back propagation starts from the last point,
     # and ends at d[0, 0]
     path.append((i, j))
-    while i > 1 or j > 1:
+    while i > 0 or j > 0:
         if i == 0:
             j = j - 1
         elif j == 0:
@@ -957,7 +957,6 @@ def dtw_path(d):
                 i = i - 1
                 j = j - 1
         path.append((i, j))
-    path.append((0, 0))
     path = np.array(path)
     # reverse the order of path, such that it starts with [0, 0]
     return path[::-1]
