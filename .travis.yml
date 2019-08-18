@@ -7,7 +7,7 @@ install:
   - pip install flake8 pytest-cov
   - pip install pytest --upgrade
   - pip install . --no-cache-dir
-script: pytest tests/tests.py
+script: pytest --cov=similaritymeasures -p no:warnings tests/tests.py
 before_script:
   - flake8 similaritymeasures
   - pytest --version
