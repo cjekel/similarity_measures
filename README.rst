@@ -1,3 +1,8 @@
+similaritymeasures
+==================
+
+|Downloads a month| |Build Status| |Coverage Status|
+
 Quantify the difference between two arbitrary curves
 ====================================================
 
@@ -52,14 +57,14 @@ Install with pip
 
 ::
 
-    [sudo] pip install similaritymeasures
+   [sudo] pip install similaritymeasures
 
 or clone and install from source.
 
 ::
 
-    git clone https://github.com/cjekel/similarity_measures
-    [sudo] pip install ./similarity_measures
+   git clone https://github.com/cjekel/similarity_measures
+   [sudo] pip install ./similarity_measures
 
 Example useage
 ==============
@@ -68,51 +73,51 @@ This shows you how to compute the various similarity measures
 
 ::
 
-    import numpy as np
-    import similaritymeasures
-    import matplotlib.pyplot as plt
+   import numpy as np
+   import similaritymeasures
+   import matplotlib.pyplot as plt
 
-    # Generate random experimental data
-    x = np.random.random(100)
-    y = np.random.random(100)
-    exp_data = np.zeros((100, 2))
-    exp_data[:, 0] = x
-    exp_data[:, 1] = y
+   # Generate random experimental data
+   x = np.random.random(100)
+   y = np.random.random(100)
+   exp_data = np.zeros((100, 2))
+   exp_data[:, 0] = x
+   exp_data[:, 1] = y
 
-    # Generate random numerical data
-    x = np.random.random(100)
-    y = np.random.random(100)
-    num_data = np.zeros((100, 2))
-    num_data[:, 0] = x
-    num_data[:, 1] = y
+   # Generate random numerical data
+   x = np.random.random(100)
+   y = np.random.random(100)
+   num_data = np.zeros((100, 2))
+   num_data[:, 0] = x
+   num_data[:, 1] = y
 
-    # quantify the difference between the two curves using PCM
-    pcm = similaritymeasures.pcm(exp_data, num_data)
+   # quantify the difference between the two curves using PCM
+   pcm = similaritymeasures.pcm(exp_data, num_data)
 
-    # quantify the difference between the two curves using
-    # Discrete Frechet distance
-    df = similaritymeasures.frechet_dist(exp_data, num_data)
+   # quantify the difference between the two curves using
+   # Discrete Frechet distance
+   df = similaritymeasures.frechet_dist(exp_data, num_data)
 
-    # quantify the difference between the two curves using
-    # area between two curves
-    area = similaritymeasures.area_between_two_curves(exp_data, num_data)
+   # quantify the difference between the two curves using
+   # area between two curves
+   area = similaritymeasures.area_between_two_curves(exp_data, num_data)
 
-    # quantify the difference between the two curves using
-    # Curve Length based similarity measure
-    cl = similaritymeasures.curve_length_measure(exp_data, num_data)
+   # quantify the difference between the two curves using
+   # Curve Length based similarity measure
+   cl = similaritymeasures.curve_length_measure(exp_data, num_data)
 
-    # quantify the difference between the two curves using
-    # Dynamic Time Warping distance
-    dtw, d = similaritymeasures.dtw(exp_data, num_data)
+   # quantify the difference between the two curves using
+   # Dynamic Time Warping distance
+   dtw, d = similaritymeasures.dtw(exp_data, num_data)
 
-    # print the results
-    print(pcm, df, area, cl, dtw)
+   # print the results
+   print(pcm, df, area, cl, dtw)
 
-    # plot the data
-    plt.figure()
-    plt.plot(exp_data[:, 0], exp_data[:, 1])
-    plt.plot(num_data[:, 0], num_data[:, 1])
-    plt.show()
+   # plot the data
+   plt.figure()
+   plt.plot(exp_data[:, 0], exp_data[:, 1])
+   plt.plot(num_data[:, 0], num_data[:, 1])
+   plt.show()
 
 If you are interested in setting up an optimization problem using these
 measures, check out `this Jupyter
@@ -209,12 +214,12 @@ http://www.sciencedirect.com/science/article/pii/S0933365708001772.
 [16] Senin, P., 2008. Dynamic time warping algorithm review. Information
 and Computer Science Department University of Hawaii at Manoa Honolulu,
 USA, 855, pp.1-23.
-http://seninp.github.io/assets/pubs/senin\_dtw\_litreview\_2008.pdf
+http://seninp.github.io/assets/pubs/senin_dtw_litreview_2008.pdf
 
 Please cite
 ===========
 
-If you've found this information or library helpful please cite the
+If you’ve found this information or library helpful please cite the
 following paper. You should also cite the papers of any methods that you
 have used.
 
@@ -225,13 +230,19 @@ Material Forming. https://doi.org/10.1007/s12289-018-1421-8
 
 ::
 
-    @article{Jekel2018,
-    author = {Jekel, Charles F and Venter, Gerhard and Venter, Martin P and Stander, Nielen and Haftka, Raphael T},
-    doi = {10.1007/s12289-018-1421-8},
-    issn = {1960-6214},
-    journal = {International Journal of Material Forming},
-    month = {jul},
-    title = {{Similarity measures for identifying material parameters from hysteresis loops using inverse analysis}},
-    url = {https://doi.org/10.1007/s12289-018-1421-8},
-    year = {2018}
-    }
+   @article{Jekel2018,
+   author = {Jekel, Charles F and Venter, Gerhard and Venter, Martin P and Stander, Nielen and Haftka, Raphael T},
+   doi = {10.1007/s12289-018-1421-8},
+   issn = {1960-6214},
+   journal = {International Journal of Material Forming},
+   month = {jul},
+   title = {{Similarity measures for identifying material parameters from hysteresis loops using inverse analysis}},
+   url = {https://doi.org/10.1007/s12289-018-1421-8},
+   year = {2018}
+   }
+
+.. |Downloads a month| image:: https://img.shields.io/pypi/dm/similaritymeasures.svg
+.. |Build Status| image:: https://travis-ci.com/cjekel/similarity_measures.svg?branch=master
+   :target: https://travis-ci.com/cjekel/similarity_measures
+.. |Coverage Status| image:: https://coveralls.io/repos/github/cjekel/similarity_measures/badge.svg?branch=master
+   :target: https://coveralls.io/github/cjekel/similarity_measures?branch=master
