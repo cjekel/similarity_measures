@@ -161,6 +161,12 @@ class TestEverything(unittest.TestCase):
         _ = similaritymeasures.frechet_dist(curve_a_rand, curve_b_rand)
         self.assertTrue(True)
 
+    def test_cl_zeros(self):
+        z1 = np.zeros((100, 2))
+        z2 = np.zeros((100, 2))
+        _ = similaritymeasures.curve_length_measure(z1, z2)
+        self.assertTrue(True)
+
 
 if __name__ == '__main__':
 
