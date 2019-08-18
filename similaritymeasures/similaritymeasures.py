@@ -718,7 +718,7 @@ def pcm(exp_data, num_data):
         xi1 = xi2.copy()
         eta1 = eta2.copy()
         xi2 = xi1OLD.copy()
-        eta1OLD = eta1OLD.copy()
+        eta2 = eta1OLD.copy()
 
     n_sum = len(le_sum)
 

@@ -41,12 +41,30 @@ class TestEverything(unittest.TestCase):
         area = similaritymeasures.area_between_two_curves(curve1, curve2)
         self.assertTrue(area, 1.0)
 
+    def test_c1_c2_area_swapped(self):
+        area = similaritymeasures.area_between_two_curves(curve2, curve1)
+        self.assertTrue(area, 1.0)
+
     def test_c3_c4_area(self):
         area = similaritymeasures.area_between_two_curves(curve3, curve4)
         self.assertTrue(area, 1.0)
 
     def test_c1_c2_pcm(self):
         pcm = similaritymeasures.pcm(curve1, curve2)
+        self.assertTrue(pcm, np.nan)
+
+    def test_pcm_rev(self):
+        x1 = np.linspace(0.0, 1.0, 100)
+        y1 = x1*20.0
+        temp1 = np.array((x1, y1)).T
+        x2 = np.linspace(1.0, 2.5, 50)
+        y2 = x2*3.0
+        temp2 = np.array((x2, y2)).T
+        pcm = similaritymeasures.pcm(temp2, temp1)
+        self.assertTrue(True)
+
+    def test_c1_c2_pcm_swapped(self):
+        pcm = similaritymeasures.pcm(curve2, curve1)
         self.assertTrue(pcm, np.nan)
 
     def test_c3_c4_pcm(self):
