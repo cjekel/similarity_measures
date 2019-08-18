@@ -213,7 +213,7 @@ def area_between_two_curves(exp_data, num_data):
     Calculates the area between two curves.
 
     This calculates the area according to the algorithm in [1]_. Each curve is
-    constructed from discretizied data points in 2-D space, e.g. each curve
+    constructed from discretized data points in 2-D space, e.g. each curve
     consists of x and y data points.
 
     Parameters
