@@ -4,10 +4,13 @@ python:
   - "3.5"
   - "3.6"
 install:
-  - pip install flake8 pytest
+  - pip install flake8 pytest-cov
+  - pip install pytest --upgrade
   - pip install . --no-cache-dir
-script: pytest tests.py
+script: pytest tests/tests.py
 before_script:
   - flake8 similaritymeasures
   - pytest --version
-  - cd tests
+after_success:
+  - pip install python-coveralls
+  - coveralls
