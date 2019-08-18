@@ -9,6 +9,10 @@ y1 = np.ones(100)*2
 x2 = np.linspace(0.0, 1.0, 50)
 y2 = np.ones(50)
 
+np.random.seed(1212121)
+curve_a_rand = np.random.random((100, 2))
+curve_b_rand = np.random.random((90, 2))
+
 curve1 = np.array((x1, y1)).T
 curve2 = np.array((x2, y2)).T
 
@@ -133,6 +137,26 @@ class TestEverything(unittest.TestCase):
         quad = similaritymeasures.is_simple_quad(a, b, d, c)
         self.assertFalse(quad)
 
+    def test_random_dtw(self):
+        _ = similaritymeasures.dtw(curve_a_rand, curve_b_rand)
+        self.assertTrue(True)
+
+    def test_random_pcm(self):
+        _ = similaritymeasures.pcm(curve_a_rand, curve_b_rand)
+        self.assertTrue(True)
+
+    def test_random_area(self):
+        _ = similaritymeasures.area_between_two_curves(curve_a_rand,
+                                                       curve_b_rand)
+        self.assertTrue(True)
+
+    def test_random_cl(self):
+        _ = similaritymeasures.curve_length_measure(curve_a_rand, curve_b_rand)
+        self.assertTrue(True)
+
+    def test_random_fr(self):
+        _ = similaritymeasures.frechet_dist(curve_a_rand, curve_b_rand)
+        self.assertTrue(True)
 
 if __name__ == '__main__':
 
