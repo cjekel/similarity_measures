@@ -64,7 +64,7 @@ class TestEverything(unittest.TestCase):
         x2 = np.linspace(1.0, 2.5, 50)
         y2 = x2*3.0
         temp2 = np.array((x2, y2)).T
-        pcm = similaritymeasures.pcm(temp2, temp1)
+        _ = similaritymeasures.pcm(temp2, temp1)
         self.assertTrue(True)
 
     def test_c1_c2_pcm_swapped(self):
@@ -138,8 +138,11 @@ class TestEverything(unittest.TestCase):
         self.assertFalse(quad)
 
     def test_random_dtw(self):
-        _ = similaritymeasures.dtw(curve_a_rand, curve_b_rand)
-        self.assertTrue(True)
+        r, d = similaritymeasures.dtw(curve_a_rand, curve_b_rand)
+        path = similaritymeasures.dtw_path(d)
+        c = cdist(curve_a_rand, curve_b_rand)
+        cost = np.sum(c[path[:, 0], path[:, 1]])
+        self.assertTrue(np.isclose(r, cost))
 
     def test_random_pcm(self):
         _ = similaritymeasures.pcm(curve_a_rand, curve_b_rand)
@@ -157,6 +160,7 @@ class TestEverything(unittest.TestCase):
     def test_random_fr(self):
         _ = similaritymeasures.frechet_dist(curve_a_rand, curve_b_rand)
         self.assertTrue(True)
+
 
 if __name__ == '__main__':
 
