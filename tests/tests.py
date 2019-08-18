@@ -107,6 +107,14 @@ class TestEverything(unittest.TestCase):
         r, _ = similaritymeasures.dtw(P, Q, metric='minkowski', p=3)
         self.assertTrue(r, 3.0)
 
+    def test_complex_quad(self):
+        a = [0., 0.]
+        b = [1., 1.]
+        c = [1., 0.]
+        d = [0., 1.]
+        quad = similaritymeasures.is_simple_quad(a, b, d, c)
+        self.assertFalse(quad)
+
 
 if __name__ == '__main__':
 
