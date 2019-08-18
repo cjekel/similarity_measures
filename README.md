@@ -1,3 +1,7 @@
+# similaritymeasures
+
+![Downloads a month](https://img.shields.io/pypi/dm/similaritymeasures.svg) [![Build Status](https://travis-ci.com/cjekel/similarity_measures.svg?branch=master)](https://travis-ci.com/cjekel/similarity_measures)
+
 # Quantify the difference between two arbitrary curves
 
 Curves in this case are:
