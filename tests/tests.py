@@ -123,8 +123,8 @@ class TestEverything(unittest.TestCase):
 
     def test_P_Q_pcm(self):
         Q[:, 1] -= 1
-        _ = similaritymeasures.pcm(P, Q)
-        self.assertTrue(True)
+        a = similaritymeasures.pcm(P, Q)
+        self.assertTrue(np.isclose(a, 0.0))
 
     def test_P_Q_dtw_minkowski_p1(self):
         r, _ = similaritymeasures.dtw(P, Q, metric='minkowski', p=1)
