@@ -122,6 +122,7 @@ class TestEverything(unittest.TestCase):
         self.assertTrue(r, 3.0)
 
     def test_P_Q_pcm(self):
+        Q[:, 1] -= 1
         _ = similaritymeasures.pcm(P, Q)
         self.assertTrue(True)
 
