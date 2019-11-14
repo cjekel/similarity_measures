@@ -94,6 +94,9 @@ If you are interested in setting up an optimization problem using these measures
 # Changelog
 Version 0.3.0: Fréchet distance now supports N-D data! See [CHANGELOG.md](https://github.com/cjekel/similarity_measures/blob/master/CHANGELOG.md) for full details.
 
+# Documenation
+Each function includes a descriptive docstring, which you can view online [here](https://jekel.me/similarity_measures/index.html).
+
 # References
 [1] Katharina Witowski and Nielen Stander. Parameter Identification of Hysteretic Models
 Using Partial Curve Mapping. 12th AIAA Aviation Technology, Integration, and Op-

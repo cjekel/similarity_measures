@@ -428,85 +428,6 @@ def curve_length_measure(exp_data, num_data):
     return np.sqrt(np.sum(r_sq))
 
 
-# def euc_dist(pt1, pt2):
-#     r"""
-#     Calculates the Euclidean distance between two points
-
-#     Parameters
-#     ----------
-#     pt1 : array_like
-#         point one
-#     pt2 : array_like
-#         point two
-
-#     Returns
-#     -------
-#     Euclidean distance
-
-#     Notes
-#     -----
-#     This only works in 2-D space. Thanks to MaxBareiss
-#     https://gist.github.com/MaxBareiss/ba2f9441d9455b56fbc9
-#     """
-#     euc = ((pt2[0]-pt1[0])*(pt2[0]-pt1[0])+(pt2[1]-pt1[1])*(pt2[1]-pt1[1]))
-#     return np.sqrt(euc)
-
-
-def _c(ca, i, j, P, Q):
-    """
-    Recursive caller for discrete Frechet distance
-
-    This is the recursive caller as as defined in [1]_.
-
-    Parameters
-    ----------
-    ca : array_like
-        distance like matrix
-    i : int
-        index
-    j : int
-        index
-    P : array_like
-        array containing path P
-    Q : array_like
-        array containing path Q
-
-    Returns
-    -------
-    df : float
-        discrete frechet distance
-
-    Notes
-    -----
-    This should work in N-D space. Thanks to MaxBareiss
-    https://gist.github.com/MaxBareiss/ba2f9441d9455b56fbc9
-
-    References
-    ----------
-    .. [1] Thomas Eiter and Heikki Mannila. Computing discrete Frechet
-        distance. Technical report, 1994.
-        http://www.kr.tuwien.ac.at/staff/eiter/et-archive/cdtr9464.pdf
-        http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.90.937&rep=rep1&type=pdf
-    """
-    if ca[i, j] > -1:
-        return ca[i, j]
-    elif i == 0 and j == 0:
-        ca[i, j] = minkowski_distance(P[0], Q[0], p=pnorm)
-    elif i > 0 and j == 0:
-        ca[i, j] = max(_c(ca, i-1, 0, P, Q),
-                       minkowski_distance(P[i], Q[0], p=pnorm))
-    elif i == 0 and j > 0:
-        ca[i, j] = max(_c(ca, 0, j-1, P, Q),
-                       minkowski_distance(P[0], Q[j], p=pnorm))
-    elif i > 0 and j > 0:
-        ca[i, j] = max(min(_c(ca, i-1, j, P, Q), _c(ca, i-1, j-1, P, Q),
-                       _c(ca, i, j-1, P, Q)),
-                       minkowski_distance(P[i], Q[j], p=pnorm))
-    else:
-        ca[i, j] = float("inf")
-    return ca[i, j]
-
-
 def frechet_dist(exp_data, num_data, p=2):
     r"""
     Compute the discrete Frechet distance
@@ -547,17 +468,8 @@ def frechet_dist(exp_data, num_data, p=2):
     Your x locations of data points should be exp_data[:, 0], and the y
     locations of the data points should be exp_data[:, 1]. Same for num_data.
 
-    Python has a default limit to the amount of recursive calls a single
-    function can make. If you have a large dataset, you may need to increase
-    this limit. Check out the following resources.
-
-    https://docs.python.org/3/library/sys.html#sys.setrecursionlimit
-    https://stackoverflow.com/questions/3323001/what-is-the-maximum-recursion-depth-in-python-and-how-to-increase-it
-
-    Thanks to MaxBareiss
-    https://gist.github.com/MaxBareiss/ba2f9441d9455b56fbc9
-
-    This sets a global variable named pnorm, where pnorm = p.
+    Thanks to Arbel Amir for the issue, and Sen ZHANG for the iterative code
+    https://github.com/cjekel/similarity_measures/issues/6
 
     Examples
     --------
@@ -576,15 +488,20 @@ def frechet_dist(exp_data, num_data, p=2):
     >>> df = frechet_dist(exp_data, num_data)
 
     """
-    # set p as global variable
-    global pnorm
-    pnorm = p
-    # Computes the discrete frechet distance between two polygonal lines
-    # Algorithm: http://www.kr.tuwien.ac.at/staff/eiter/et-archive/cdtr9464.pdf
-    # exp_data, num_data are arrays of 2-element arrays (points)
-    ca = np.ones((len(exp_data), len(num_data)))
+    n = len(exp_data)
+    m = len(num_data)
+    ca = np.ones((n, m))
     ca = np.multiply(ca, -1)
-    return _c(ca, len(exp_data)-1, len(num_data)-1, exp_data, num_data)
+    ca[0, 0] = minkowski_distance(exp_data[0], num_data[0], p=p)
+    for i in range(1, n):
+        ca[i, 0] = max(ca[i-1, 0], minkowski_distance(exp_data[i], num_data[0], p=p))
+    for j in range(1, m):
+        ca[0, j] = max(ca[0, j-1], minkowski_distance(exp_data[0], num_data[j], p=p))
+    for i in range(1, n):
+        for j in range(1, m):
+            ca[i, j] = max(min(ca[i-1, j], ca[i, j-1], ca[i-1, j-1]),
+                               minkowski_distance(exp_data[i], num_data[j], p=p))
+    return ca[n-1, m-1]
 
 
 def normalizeTwoCurves(x, y, w, z):

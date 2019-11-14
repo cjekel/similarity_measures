@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2019-11-13
+### Added
+- setuptools is now a requirement
+- online docs [here](https://jekel.me/similarity_measures/index.html)
+### Changed
+- Fréchet distance now uses an iterative dynamic programming algorithm (Thanks to Sen ZHANG https://github.com/SenZHANG-GitHub). The performance improvements were briefly studied in this [notebook](https://github.com/cjekel/similarity_measures/blob/master/frechet_distance_recursion_vs_dp.ipynb). 
+
 ## [0.3.4] - 2019-08-18
 ### Changed
 - fixed bug in is_simple_quad(), which would sometimes return the incorrect value
