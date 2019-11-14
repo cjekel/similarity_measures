@@ -1,4 +1,3 @@
-import io
 from distutils.core import setup
 setup(
     name='similaritymeasures',
