@@ -121,6 +121,10 @@ class TestEverything(unittest.TestCase):
         r, _ = similaritymeasures.dtw(P, Q, metric='cityblock')
         self.assertTrue(r, 3.0)
 
+    def test_P_Q_pcm(self):
+        _ = similaritymeasures.pcm(P, Q)
+        self.assertTrue(True)
+
     def test_P_Q_dtw_minkowski_p1(self):
         r, _ = similaritymeasures.dtw(P, Q, metric='minkowski', p=1)
         self.assertTrue(r, 3.0)
