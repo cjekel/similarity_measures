@@ -19,7 +19,7 @@ This library includes the following methods to quantify the difference (or simil
 
 - **Partial Curve Mapping**<sup>x</sup> (PCM) method: Matches the area of a subset between the two curves [1]
 - **Area method**<sup>x</sup>: An algorithm for calculating the Area between two curves in 2D space [2]
-- **Discrete Fréchet distance**<sup>y</sup>: The shortest distance in-between two curves, where you are allowed to very the speed at which you travel along each curve independently (walking dog problem) [3, 4, 5, 6, 7, 8]
+- **Discrete Frechet distance**<sup>y</sup>: The shortest distance in-between two curves, where you are allowed to very the speed at which you travel along each curve independently (walking dog problem) [3, 4, 5, 6, 7, 8]
 - **Curve Length**<sup>x</sup> method: Assumes that the only true independent variable of the curves is the arc-length distance along the curve from the origin [9, 10]
 - **Dynamic Time Warping**<sup>y</sup> (DTW): A non-metric distance between two time-series curves that has been proven useful for a variety of applications [11, 12, 13, 14, 15, 16]
 
@@ -92,7 +92,7 @@ plt.show()
 If you are interested in setting up an optimization problem using these measures, check out [this Jupyter Notebook](https://github.com/cjekel/similarity_measures/blob/master/Examples_of_Similarity_Measures.ipynb) which replicates Section 3.2 from [2].
 
 # Changelog
-Version 0.3.0: Fréchet distance now supports N-D data! See [CHANGELOG.md](https://github.com/cjekel/similarity_measures/blob/master/CHANGELOG.md) for full details.
+Version 0.3.0: Frechet distance now supports N-D data! See [CHANGELOG.md](https://github.com/cjekel/similarity_measures/blob/master/CHANGELOG.md) for full details.
 
 # Documenation
 Each function includes a descriptive docstring, which you can view online [here](https://jekel.me/similarity_measures/index.html).
@@ -105,13 +105,13 @@ Optimization Conference, sep 2012. doi: doi:10.2514/6.2012-5580.
 
 [2] Jekel, C. F., Venter, G., Venter, M. P., Stander, N., & Haftka, R. T. (2018). Similarity measures for identifying material parameters from hysteresis loops using inverse analysis. International Journal of Material Forming. https://doi.org/10.1007/s12289-018-1421-8
 
-[3] M Maurice Fréchet. Sur quelques points du calcul fonctionnel. Rendiconti del Circol
+[3] M Maurice Frechet. Sur quelques points du calcul fonctionnel. Rendiconti del Circol
 Matematico di Palermo (1884-1940), 22(1):1–72, 1906.
 
-[4] Thomas Eiter and Heikki Mannila. Computing discrete Fréchet distance. Technical
+[4] Thomas Eiter and Heikki Mannila. Computing discrete Frechet distance. Technical
 report, 1994.
 
-[5] Anne Driemel, Sariel Har-Peled, and Carola Wenk. Approximating the Fréchet Distance
+[5] Anne Driemel, Sariel Har-Peled, and Carola Wenk. Approximating the Frechet Distance
 for Realistic Curves in Near Linear Time. Discrete & Computational Geometry, 48(1):
 94–127, 2012. ISSN 1432-0444. doi: 10.1007/s00454-012-9402-z. URL http://dx.doi.org/10.1007/s00454-012-9402-z.
 
@@ -122,7 +122,7 @@ Subquadratic Algorithms Unless SETH Fails, 2014.
 Analysis: A Method for Quantifying Macromolecular Pathways. PLOS Computational
 Biology, 11(10):1–37, 2015. doi: 10.1371/journal.pcbi.1004568. URL https://doi.org/10.1371/journal.pcbi.1004568.
 
-[8] Helmut Alt and Michael Godau. Computing the Fréchet Distance Between Two Polyg-
+[8] Helmut Alt and Michael Godau. Computing the Frechet Distance Between Two Polyg-
 onal Curves. International Journal of Computational Geometry & Applications, 05
 (01n02):75–91, 1995. doi: 10.1142/S0218195995000064.
 
