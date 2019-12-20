@@ -99,6 +99,8 @@ def is_simple_quad(ab, bc, cd, da):
         crossTF = cross <= 0
     if sum(crossTF) == 2:
         return True
+    elif sum(crossTF) == 4:
+        return True
     else:
         return False
 
