@@ -172,6 +172,17 @@ class TestEverything(unittest.TestCase):
         _ = similaritymeasures.curve_length_measure(z1, z2)
         self.assertTrue(True)
 
+    def test_four_area(self):
+        x_axis = [0., 1., 2., 3., 4.]
+        exp_data = np.zeros((len(x_axis), 2))
+        num_data = np.zeros((len(x_axis), 2))
+        exp_data[:, 0] = x_axis
+        exp_data[:, 1] = 0.
+        num_data[:, 0] = x_axis
+        num_data[:, 1] = 1.
+        area = similaritymeasures.area_between_two_curves(exp_data, num_data)
+        self.assertTrue(np.isclose(area, 4.0))
+
 
 if __name__ == '__main__':
 
