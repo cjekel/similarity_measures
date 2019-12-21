@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.2] - 2019-12-21
+### Changed
+- There was bug in testing for a complex quadrilateral that made me incorrectly change the is_simple_quad function. This bug has existed in the area function since August, and should be fixed now. Thanks to @aanchalMongia for the detailed report in https://github.com/cjekel/similarity_measures/issues/7 .
+
 ## [0.4.1] - 2019-12-20
 ### Changed
 - Fix bug in simple quad check; simple quads occur with two or four positive cross products, or with two or four negative cross products.
