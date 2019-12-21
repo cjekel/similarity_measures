@@ -97,9 +97,7 @@ def is_simple_quad(ab, bc, cd, da):
     #   Because they don't necessarily need to lie in the same 'Z' direction
     if sum(crossTF) <= 1:
         crossTF = cross <= 0
-    if sum(crossTF) == 2:
-        return True
-    elif sum(crossTF) == 4:
+    if sum(crossTF) > 2:
         return True
     else:
         return False

@@ -135,12 +135,24 @@ class TestEverything(unittest.TestCase):
         self.assertTrue(r, 3.0)
 
     def test_complex_quad(self):
-        a = [0., 0.]
-        b = [1., 1.]
-        c = [1., 0.]
-        d = [0., 1.]
-        quad = similaritymeasures.is_simple_quad(a, b, d, c)
+        x = [0, 1, 1, 0]
+        y = [0, 1, 0, 1]
+        AB = [x[1]-x[0], y[1]-y[0]]
+        BC = [x[2]-x[1], y[2]-y[1]]
+        CD = [x[3]-x[2], y[3]-y[2]]
+        DA = [x[0]-x[3], y[0]-y[3]]
+        quad = similaritymeasures.is_simple_quad(AB, BC, CD, DA)
         self.assertFalse(quad)
+
+    def test_simple_quad(self):
+        x = [0, 0, 1, 1]
+        y = [0, 1, 1, 0]
+        AB = [x[1]-x[0], y[1]-y[0]]
+        BC = [x[2]-x[1], y[2]-y[1]]
+        CD = [x[3]-x[2], y[3]-y[2]]
+        DA = [x[0]-x[3], y[0]-y[3]]
+        quad = similaritymeasures.is_simple_quad(AB, BC, CD, DA)
+        self.assertTrue(quad)
 
     def test_random_dtw(self):
         r, d = similaritymeasures.dtw(curve_a_rand, curve_b_rand)
