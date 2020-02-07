@@ -169,14 +169,14 @@ If you've found this information or library helpful please cite the following pa
 Jekel, C. F., Venter, G., Venter, M. P., Stander, N., & Haftka, R. T. (2018). Similarity measures for identifying material parameters from hysteresis loops using inverse analysis. International Journal of Material Forming. https://doi.org/10.1007/s12289-018-1421-8
 
 ```
-@article{Jekel2018,
+@article{Jekel2019,
 author = {Jekel, Charles F and Venter, Gerhard and Venter, Martin P and Stander, Nielen and Haftka, Raphael T},
 doi = {10.1007/s12289-018-1421-8},
 issn = {1960-6214},
 journal = {International Journal of Material Forming},
-month = {jul},
+month = {may},
 title = {{Similarity measures for identifying material parameters from hysteresis loops using inverse analysis}},
 url = {https://doi.org/10.1007/s12289-018-1421-8},
-year = {2018}
+year = {2019}
 }
 ```
