@@ -41,7 +41,7 @@ git clone https://github.com/cjekel/similarity_measures
 
 # Example useage
 This shows you how to compute the various similarity measures
-```
+```python
 import numpy as np
 import similaritymeasures
 import matplotlib.pyplot as plt
