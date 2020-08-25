@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.4] - 2020-08-25
+### Changed
+- fix bug where similaritymeasures wouldn't install on certain systems due to Python's default locale based encodings
+- new version.py to handling single source versioning
+### Removed
+- setuptools is no longer a runtime dependency
+
 ## [0.4.3] - 2020-02-06
 ### Changed
 - Fix paper citation had the incorrect month and year.
