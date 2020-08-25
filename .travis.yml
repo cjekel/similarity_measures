@@ -13,5 +13,7 @@ script: pytest --cov=similaritymeasures -p no:warnings tests/tests.py
 before_script:
   - flake8 similaritymeasures
   - pytest --version
+  - pip install similaritymeasures
+  - pip uninstall similaritymeasures
 after_success:
   - coveralls
