@@ -9,7 +9,7 @@ setup(
     url='https://github.com/cjekel/similarity_measures',
     license='MIT License',
     description='Quantify the difference between two arbitrary curves in space',  # noqa E501
-    long_description=open('README.md').read(),
+    long_description=open('README.md', encoding="utf-8").read(),
     long_description_content_type='text/markdown',
     platforms=['any'],
     install_requires=[
