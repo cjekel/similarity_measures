@@ -5,6 +5,8 @@ python:
   - "3.6"
   - "3.7"
 install:
+  - pip install similaritymeasures
+  - pip uninstall -y similaritymeasures
   - pip install coverage==4.5.4
   - pip install flake8 pytest-cov coveralls python-coveralls
   - pip install pytest --upgrade
@@ -13,7 +15,5 @@ script: pytest --cov=similaritymeasures -p no:warnings tests/tests.py
 before_script:
   - flake8 similaritymeasures
   - pytest --version
-  - pip install similaritymeasures
-  - pip uninstall -y similaritymeasures
 after_success:
   - coveralls
