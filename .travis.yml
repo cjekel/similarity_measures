@@ -14,6 +14,6 @@ before_script:
   - flake8 similaritymeasures
   - pytest --version
   - pip install similaritymeasures
-  - pip uninstall similaritymeasures
+  - !pip uninstall similaritymeasures y
 after_success:
   - coveralls
