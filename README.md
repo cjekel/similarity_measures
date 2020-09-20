@@ -162,6 +162,17 @@ http://www.sciencedirect.com/science/article/pii/S0933365708001772.
 Computer Science Department University of Hawaii at Manoa Honolulu, USA, 855, pp.1-23.
 http://seninp.github.io/assets/pubs/senin_dtw_litreview_2008.pdf
 
+# Contributions welcome!
+
+This is by no means a complete list of all possible similarity measures. For instance the SciPy [Hausdorff distance](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.directed_hausdorff.html) is an alternative similarity measure useful if you don't know the beginning and ending of each curve. There are many more possible functions out there. Feel free to send PRs for other functions in literature!
+
+Requirements for adding new method to this library:
+ - all methods should be able to quantify the difference between two curves
+ - method must support the case where each curve may have a different number of data points
+ - follow the style of existing functions
+ - reference to method details, or descriptive docstring of the method
+ - include test(s) for your new method
+ - minimum Python dependencies (try to stick to SciPy/numpy functions if possible)
 
 # Please cite
 If you've found this information or library helpful please cite the following paper. You should also cite the papers of any methods that you have used.
