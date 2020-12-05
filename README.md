@@ -1,6 +1,6 @@
 # similaritymeasures
 
-![Downloads a month](https://img.shields.io/pypi/dm/similaritymeasures.svg) [![Build Status](https://travis-ci.com/cjekel/similarity_measures.svg?branch=master)](https://travis-ci.com/cjekel/similarity_measures) [![Coverage Status](https://coveralls.io/repos/github/cjekel/similarity_measures/badge.svg?branch=master)](https://coveralls.io/github/cjekel/similarity_measures?branch=master)
+![Downloads a month](https://img.shields.io/pypi/dm/similaritymeasures.svg) ![similaritymeasures ci](https://github.com/cjekel/similarity_measures/workflows/similaritymeasures%20ci/badge.svg) [![codecov](https://codecov.io/gh/cjekel/similarity_measures/branch/master/graph/badge.svg?token=nwuIhL8r3C)](https://codecov.io/gh/cjekel/similarity_measures)
 
 # Quantify the difference between two arbitrary curves
 
