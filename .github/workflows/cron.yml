@@ -1,0 +1,45 @@
+name: similaritymeasures cron
+
+on:
+  push:
+  schedule:
+    # Also run every 24 hours
+    - cron:  '* */24 * * *'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [2.7, 3.5, 3.6, 3.7, 3.8]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install flake8 coverage pytest pytest-cov
+    - name: Install similaritymeasures
+      run: |
+        python -m pip install . --no-cache-dir
+    - name: Lint with flake8
+      run: |
+        flake8 similaritymeasures
+    - name: Test with pytest
+      run: |
+        pytest --cov=similaritymeasures --cov-report=xml -p no:warnings tests/tests.py
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: ./coverage.xml
+        directory: ./coverage/reports/
+        flags: unittests
+        env_vars: OS,PYTHON
+        name: codecov-umbrella
+        fail_ci_if_error: true
+        verbose: false
