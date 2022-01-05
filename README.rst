@@ -66,7 +66,7 @@ or clone and install from source.
    git clone https://github.com/cjekel/similarity_measures
    [sudo] pip install ./similarity_measures
 
-Example useage
+Example usage
 ==============
 
 This shows you how to compute the various similarity measures
