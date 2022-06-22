@@ -880,10 +880,9 @@ def dtw_path(d):
     # reverse the order of path, such that it starts with [0, 0]
     return path[::-1]
 
-def mae(exp_data, num_data, metric='euclidean', **kwargs):
+def mae(exp_data, num_data, p=2, threshold=1000000):
     """
     Compute the Mean Absolute distance.
-
     This computes the mean of absolute values of the distances 
     between 2 corresponding points on the curve. This can use all 
     distance metrics that are available in scipy.spatial.distance.cdist.
@@ -896,58 +895,25 @@ def mae(exp_data, num_data, metric='euclidean', **kwargs):
     num_data : array_like
         Curve from your numerical data. num_data is of (P, N) shape, where P
         is the number of data points, and N is the number of dimmensions
-    metric : str or callable, optional
-        The distance metric to use. Default='euclidean'. Refer to the
-        documentation for scipy.spatial.distance.cdist. Some examples:
-        'braycurtis', 'canberra', 'chebyshev', 'cityblock', 'correlation',
-        'cosine', 'dice', 'euclidean', 'hamming', 'jaccard', 'kulsinski',
-        'mahalanobis', 'matching', 'minkowski', 'rogerstanimoto', 'russellrao',
-        'seuclidean', 'sokalmichener', 'sokalsneath', 'sqeuclidean',
-        'wminkowski', 'yule'.
-    **kwargs : dict, optional
-        Extra arguments to `metric`: refer to each metric documentation in
-        scipy.spatial.distance.
+    p: float,
+        1 <= p <= infinity. Which Minkowski p-norm to use.
+    threshold : positive int
+        If M * N * K > threshold, algorithm uses a Python loop instead of large temporary arrays.
 
-        Some examples:
-
-        p : scalar
-            The p-norm to apply for Minkowski, weighted and unweighted.
-            Default: 2.
-
-        w : ndarray
-            The weight vector for metrics that support weights (e.g.,
-            Minkowski).
-
-        V : ndarray
-            The variance vector for standardized Euclidean.
-            Default: var(vstack([XA, XB]), axis=0, ddof=1)
-
-        VI : ndarray
-            The inverse of the covariance matrix for Mahalanobis.
-            Default: inv(cov(vstack([XA, XB].T))).T
-
-        out : ndarray
-            The output array
-            If not None, the distance matrix Y is stored in this array.
-
-    Retruns
+    Returns
     -------
     r : float
         MAE.
     """
-    c = distance.cdist(exp_data, num_data, metric=metric, **kwargs)
-    mae = 0
-    for i in range(0, len(c)):
-        mae += abs(c[i, i])
-    mae /= len(c)
-    return mae
+    c = distance_matrix(exp_data, num_data, p=p, threshold=threshold)
+    return np.mean(np.diag(c))  # All values in c are positive since Minkowski distance is always positive
 
-def mse(exp_data, num_data, metric='euclidean', **kwargs):
+def mse(exp_data, num_data, p=2, threshold=1000000):
     """
-    Compute the Mean Square distance.
-    
-    This can use all distance metrics that are
-    available in scipy.spatial.distance.cdist.
+    Compute the Mean Squared distance.
+    This computes the mean of Sqaured values of the distances 
+    between 2 corresponding points on the curve. This can use all 
+    distance metrics that are available in scipy.spatial.distance.cdist.
 
     Parameters
     ----------
@@ -957,47 +923,67 @@ def mse(exp_data, num_data, metric='euclidean', **kwargs):
     num_data : array_like
         Curve from your numerical data. num_data is of (P, N) shape, where P
         is the number of data points, and N is the number of dimmensions
-    metric : str or callable, optional
-        The distance metric to use. Default='euclidean'. Refer to the
-        documentation for scipy.spatial.distance.cdist. Some examples:
-        'braycurtis', 'canberra', 'chebyshev', 'cityblock', 'correlation',
-        'cosine', 'dice', 'euclidean', 'hamming', 'jaccard', 'kulsinski',
-        'mahalanobis', 'matching', 'minkowski', 'rogerstanimoto', 'russellrao',
-        'seuclidean', 'sokalmichener', 'sokalsneath', 'sqeuclidean',
-        'wminkowski', 'yule'.
-    **kwargs : dict, optional
-        Extra arguments to `metric`: refer to each metric documentation in
-        scipy.spatial.distance.
+    p: float,
+        1 <= p <= infinity. Which Minkowski p-norm to use.
+    threshold : positive int
+        If M * N * K > threshold, algorithm uses a Python loop instead of large temporary arrays.
 
-        Some examples:
-
-        p : scalar
-            The p-norm to apply for Minkowski, weighted and unweighted.
-            Default: 2.
-
-        w : ndarray
-            The weight vector for metrics that support weights (e.g.,
-            Minkowski).
-
-        V : ndarray
-            The variance vector for standardized Euclidean.
-            Default: var(vstack([XA, XB]), axis=0, ddof=1)
-
-        VI : ndarray
-            The inverse of the covariance matrix for Mahalanobis.
-            Default: inv(cov(vstack([XA, XB].T))).T
-
-        out : ndarray
-            The output array
-            If not None, the distance matrix Y is stored in this array.
-
-    Retruns
+    Returns
     -------
     r : float
-        MSE distance."""
-    c = distance.cdist(exp_data, num_data, metric=metric, **kwargs)
-    mse = 0
-    for i in range(0, len(c)):
-        mse += (c[i, i])**2
-    mse /= len(c)
-    return mse
+        MSE."""
+    c = distance_matrix(exp_data, num_data, p=p, threshold=threshold)
+    return np.mean(np.square(np.diag(c)))def mae(exp_data, num_data, p=2, threshold=1000000):
+    """
+    Compute the Mean Absolute distance.
+    This computes the mean of absolute values of the distances 
+    between 2 corresponding points on the curve. This can use all 
+    distance metrics that are available in scipy.spatial.distance.cdist.
+
+    Parameters
+    ----------
+    exp_data : array_like
+        Curve from your experimental data. exp_data is of (M, N) shape, where
+        M is the number of data points, and N is the number of dimmensions
+    num_data : array_like
+        Curve from your numerical data. num_data is of (P, N) shape, where P
+        is the number of data points, and N is the number of dimmensions
+    p: float,
+        1 <= p <= infinity. Which Minkowski p-norm to use.
+    threshold : positive int
+        If M * N * K > threshold, algorithm uses a Python loop instead of large temporary arrays.
+
+    Returns
+    -------
+    r : float
+        MAE.
+    """
+    c = distance_matrix(exp_data, num_data, p=p, threshold=threshold)
+    return np.mean(np.diag(c))  # All values in c are positive since Minkowski distance is always positive
+
+def mse(exp_data, num_data, p=2, threshold=1000000):
+    """
+    Compute the Mean Squared distance.
+    This computes the mean of Sqaured values of the distances 
+    between 2 corresponding points on the curve. This can use all 
+    distance metrics that are available in scipy.spatial.distance.cdist.
+
+    Parameters
+    ----------
+    exp_data : array_like
+        Curve from your experimental data. exp_data is of (M, N) shape, where
+        M is the number of data points, and N is the number of dimmensions
+    num_data : array_like
+        Curve from your numerical data. num_data is of (P, N) shape, where P
+        is the number of data points, and N is the number of dimmensions
+    p: float,
+        1 <= p <= infinity. Which Minkowski p-norm to use.
+    threshold : positive int
+        If M * N * K > threshold, algorithm uses a Python loop instead of large temporary arrays.
+
+    Returns
+    -------
+    r : float
+        MSE."""
+    c = distance_matrix(exp_data, num_data, p=p, threshold=threshold)
+    return np.mean(np.square(np.diag(c)))
