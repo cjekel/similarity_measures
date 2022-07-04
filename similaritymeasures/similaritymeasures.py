@@ -923,5 +923,5 @@ def mse(exp_data, num_data):
     -------
     r : float
         MSE."""
-    c = np.abs(exp_data - num_data)
-    return np.mean(np.square(c))
+    c = np.square(exp_data - num_data)
+    return np.mean(c)
