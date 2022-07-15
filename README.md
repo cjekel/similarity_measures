@@ -23,7 +23,8 @@ This library includes the following methods to quantify the difference (or simil
 - **Curve Length**<sup>x</sup> method: Assumes that the only true independent variable of the curves is the arc-length distance along the curve from the origin [9, 10]
 - **Dynamic Time Warping**<sup>y</sup> (DTW): A non-metric distance between two time-series curves that has been proven useful for a variety of applications [11, 12, 13, 14, 15, 16]
 - **Mean absolute error**<sup>y,z</sup> (MAE): A L1 error that requires curves to have the same number of data points and dimensions. See [this](https://en.wikipedia.org/wiki/Mean_absolute_error) wiki page.
-- **Mean squared error**<sup>y,z</sup> (MSE): A L2 error that requires curves to have the same number of data points and dimensions. See [this](https://en.wikipedia.org/wiki/Mean_absolute_error) wiki page
+- **Mean squared error**<sup>y,z</sup> (MSE): A L2 error that requires curves to have the same number of data points and dimensions. See [this](https://en.wikipedia.org/wiki/Mean_squared_error) wiki page.
+
 <sup>x</sup> denotes methods created specifically for material parameter identification
 
 <sup>y</sup> denotes that the method implemented in this library supports N-D data!

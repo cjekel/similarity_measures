@@ -1,7 +1,7 @@
 similaritymeasures
 ==================
 
-|Downloads a month| |Build Status| |Coverage Status|
+|Downloads a month| |similaritymeasures ci| |codecov|
 
 Quantify the difference between two arbitrary curves
 ====================================================
@@ -44,11 +44,22 @@ This library includes the following methods to quantify the difference
 -  **Dynamic Time Warping**\ y (DTW): A non-metric distance between two
    time-series curves that has been proven useful for a variety of
    applications [11, 12, 13, 14, 15, 16]
+-  **Mean absolute error**\ y,z (MAE): A L1 error that requires curves
+   to have the same number of data points and dimensions. See
+   `this <https://en.wikipedia.org/wiki/Mean_absolute_error>`__ wiki
+   page.
+-  **Mean squared error**\ y,z (MSE): A L2 error that requires curves to
+   have the same number of data points and dimensions. See
+   `this <https://en.wikipedia.org/wiki/Mean_squared_error>`__ wiki
+   page.
 
 x denotes methods created specifically for material parameter
 identification
 
 y denotes that the method implemented in this library supports N-D data!
+
+z denotes that the method requires each curve to have the same number of
+data points
 
 Installation
 ============
@@ -67,7 +78,7 @@ or clone and install from source.
    [sudo] pip install ./similarity_measures
 
 Example usage
-==============
+=============
 
 This shows you how to compute the various similarity measures
 
@@ -110,8 +121,14 @@ This shows you how to compute the various similarity measures
    # Dynamic Time Warping distance
    dtw, d = similaritymeasures.dtw(exp_data, num_data)
 
+   # mean absolute error
+   mae = similaritymeasures.mae(exp_data, num_data)
+
+   # mean squared error
+   mse = similaritymeasures.mse(exp_data, num_data)
+
    # print the results
-   print(pcm, df, area, cl, dtw)
+   print(pcm, df, area, cl, dtw, mae, mse)
 
    # plot the data
    plt.figure()
@@ -222,6 +239,25 @@ and Computer Science Department University of Hawaii at Manoa Honolulu,
 USA, 855, pp.1-23.
 http://seninp.github.io/assets/pubs/senin_dtw_litreview_2008.pdf
 
+Contributions welcome!
+======================
+
+This is by no means a complete list of all possible similarity measures.
+For instance the SciPy `Hausdorff
+distance <https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.directed_hausdorff.html>`__
+is an alternative similarity measure useful if you don’t know the
+beginning and ending of each curve. There are many more possible
+functions out there. Feel free to send PRs for other functions in
+literature!
+
+Requirements for adding new method to this library: - all methods should
+be able to quantify the difference between two curves - method must
+support the case where each curve may have a different number of data
+points - follow the style of existing functions - reference to method
+details, or descriptive docstring of the method - include test(s) for
+your new method - minimum Python dependencies (try to stick to
+SciPy/numpy functions if possible)
+
 Please cite
 ===========
 
@@ -248,7 +284,6 @@ Material Forming. https://doi.org/10.1007/s12289-018-1421-8
    }
 
 .. |Downloads a month| image:: https://img.shields.io/pypi/dm/similaritymeasures.svg
-.. |Build Status| image:: https://travis-ci.com/cjekel/similarity_measures.svg?branch=master
-   :target: https://travis-ci.com/cjekel/similarity_measures
-.. |Coverage Status| image:: https://coveralls.io/repos/github/cjekel/similarity_measures/badge.svg?branch=master
-   :target: https://coveralls.io/github/cjekel/similarity_measures?branch=master
+.. |similaritymeasures ci| image:: https://github.com/cjekel/similarity_measures/workflows/similaritymeasures%20ci/badge.svg
+.. |codecov| image:: https://codecov.io/gh/cjekel/similarity_measures/branch/master/graph/badge.svg?token=nwuIhL8r3C
+   :target: https://codecov.io/gh/cjekel/similarity_measures
