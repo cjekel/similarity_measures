@@ -2,7 +2,6 @@ from __future__ import division
 import numpy as np
 from scipy.spatial import distance
 from scipy.spatial import minkowski_distance
-
 # MIT License
 #
 # Copyright (c) 2018,2019 Charles Jekel
@@ -879,3 +878,50 @@ def dtw_path(d):
     path = np.array(path)
     # reverse the order of path, such that it starts with [0, 0]
     return path[::-1]
+
+def mae(exp_data, num_data):
+    """
+    Compute the Mean Absolute distance.
+    This computes the mean of absolute values of the distances 
+    between 2 corresponding points on the curve. This can use all 
+    distance metrics that are available in scipy.spatial.distance.cdist.
+
+    Parameters
+    ----------
+    exp_data : array_like
+        Curve from your experimental data. exp_data is of (M, N) shape, where
+        M is the number of data points, and N is the number of dimensions
+    num_data : array_like
+        Curve from your numerical data. num_data is of (P, N) shape, where P
+        is the number of data points, and N is the number of dimensions
+
+    Returns
+    -------
+    r : float
+        MAE.
+    """
+    c = np.abs(exp_data - num_data)
+    return np.mean(c)  # All values in c are positive since Minkowski distance is always positive
+
+def mse(exp_data, num_data):
+    """
+    Compute the Mean Squared distance.
+    This computes the mean of Sqaured values of the distances 
+    between 2 corresponding points on the curve. This can use all 
+    distance metrics that are available in scipy.spatial.distance.cdist.
+
+    Parameters
+    ----------
+    exp_data : array_like
+        Curve from your experimental data. exp_data is of (M, N) shape, where
+        M is the number of data points, and N is the number of dimensions
+    num_data : array_like
+        Curve from your numerical data. num_data is of (P, N) shape, where P
+        is the number of data points, and N is the number of dimensions
+
+    Returns
+    -------
+    r : float
+        MSE."""
+    c = np.square(exp_data - num_data)
+    return np.mean(c)
