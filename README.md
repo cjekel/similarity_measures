@@ -22,10 +22,13 @@ This library includes the following methods to quantify the difference (or simil
 - **Discrete Frechet distance**<sup>y</sup>: The shortest distance in-between two curves, where you are allowed to very the speed at which you travel along each curve independently (walking dog problem) [3, 4, 5, 6, 7, 8]
 - **Curve Length**<sup>x</sup> method: Assumes that the only true independent variable of the curves is the arc-length distance along the curve from the origin [9, 10]
 - **Dynamic Time Warping**<sup>y</sup> (DTW): A non-metric distance between two time-series curves that has been proven useful for a variety of applications [11, 12, 13, 14, 15, 16]
-
+- **Mean absolute error**<sup>y,z</sup> (MAE): A L1 error that requires curves to have the same number of data points and dimensions. See [this](https://en.wikipedia.org/wiki/Mean_absolute_error) wiki page.
+- **Mean squared error**<sup>y,z</sup> (MSE): A L2 error that requires curves to have the same number of data points and dimensions. See [this](https://en.wikipedia.org/wiki/Mean_absolute_error) wiki page
 <sup>x</sup> denotes methods created specifically for material parameter identification
 
 <sup>y</sup> denotes that the method implemented in this library supports N-D data!
+
+<sup>z</sup> denotes that the method requires each curve to have the same number of data points
 
 # Installation 
 Install with pip
@@ -79,8 +82,14 @@ cl = similaritymeasures.curve_length_measure(exp_data, num_data)
 # Dynamic Time Warping distance
 dtw, d = similaritymeasures.dtw(exp_data, num_data)
 
+# mean absolute error
+mae = similaritymeasures.mae(exp_data, num_data)
+
+# mean squared error
+mse = similaritymeasures.mse(exp_data, num_data)
+
 # print the results
-print(pcm, df, area, cl, dtw)
+print(pcm, df, area, cl, dtw, mae, mse)
 
 # plot the data
 plt.figure()
