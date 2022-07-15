@@ -879,11 +879,13 @@ def dtw_path(d):
     # reverse the order of path, such that it starts with [0, 0]
     return path[::-1]
 
+
 def mae(exp_data, num_data):
     """
     Compute the Mean Absolute distance.
-    This computes the mean of absolute values of the distances 
-    between 2 corresponding points on the curve. This can use all 
+
+    This computes the mean of absolute values of the distances
+    between 2 corresponding points on the curve. This can use all
     distance metrics that are available in scipy.spatial.distance.cdist.
 
     Parameters
@@ -901,13 +903,15 @@ def mae(exp_data, num_data):
         MAE.
     """
     c = np.abs(exp_data - num_data)
-    return np.mean(c)  # All values in c are positive since Minkowski distance is always positive
+    return np.mean(c)
+
 
 def mse(exp_data, num_data):
     """
     Compute the Mean Squared distance.
-    This computes the mean of Sqaured values of the distances 
-    between 2 corresponding points on the curve. This can use all 
+
+    This computes the mean of Sqaured values of the distances
+    between 2 corresponding points on the curve. This can use all
     distance metrics that are available in scipy.spatial.distance.cdist.
 
     Parameters
