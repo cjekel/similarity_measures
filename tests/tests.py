@@ -195,6 +195,34 @@ class TestEverything(unittest.TestCase):
         area = similaritymeasures.area_between_two_curves(exp_data, num_data)
         self.assertTrue(np.isclose(area, 4.0))
 
+    def test_mae(self):
+        x_axis = [0., 1., 2., 3., 4.]
+        exp_data = np.zeros((len(x_axis), 2))
+        num_data = np.zeros((len(x_axis), 2))
+        exp_data[:, 0] = x_axis
+        exp_data[:, 1] = 0.
+        num_data[:, 0] = x_axis
+        num_data[:, 1] = 1.
+        mae = similaritymeasures.mae(exp_data, num_data)
+        self.assertTrue(np.isclose(mae, 0.5))
+        exp_data = exp_data + .1
+        mae = similaritymeasures.mae(exp_data, num_data)
+        self.assertTrue(np.isclose(mae, 0.5))
+
+    def test_mse(self):
+        x_axis = [0., 1., 2., 3., 4.]
+        exp_data = np.zeros((len(x_axis), 2))
+        num_data = np.zeros((len(x_axis), 2))
+        exp_data[:, 0] = x_axis
+        exp_data[:, 1] = 0.
+        num_data[:, 0] = x_axis
+        num_data[:, 1] = 1.
+        mse = similaritymeasures.mse(exp_data, num_data)
+        self.assertTrue(np.isclose(mse, 0.5))
+        exp_data = exp_data + .1
+        mse = similaritymeasures.mse(exp_data, num_data)
+        self.assertTrue(np.isclose(mse, 0.41))
+
 
 if __name__ == '__main__':
 
