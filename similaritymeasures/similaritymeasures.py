@@ -884,9 +884,8 @@ def mae(exp_data, num_data):
     """
     Compute the Mean Absolute distance.
 
-    This computes the mean of absolute values of the distances
-    between 2 corresponding points on the curve. This can use all
-    distance metrics that are available in scipy.spatial.distance.cdist.
+    This computes the mean of absolute values of distances between two curves.
+    Each curve must have the same number of data points and the same dimension.
 
     Parameters
     ----------
@@ -894,7 +893,7 @@ def mae(exp_data, num_data):
         Curve from your experimental data. exp_data is of (M, N) shape, where
         M is the number of data points, and N is the number of dimensions
     num_data : array_like
-        Curve from your numerical data. num_data is of (P, N) shape, where P
+        Curve from your numerical data. num_data is of (M, N) shape, where M
         is the number of data points, and N is the number of dimensions
 
     Returns
@@ -910,9 +909,8 @@ def mse(exp_data, num_data):
     """
     Compute the Mean Squared distance.
 
-    This computes the mean of Sqaured values of the distances
-    between 2 corresponding points on the curve. This can use all
-    distance metrics that are available in scipy.spatial.distance.cdist.
+    This computes the mean of Sqaured distances between two curves.
+    Each curve must have the same number of data points and the same dimension.
 
     Parameters
     ----------
@@ -920,12 +918,13 @@ def mse(exp_data, num_data):
         Curve from your experimental data. exp_data is of (M, N) shape, where
         M is the number of data points, and N is the number of dimensions
     num_data : array_like
-        Curve from your numerical data. num_data is of (P, N) shape, where P
+        Curve from your numerical data. num_data is of (M, N) shape, where M
         is the number of data points, and N is the number of dimensions
 
     Returns
     -------
     r : float
-        MSE."""
+        MSE.
+    """
     c = np.square(exp_data - num_data)
     return np.mean(c)
