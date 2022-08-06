@@ -882,7 +882,7 @@ def dtw_path(d):
 
 def mae(exp_data, num_data):
     """
-    Compute the Mean Absolute distance.
+    Compute the Mean Absolute Error (MAE).
 
     This computes the mean of absolute values of distances between two curves.
     Each curve must have the same number of data points and the same dimension.
@@ -907,9 +907,9 @@ def mae(exp_data, num_data):
 
 def mse(exp_data, num_data):
     """
-    Compute the Mean Squared distance.
+    Compute the Mean Squared Error (MAE).
 
-    This computes the mean of Sqaured distances between two curves.
+    This computes the mean of sqaured distances between two curves.
     Each curve must have the same number of data points and the same dimension.
 
     Parameters
