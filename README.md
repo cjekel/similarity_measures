@@ -35,12 +35,12 @@ This library includes the following methods to quantify the difference (or simil
 Install with pip
 
 ```
-[sudo] pip install similaritymeasures
+python -m pip install similaritymeasures
 ```
 or clone and install from source.
 ```
 git clone https://github.com/cjekel/similarity_measures
-[sudo] pip install ./similarity_measures
+python -m pip install ./similarity_measures
 ```
 
 # Example usage
