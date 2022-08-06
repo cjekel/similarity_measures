@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2022-08-06
+### Added
+- Added mean absolute error as `similaritymeasures.mae` thanks to a contribution by [HarshRaoD](https://github.com/HarshRaoD)
+- Added mean squared error as `similaritymeasures.mse` thanks to a contribution by [HarshRaoD](https://github.com/HarshRaoD)
+
 ## [0.4.4] - 2020-08-25
 ### Changed
 - fix bug where similaritymeasures wouldn't install on certain systems due to Python's default locale based encodings
