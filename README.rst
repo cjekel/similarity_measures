@@ -1,7 +1,7 @@
 similaritymeasures
 ==================
 
-|Downloads a month| |similaritymeasures ci| |codecov| |PyPI version| s
+|Downloads a month| |similaritymeasures ci| |codecov| |PyPI version|
 
 Quantify the difference between two arbitrary curves
 ====================================================
