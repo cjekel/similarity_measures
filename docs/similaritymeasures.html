@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.9.1" />
+<meta name="generator" content="pdoc 0.10.0" />
 <title>similaritymeasures.similaritymeasures API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
@@ -30,7 +30,6 @@
 import numpy as np
 from scipy.spatial import distance
 from scipy.spatial import minkowski_distance
-
 # MIT License
 #
 # Copyright (c) 2018,2019 Charles Jekel
@@ -906,7 +905,57 @@ def dtw_path(d):
         path.append((i, j))
     path = np.array(path)
     # reverse the order of path, such that it starts with [0, 0]
-    return path[::-1]</code></pre>
+    return path[::-1]
+
+
+def mae(exp_data, num_data):
+    &#34;&#34;&#34;
+    Compute the Mean Absolute distance.
+
+    This computes the mean of absolute values of distances between two curves.
+    Each curve must have the same number of data points and the same dimension.
+
+    Parameters
+    ----------
+    exp_data : array_like
+        Curve from your experimental data. exp_data is of (M, N) shape, where
+        M is the number of data points, and N is the number of dimensions
+    num_data : array_like
+        Curve from your numerical data. num_data is of (M, N) shape, where M
+        is the number of data points, and N is the number of dimensions
+
+    Returns
+    -------
+    r : float
+        MAE.
+    &#34;&#34;&#34;
+    c = np.abs(exp_data - num_data)
+    return np.mean(c)
+
+
+def mse(exp_data, num_data):
+    &#34;&#34;&#34;
+    Compute the Mean Squared distance.
+
+    This computes the mean of Sqaured distances between two curves.
+    Each curve must have the same number of data points and the same dimension.
+
+    Parameters
+    ----------
+    exp_data : array_like
+        Curve from your experimental data. exp_data is of (M, N) shape, where
+        M is the number of data points, and N is the number of dimensions
+    num_data : array_like
+        Curve from your numerical data. num_data is of (M, N) shape, where M
+        is the number of data points, and N is the number of dimensions
+
+    Returns
+    -------
+    r : float
+        MSE.
+    &#34;&#34;&#34;
+    c = np.square(exp_data - num_data)
+    return np.mean(c)</code></pre>
 </details>
 </section>
 <section>
@@ -1072,7 +1121,7 @@ of Mechanical Sciences, 54(1):294-305, 2012. ISSN 0020-7403. DOI
 <a href="https://doi.org/10.1016/j.ijmecsci.2011.11.010">https://doi.org/10.1016/j.ijmecsci.2011.11.010</a> URL:
 <a href="http://www.sciencedirect.com/science/article/pii/S0020740311002451">http://www.sciencedirect.com/science/article/pii/S0020740311002451</a></p>
 <h2 id="examples">Examples</h2>
-<pre><code class="python-repl">&gt;&gt;&gt; # Generate random experimental data
+<pre><code class="language-python-repl">&gt;&gt;&gt; # Generate random experimental data
 &gt;&gt;&gt; x = np.random.random(100)
 &gt;&gt;&gt; y = np.random.random(100)
 &gt;&gt;&gt; exp_data = np.zeros((100, 2))
@@ -1232,7 +1281,7 @@ and Computer Science Department University of Hawaii at Manoa Honolulu,
 USA, 855, pp.1-23.
 <a href="http://seninp.github.io/assets/pubs/senin_dtw_litreview_2008.pdf">http://seninp.github.io/assets/pubs/senin_dtw_litreview_2008.pdf</a></p>
 <h2 id="examples">Examples</h2>
-<pre><code class="python-repl">&gt;&gt;&gt; # Generate random experimental data
+<pre><code class="language-python-repl">&gt;&gt;&gt; # Generate random experimental data
 &gt;&gt;&gt; x = np.random.random(100)
 &gt;&gt;&gt; y = np.random.random(100)
 &gt;&gt;&gt; exp_data = np.zeros((100, 2))
@@ -1249,7 +1298,7 @@ USA, 855, pp.1-23.
 <p>The euclidean distance is used by default. You can use metric and **kwargs
 to specify different types of distance metrics. The following example uses
 the city block or Manhattan distance between points.</p>
-<pre><code class="python-repl">&gt;&gt;&gt; r, d = dtw(exp_data, num_data, metric='cityblock')
+<pre><code class="language-python-repl">&gt;&gt;&gt; r, d = dtw(exp_data, num_data, metric='cityblock')
 </code></pre></div>
 <details class="source">
 <summary>
@@ -1405,7 +1454,7 @@ USA, 855, pp.1-23.
 <a href="http://seninp.github.io/assets/pubs/senin_dtw_litreview_2008.pdf">http://seninp.github.io/assets/pubs/senin_dtw_litreview_2008.pdf</a></p>
 <h2 id="examples">Examples</h2>
 <p>First calculate the DTW cumulative distance matrix.</p>
-<pre><code class="python-repl">&gt;&gt;&gt; # Generate random experimental data
+<pre><code class="language-python-repl">&gt;&gt;&gt; # Generate random experimental data
 &gt;&gt;&gt; x = np.random.random(100)
 &gt;&gt;&gt; y = np.random.random(100)
 &gt;&gt;&gt; exp_data = np.zeros((100, 2))
@@ -1420,11 +1469,11 @@ USA, 855, pp.1-23.
 &gt;&gt;&gt; r, d = dtw(exp_data, num_data)
 </code></pre>
 <p>Now you can calculate the optimal DTW path</p>
-<pre><code class="python-repl">&gt;&gt;&gt; path = dtw_path(d)
+<pre><code class="language-python-repl">&gt;&gt;&gt; path = dtw_path(d)
 </code></pre>
 <p>You can visualize the path on the cumulative distance matrix using the
 following code.</p>
-<pre><code class="python-repl">&gt;&gt;&gt; import matplotlib.pyplot as plt
+<pre><code class="language-python-repl">&gt;&gt;&gt; import matplotlib.pyplot as plt
 &gt;&gt;&gt; plt.figure()
 &gt;&gt;&gt; plt.imshow(d.T, origin='lower')
 &gt;&gt;&gt; plt.plot(path[:, 0], path[:, 1], '-k')
@@ -1565,7 +1614,7 @@ locations of the data points should be exp_data[:, 1]. Same for num_data.</p>
 <p>Thanks to Arbel Amir for the issue, and Sen ZHANG for the iterative code
 <a href="https://github.com/cjekel/similarity_measures/issues/6">https://github.com/cjekel/similarity_measures/issues/6</a></p>
 <h2 id="examples">Examples</h2>
-<pre><code class="python-repl">&gt;&gt;&gt; # Generate random experimental data
+<pre><code class="language-python-repl">&gt;&gt;&gt; # Generate random experimental data
 &gt;&gt;&gt; x = np.random.random(100)
 &gt;&gt;&gt; y = np.random.random(100)
 &gt;&gt;&gt; exp_data = np.zeros((100, 2))
@@ -1751,7 +1800,7 @@ to determine the arc length.</p>
 <dd>the cumulative sum of euclidean distances between every two points</dd>
 </dl>
 <h2 id="examples">Examples</h2>
-<pre><code class="python-repl">&gt;&gt;&gt; le, le_total, le_cum = get_length(x, y)
+<pre><code class="language-python-repl">&gt;&gt;&gt; le, le_total, le_cum = get_length(x, y)
 </code></pre></div>
 <details class="source">
 <summary>
@@ -1881,6 +1930,56 @@ is a self-intersecting quadrilateral.</p>
         return False</code></pre>
 </details>
 </dd>
+<dt id="similaritymeasures.similaritymeasures.mae"><code class="name flex">
+<span>def <span class="ident">mae</span></span>(<span>exp_data, num_data)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Compute the Mean Absolute distance.</p>
+<p>This computes the mean of absolute values of distances between two curves.
+Each curve must have the same number of data points and the same dimension.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>exp_data</code></strong> :&ensp;<code>array_like</code></dt>
+<dd>Curve from your experimental data. exp_data is of (M, N) shape, where
+M is the number of data points, and N is the number of dimensions</dd>
+<dt><strong><code>num_data</code></strong> :&ensp;<code>array_like</code></dt>
+<dd>Curve from your numerical data. num_data is of (M, N) shape, where M
+is the number of data points, and N is the number of dimensions</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>r</code></strong> :&ensp;<code>float</code></dt>
+<dd>MAE.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def mae(exp_data, num_data):
+    &#34;&#34;&#34;
+    Compute the Mean Absolute distance.
+
+    This computes the mean of absolute values of distances between two curves.
+    Each curve must have the same number of data points and the same dimension.
+
+    Parameters
+    ----------
+    exp_data : array_like
+        Curve from your experimental data. exp_data is of (M, N) shape, where
+        M is the number of data points, and N is the number of dimensions
+    num_data : array_like
+        Curve from your numerical data. num_data is of (M, N) shape, where M
+        is the number of data points, and N is the number of dimensions
+
+    Returns
+    -------
+    r : float
+        MAE.
+    &#34;&#34;&#34;
+    c = np.abs(exp_data - num_data)
+    return np.mean(c)</code></pre>
+</details>
+</dd>
 <dt id="similaritymeasures.similaritymeasures.makeQuad"><code class="name flex">
 <span>def <span class="ident">makeQuad</span></span>(<span>x, y)</span>
 </code></dt>
@@ -1977,6 +2076,56 @@ using the shoelace formula.</p></div>
     return area</code></pre>
 </details>
 </dd>
+<dt id="similaritymeasures.similaritymeasures.mse"><code class="name flex">
+<span>def <span class="ident">mse</span></span>(<span>exp_data, num_data)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Compute the Mean Squared distance.</p>
+<p>This computes the mean of Sqaured distances between two curves.
+Each curve must have the same number of data points and the same dimension.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>exp_data</code></strong> :&ensp;<code>array_like</code></dt>
+<dd>Curve from your experimental data. exp_data is of (M, N) shape, where
+M is the number of data points, and N is the number of dimensions</dd>
+<dt><strong><code>num_data</code></strong> :&ensp;<code>array_like</code></dt>
+<dd>Curve from your numerical data. num_data is of (M, N) shape, where M
+is the number of data points, and N is the number of dimensions</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>r</code></strong> :&ensp;<code>float</code></dt>
+<dd>MSE.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def mse(exp_data, num_data):
+    &#34;&#34;&#34;
+    Compute the Mean Squared distance.
+
+    This computes the mean of Sqaured distances between two curves.
+    Each curve must have the same number of data points and the same dimension.
+
+    Parameters
+    ----------
+    exp_data : array_like
+        Curve from your experimental data. exp_data is of (M, N) shape, where
+        M is the number of data points, and N is the number of dimensions
+    num_data : array_like
+        Curve from your numerical data. num_data is of (M, N) shape, where M
+        is the number of data points, and N is the number of dimensions
+
+    Returns
+    -------
+    r : float
+        MSE.
+    &#34;&#34;&#34;
+    c = np.square(exp_data - num_data)
+    return np.mean(c)</code></pre>
+</details>
+</dd>
 <dt id="similaritymeasures.similaritymeasures.normalizeTwoCurves"><code class="name flex">
 <span>def <span class="ident">normalizeTwoCurves</span></span>(<span>x, y, w, z)</span>
 </code></dt>
@@ -2013,7 +2162,7 @@ AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference,
 Aviation Technology, Integration, and Operations (ATIO) Conferences.
 doi: doi:10.2514/6.2012-5580.</p>
 <h2 id="examples">Examples</h2>
-<pre><code class="python-repl">&gt;&gt;&gt; xi, eta, xiP, etaP = normalizeTwoCurves(x,y,w,z)
+<pre><code class="language-python-repl">&gt;&gt;&gt; xi, eta, xiP, etaP = normalizeTwoCurves(x,y,w,z)
 </code></pre></div>
 <details class="source">
 <summary>
@@ -2103,7 +2252,7 @@ AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference,
 Aviation Technology, Integration, and Operations (ATIO) Conferences.
 doi: doi:10.2514/6.2012-5580.</p>
 <h2 id="examples">Examples</h2>
-<pre><code class="python-repl">&gt;&gt;&gt; # Generate random experimental data
+<pre><code class="language-python-repl">&gt;&gt;&gt; # Generate random experimental data
 &gt;&gt;&gt; x = np.random.random(100)
 &gt;&gt;&gt; y = np.random.random(100)
 &gt;&gt;&gt; exp_data = np.zeros((100, 2))
@@ -2319,7 +2468,9 @@ x[1] and y[1] and so forth</p>
 <li><code><a title="similaritymeasures.similaritymeasures.get_arc_length" href="#similaritymeasures.similaritymeasures.get_arc_length">get_arc_length</a></code></li>
 <li><code><a title="similaritymeasures.similaritymeasures.get_length" href="#similaritymeasures.similaritymeasures.get_length">get_length</a></code></li>
 <li><code><a title="similaritymeasures.similaritymeasures.is_simple_quad" href="#similaritymeasures.similaritymeasures.is_simple_quad">is_simple_quad</a></code></li>
+<li><code><a title="similaritymeasures.similaritymeasures.mae" href="#similaritymeasures.similaritymeasures.mae">mae</a></code></li>
 <li><code><a title="similaritymeasures.similaritymeasures.makeQuad" href="#similaritymeasures.similaritymeasures.makeQuad">makeQuad</a></code></li>
+<li><code><a title="similaritymeasures.similaritymeasures.mse" href="#similaritymeasures.similaritymeasures.mse">mse</a></code></li>
 <li><code><a title="similaritymeasures.similaritymeasures.normalizeTwoCurves" href="#similaritymeasures.similaritymeasures.normalizeTwoCurves">normalizeTwoCurves</a></code></li>
 <li><code><a title="similaritymeasures.similaritymeasures.pcm" href="#similaritymeasures.similaritymeasures.pcm">pcm</a></code></li>
 <li><code><a title="similaritymeasures.similaritymeasures.poly_area" href="#similaritymeasures.similaritymeasures.poly_area">poly_area</a></code></li>
@@ -2329,7 +2480,7 @@ x[1] and y[1] and so forth</p>
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.1</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
 </footer>
 </body>
 </html>
