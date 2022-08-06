@@ -1,7 +1,7 @@
 similaritymeasures
 ==================
 
-|Downloads a month| |similaritymeasures ci| |codecov|
+|Downloads a month| |similaritymeasures ci| |codecov| |PyPI version| s
 
 Quantify the difference between two arbitrary curves
 ====================================================
@@ -287,3 +287,4 @@ Material Forming. https://doi.org/10.1007/s12289-018-1421-8
 .. |similaritymeasures ci| image:: https://github.com/cjekel/similarity_measures/workflows/similaritymeasures%20ci/badge.svg
 .. |codecov| image:: https://codecov.io/gh/cjekel/similarity_measures/branch/master/graph/badge.svg?token=nwuIhL8r3C
    :target: https://codecov.io/gh/cjekel/similarity_measures
+.. |PyPI version| image:: https://img.shields.io/pypi/v/similaritymeasures

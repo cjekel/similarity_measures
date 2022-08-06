@@ -1,6 +1,6 @@
 # similaritymeasures
 
-![Downloads a month](https://img.shields.io/pypi/dm/similaritymeasures.svg) ![similaritymeasures ci](https://github.com/cjekel/similarity_measures/workflows/similaritymeasures%20ci/badge.svg) [![codecov](https://codecov.io/gh/cjekel/similarity_measures/branch/master/graph/badge.svg?token=nwuIhL8r3C)](https://codecov.io/gh/cjekel/similarity_measures)
+![Downloads a month](https://img.shields.io/pypi/dm/similaritymeasures.svg) ![similaritymeasures ci](https://github.com/cjekel/similarity_measures/workflows/similaritymeasures%20ci/badge.svg) [![codecov](https://codecov.io/gh/cjekel/similarity_measures/branch/master/graph/badge.svg?token=nwuIhL8r3C)](https://codecov.io/gh/cjekel/similarity_measures) ![PyPI version](https://img.shields.io/pypi/v/similaritymeasures) s
 
 # Quantify the difference between two arbitrary curves
 
