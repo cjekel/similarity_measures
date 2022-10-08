@@ -737,7 +737,6 @@ def dtw(exp_data, num_data, metric=&#39;euclidean&#39;, **kwargs):
     **kwargs : dict, optional
         Extra arguments to `metric`: refer to each metric documentation in
         scipy.spatial.distance.
-
         Some examples:
 
         p : scalar
@@ -760,7 +759,7 @@ def dtw(exp_data, num_data, metric=&#39;euclidean&#39;, **kwargs):
             The output array
             If not None, the distance matrix Y is stored in this array.
 
-    Retruns
+    Returns
     -------
     r : float
         DTW distance.
@@ -1253,8 +1252,8 @@ documentation for scipy.spatial.distance.cdist. Some examples:
 <dt><strong><code>**kwargs</code></strong> :&ensp;<code>dict</code>, optional</dt>
 <dd>
 <p>Extra arguments to <code>metric</code>: refer to each metric documentation in
-scipy.spatial.distance.</p>
-<p>Some examples:</p>
+scipy.spatial.distance.
+Some examples:</p>
 <p>p : scalar
 The p-norm to apply for Minkowski, weighted and unweighted.
 Default: 2.</p>
@@ -1272,11 +1271,13 @@ The output array
 If not None, the distance matrix Y is stored in this array.</p>
 </dd>
 </dl>
-<h2 id="retruns">Retruns</h2>
-<p>r : float
-DTW distance.
-d : ndarray (2-D)
-Cumulative distance matrix</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>r</code></strong> :&ensp;<code>float</code></dt>
+<dd>DTW distance.</dd>
+<dt><strong><code>d</code></strong> :&ensp;<code>ndarray (2-D)</code></dt>
+<dd>Cumulative distance matrix</dd>
+</dl>
 <h2 id="notes">Notes</h2>
 <p>The DTW distance is d[-1, -1].</p>
 <p>This has O(M, P) computational cost.</p>
@@ -1345,7 +1346,6 @@ the city block or Manhattan distance between points.</p>
     **kwargs : dict, optional
         Extra arguments to `metric`: refer to each metric documentation in
         scipy.spatial.distance.
-
         Some examples:
 
         p : scalar
@@ -1368,7 +1368,7 @@ the city block or Manhattan distance between points.</p>
             The output array
             If not None, the distance matrix Y is stored in this array.
 
-    Retruns
+    Returns
     -------
     r : float
         DTW distance.
