@@ -376,7 +376,7 @@ def curve_length_measure(exp_data, num_data):
     num_data : ndarray (2-D)
         Curve from your numerical data.
 
-    Retruns
+    Returns
     -------
     r : float
         curve length based similarity distance

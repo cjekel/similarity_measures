@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.6.0] - 2022-10-08
 ### Changed
 - `similaritymeasures.pcm` now produces different values! This was done to better follow the original algorithm. To get the same results from previous versions, set `norm_seg_length=True`. What this option does is scale each segment length by the maximum values of the curve (borrowed from the `curve_length_measure`). This scaling should not be needed with the PCM method because both curves are always scaled initially.
-- Fix docstring documentation for returns in `similaritymeasures.dtw`
+- Fix docstring documentation for returns in `similaritymeasures.dtw` and `similaritymeasures.curve_length_measure`
 
 ## [0.5.0] - 2022-08-06
 ### Added
