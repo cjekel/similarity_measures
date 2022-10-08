@@ -304,7 +304,7 @@ def area_between_two_curves(exp_data, num_data):
     return np.sum(area)
 
 
-def get_length(x, y):
+def get_length(x, y, norm_seg_length=True):
     r"""
     Compute arc lengths of an x y curve.
 
@@ -318,6 +318,8 @@ def get_length(x, y):
         the x locations of a curve
     y : array_like
         the y locations of a curve
+    norm_seg_length : boolean
+        Whether to divide the segment length of each curve by the maximum.
 
     Returns
     -------
@@ -334,15 +336,20 @@ def get_length(x, y):
 
     """
     n = len(x)
-    xmax = np.max(np.abs(x))
-    ymax = np.max(np.abs(y))
 
-    # if your max x or y value is zero... you'll get np.inf
-    # as your curve length based measure
-    if xmax == 0:
-        xmax = 1e-15
-    if ymax == 0:
-        ymax = 1e-15
+    if norm_seg_length:
+        xmax = np.max(np.abs(x))
+        ymax = np.max(np.abs(y))
+
+        # if your max x or y value is zero... you'll get np.inf
+        # as your curve length based measure
+        if xmax == 0:
+            xmax = 1e-15
+        if ymax == 0:
+            ymax = 1e-15
+    else:
+        ymax = 1.0
+        xmax = 1.0
 
     le = np.zeros(n)
     le[0] = 0.0
@@ -369,7 +376,7 @@ def curve_length_measure(exp_data, num_data):
     num_data : ndarray (2-D)
         Curve from your numerical data.
 
-    Retruns
+    Returns
     -------
     r : float
         curve length based similarity distance
@@ -559,7 +566,7 @@ def normalizeTwoCurves(x, y, w, z):
     return xi, eta, xiP, etaP
 
 
-def pcm(exp_data, num_data):
+def pcm(exp_data, num_data, norm_seg_length=False):
     """
     Compute the Partial Curve Mapping area.
 
@@ -572,6 +579,10 @@ def pcm(exp_data, num_data):
         Curve from your experimental data.
     num_data : ndarray (2-D)
         Curve from your numerical data.
+    norm_seg_length : boolean
+        Whether to divide the segment length of each curve by the maximum. The
+        default value is false, which more closely follows the algorithm
+        proposed in [1]_. Versions prior to 0.6.0 used `norm_seg_length=True`.
 
     Returns
     -------
@@ -582,6 +593,9 @@ def pcm(exp_data, num_data):
     -----
     Your x locations of data points should be exp_data[:, 0], and the y
     locations of the data points should be exp_data[:, 1]. Same for num_data.
+
+    PCM distance was changed in version 0.6.0. To get the same results from
+    previous versions, set `norm_seg_length=True`.
 
     References
     ----------
@@ -612,8 +626,8 @@ def pcm(exp_data, num_data):
     xi1, eta1, xi2, eta2 = normalizeTwoCurves(exp_data[:, 0], exp_data[:, 1],
                                               num_data[:, 0], num_data[:, 1])
     # compute the arc lengths of each curve
-    le, le_nj, le_sum = get_length(xi1, eta1)
-    lc, lc_nj, lc_sum = get_length(xi2, eta2)
+    le, le_nj, le_sum = get_length(xi1, eta1, norm_seg_length)
+    lc, lc_nj, lc_sum = get_length(xi2, eta2, norm_seg_length)
     # scale each segment to the total polygon length
     le = le / le_nj
     le_sum = le_sum / le_nj
@@ -623,8 +637,8 @@ def pcm(exp_data, num_data):
     # make sure a is shorter than a', if not swap the defintion
     if lc_nj > le_nj:
         # compute the arc lengths of each curve
-        le, le_nj, le_sum = get_length(xi2, eta2)
-        lc, lc_nj, lc_sum = get_length(xi1, eta1)
+        le, le_nj, le_sum = get_length(xi2, eta2, norm_seg_length)
+        lc, lc_nj, lc_sum = get_length(xi1, eta1, norm_seg_length)
         # scale each segment to the total polygon length
         le = le / le_nj
         le_sum = le_sum / le_nj
@@ -695,7 +709,6 @@ def dtw(exp_data, num_data, metric='euclidean', **kwargs):
     **kwargs : dict, optional
         Extra arguments to `metric`: refer to each metric documentation in
         scipy.spatial.distance.
-
         Some examples:
 
         p : scalar
@@ -718,7 +731,7 @@ def dtw(exp_data, num_data, metric='euclidean', **kwargs):
             The output array
             If not None, the distance matrix Y is stored in this array.
 
-    Retruns
+    Returns
     -------
     r : float
         DTW distance.

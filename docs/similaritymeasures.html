@@ -332,7 +332,7 @@ def area_between_two_curves(exp_data, num_data):
     return np.sum(area)
 
 
-def get_length(x, y):
+def get_length(x, y, norm_seg_length=True):
     r&#34;&#34;&#34;
     Compute arc lengths of an x y curve.
 
@@ -346,6 +346,8 @@ def get_length(x, y):
         the x locations of a curve
     y : array_like
         the y locations of a curve
+    norm_seg_length : boolean
+        Whether to divide the segment length of each curve by the maximum.
 
     Returns
     -------
@@ -362,15 +364,20 @@ def get_length(x, y):
 
     &#34;&#34;&#34;
     n = len(x)
-    xmax = np.max(np.abs(x))
-    ymax = np.max(np.abs(y))
 
-    # if your max x or y value is zero... you&#39;ll get np.inf
-    # as your curve length based measure
-    if xmax == 0:
-        xmax = 1e-15
-    if ymax == 0:
-        ymax = 1e-15
+    if norm_seg_length:
+        xmax = np.max(np.abs(x))
+        ymax = np.max(np.abs(y))
+
+        # if your max x or y value is zero... you&#39;ll get np.inf
+        # as your curve length based measure
+        if xmax == 0:
+            xmax = 1e-15
+        if ymax == 0:
+            ymax = 1e-15
+    else:
+        ymax = 1.0
+        xmax = 1.0
 
     le = np.zeros(n)
     le[0] = 0.0
@@ -397,7 +404,7 @@ def curve_length_measure(exp_data, num_data):
     num_data : ndarray (2-D)
         Curve from your numerical data.
 
-    Retruns
+    Returns
     -------
     r : float
         curve length based similarity distance
@@ -587,7 +594,7 @@ def normalizeTwoCurves(x, y, w, z):
     return xi, eta, xiP, etaP
 
 
-def pcm(exp_data, num_data):
+def pcm(exp_data, num_data, norm_seg_length=False):
     &#34;&#34;&#34;
     Compute the Partial Curve Mapping area.
 
@@ -600,6 +607,10 @@ def pcm(exp_data, num_data):
         Curve from your experimental data.
     num_data : ndarray (2-D)
         Curve from your numerical data.
+    norm_seg_length : boolean
+        Whether to divide the segment length of each curve by the maximum. The
+        default value is false, which more closely follows the algorithm
+        proposed in [1]_. Versions prior to 0.6.0 used `norm_seg_length=True`.
 
     Returns
     -------
@@ -610,6 +621,9 @@ def pcm(exp_data, num_data):
     -----
     Your x locations of data points should be exp_data[:, 0], and the y
     locations of the data points should be exp_data[:, 1]. Same for num_data.
+
+    PCM distance was changed in version 0.6.0. To get the same results from
+    previous versions, set `norm_seg_length=True`.
 
     References
     ----------
@@ -640,8 +654,8 @@ def pcm(exp_data, num_data):
     xi1, eta1, xi2, eta2 = normalizeTwoCurves(exp_data[:, 0], exp_data[:, 1],
                                               num_data[:, 0], num_data[:, 1])
     # compute the arc lengths of each curve
-    le, le_nj, le_sum = get_length(xi1, eta1)
-    lc, lc_nj, lc_sum = get_length(xi2, eta2)
+    le, le_nj, le_sum = get_length(xi1, eta1, norm_seg_length)
+    lc, lc_nj, lc_sum = get_length(xi2, eta2, norm_seg_length)
     # scale each segment to the total polygon length
     le = le / le_nj
     le_sum = le_sum / le_nj
@@ -651,8 +665,8 @@ def pcm(exp_data, num_data):
     # make sure a is shorter than a&#39;, if not swap the defintion
     if lc_nj &gt; le_nj:
         # compute the arc lengths of each curve
-        le, le_nj, le_sum = get_length(xi2, eta2)
-        lc, lc_nj, lc_sum = get_length(xi1, eta1)
+        le, le_nj, le_sum = get_length(xi2, eta2, norm_seg_length)
+        lc, lc_nj, lc_sum = get_length(xi1, eta1, norm_seg_length)
         # scale each segment to the total polygon length
         le = le / le_nj
         le_sum = le_sum / le_nj
@@ -723,7 +737,6 @@ def dtw(exp_data, num_data, metric=&#39;euclidean&#39;, **kwargs):
     **kwargs : dict, optional
         Extra arguments to `metric`: refer to each metric documentation in
         scipy.spatial.distance.
-
         Some examples:
 
         p : scalar
@@ -746,7 +759,7 @@ def dtw(exp_data, num_data, metric=&#39;euclidean&#39;, **kwargs):
             The output array
             If not None, the distance matrix Y is stored in this array.
 
-    Retruns
+    Returns
     -------
     r : float
         DTW distance.
@@ -1109,9 +1122,11 @@ based on the average value.</p>
 <dt><strong><code>num_data</code></strong> :&ensp;<code>ndarray (2-D)</code></dt>
 <dd>Curve from your numerical data.</dd>
 </dl>
-<h2 id="retruns">Retruns</h2>
-<p>r : float
-curve length based similarity distance</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>r</code></strong> :&ensp;<code>float</code></dt>
+<dd>curve length based similarity distance</dd>
+</dl>
 <h2 id="notes">Notes</h2>
 <p>This uses the OF2 method from [1]_.</p>
 <h2 id="references">References</h2>
@@ -1154,7 +1169,7 @@ of Mechanical Sciences, 54(1):294-305, 2012. ISSN 0020-7403. DOI
     num_data : ndarray (2-D)
         Curve from your numerical data.
 
-    Retruns
+    Returns
     -------
     r : float
         curve length based similarity distance
@@ -1239,8 +1254,8 @@ documentation for scipy.spatial.distance.cdist. Some examples:
 <dt><strong><code>**kwargs</code></strong> :&ensp;<code>dict</code>, optional</dt>
 <dd>
 <p>Extra arguments to <code>metric</code>: refer to each metric documentation in
-scipy.spatial.distance.</p>
-<p>Some examples:</p>
+scipy.spatial.distance.
+Some examples:</p>
 <p>p : scalar
 The p-norm to apply for Minkowski, weighted and unweighted.
 Default: 2.</p>
@@ -1258,11 +1273,13 @@ The output array
 If not None, the distance matrix Y is stored in this array.</p>
 </dd>
 </dl>
-<h2 id="retruns">Retruns</h2>
-<p>r : float
-DTW distance.
-d : ndarray (2-D)
-Cumulative distance matrix</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>r</code></strong> :&ensp;<code>float</code></dt>
+<dd>DTW distance.</dd>
+<dt><strong><code>d</code></strong> :&ensp;<code>ndarray (2-D)</code></dt>
+<dd>Cumulative distance matrix</dd>
+</dl>
 <h2 id="notes">Notes</h2>
 <p>The DTW distance is d[-1, -1].</p>
 <p>This has O(M, P) computational cost.</p>
@@ -1331,7 +1348,6 @@ the city block or Manhattan distance between points.</p>
     **kwargs : dict, optional
         Extra arguments to `metric`: refer to each metric documentation in
         scipy.spatial.distance.
-
         Some examples:
 
         p : scalar
@@ -1354,7 +1370,7 @@ the city block or Manhattan distance between points.</p>
             The output array
             If not None, the distance matrix Y is stored in this array.
 
-    Retruns
+    Returns
     -------
     r : float
         DTW distance.
@@ -1776,7 +1792,7 @@ locations of the data points should be dataset[:, 1]</p></div>
 </details>
 </dd>
 <dt id="similaritymeasures.similaritymeasures.get_length"><code class="name flex">
-<span>def <span class="ident">get_length</span></span>(<span>x, y)</span>
+<span>def <span class="ident">get_length</span></span>(<span>x, y, norm_seg_length=True)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Compute arc lengths of an x y curve.</p>
@@ -1789,6 +1805,8 @@ to determine the arc length.</p>
 <dd>the x locations of a curve</dd>
 <dt><strong><code>y</code></strong> :&ensp;<code>array_like</code></dt>
 <dd>the y locations of a curve</dd>
+<dt><strong><code>norm_seg_length</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>Whether to divide the segment length of each curve by the maximum.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
@@ -1806,7 +1824,7 @@ to determine the arc length.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_length(x, y):
+<pre><code class="python">def get_length(x, y, norm_seg_length=True):
     r&#34;&#34;&#34;
     Compute arc lengths of an x y curve.
 
@@ -1820,6 +1838,8 @@ to determine the arc length.</p>
         the x locations of a curve
     y : array_like
         the y locations of a curve
+    norm_seg_length : boolean
+        Whether to divide the segment length of each curve by the maximum.
 
     Returns
     -------
@@ -1836,15 +1856,20 @@ to determine the arc length.</p>
 
     &#34;&#34;&#34;
     n = len(x)
-    xmax = np.max(np.abs(x))
-    ymax = np.max(np.abs(y))
 
-    # if your max x or y value is zero... you&#39;ll get np.inf
-    # as your curve length based measure
-    if xmax == 0:
-        xmax = 1e-15
-    if ymax == 0:
-        ymax = 1e-15
+    if norm_seg_length:
+        xmax = np.max(np.abs(x))
+        ymax = np.max(np.abs(y))
+
+        # if your max x or y value is zero... you&#39;ll get np.inf
+        # as your curve length based measure
+        if xmax == 0:
+            xmax = 1e-15
+        if ymax == 0:
+            ymax = 1e-15
+    else:
+        ymax = 1.0
+        xmax = 1.0
 
     le = np.zeros(n)
     le[0] = 0.0
@@ -2223,7 +2248,7 @@ doi: doi:10.2514/6.2012-5580.</p>
 </details>
 </dd>
 <dt id="similaritymeasures.similaritymeasures.pcm"><code class="name flex">
-<span>def <span class="ident">pcm</span></span>(<span>exp_data, num_data)</span>
+<span>def <span class="ident">pcm</span></span>(<span>exp_data, num_data, norm_seg_length=False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Compute the Partial Curve Mapping area.</p>
@@ -2235,6 +2260,10 @@ doi: doi:10.2514/6.2012-5580.</p>
 <dd>Curve from your experimental data.</dd>
 <dt><strong><code>num_data</code></strong> :&ensp;<code>ndarray (2-D)</code></dt>
 <dd>Curve from your numerical data.</dd>
+<dt><strong><code>norm_seg_length</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>Whether to divide the segment length of each curve by the maximum. The
+default value is false, which more closely follows the algorithm
+proposed in [1]_. Versions prior to 0.6.0 used <code>norm_seg_length=True</code>.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
@@ -2244,6 +2273,8 @@ doi: doi:10.2514/6.2012-5580.</p>
 <h2 id="notes">Notes</h2>
 <p>Your x locations of data points should be exp_data[:, 0], and the y
 locations of the data points should be exp_data[:, 1]. Same for num_data.</p>
+<p>PCM distance was changed in version 0.6.0. To get the same results from
+previous versions, set <code>norm_seg_length=True</code>.</p>
 <h2 id="references">References</h2>
 <p>.. [1] Katharina Witowski and Nielen Stander. "Parameter Identification of
 Hysteretic Models Using Partial Curve Mapping", 12th AIAA Aviation
@@ -2270,7 +2301,7 @@ doi: doi:10.2514/6.2012-5580.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def pcm(exp_data, num_data):
+<pre><code class="python">def pcm(exp_data, num_data, norm_seg_length=False):
     &#34;&#34;&#34;
     Compute the Partial Curve Mapping area.
 
@@ -2283,6 +2314,10 @@ doi: doi:10.2514/6.2012-5580.</p>
         Curve from your experimental data.
     num_data : ndarray (2-D)
         Curve from your numerical data.
+    norm_seg_length : boolean
+        Whether to divide the segment length of each curve by the maximum. The
+        default value is false, which more closely follows the algorithm
+        proposed in [1]_. Versions prior to 0.6.0 used `norm_seg_length=True`.
 
     Returns
     -------
@@ -2293,6 +2328,9 @@ doi: doi:10.2514/6.2012-5580.</p>
     -----
     Your x locations of data points should be exp_data[:, 0], and the y
     locations of the data points should be exp_data[:, 1]. Same for num_data.
+
+    PCM distance was changed in version 0.6.0. To get the same results from
+    previous versions, set `norm_seg_length=True`.
 
     References
     ----------
@@ -2323,8 +2361,8 @@ doi: doi:10.2514/6.2012-5580.</p>
     xi1, eta1, xi2, eta2 = normalizeTwoCurves(exp_data[:, 0], exp_data[:, 1],
                                               num_data[:, 0], num_data[:, 1])
     # compute the arc lengths of each curve
-    le, le_nj, le_sum = get_length(xi1, eta1)
-    lc, lc_nj, lc_sum = get_length(xi2, eta2)
+    le, le_nj, le_sum = get_length(xi1, eta1, norm_seg_length)
+    lc, lc_nj, lc_sum = get_length(xi2, eta2, norm_seg_length)
     # scale each segment to the total polygon length
     le = le / le_nj
     le_sum = le_sum / le_nj
@@ -2334,8 +2372,8 @@ doi: doi:10.2514/6.2012-5580.</p>
     # make sure a is shorter than a&#39;, if not swap the defintion
     if lc_nj &gt; le_nj:
         # compute the arc lengths of each curve
-        le, le_nj, le_sum = get_length(xi2, eta2)
-        lc, lc_nj, lc_sum = get_length(xi1, eta1)
+        le, le_nj, le_sum = get_length(xi2, eta2, norm_seg_length)
+        lc, lc_nj, lc_sum = get_length(xi1, eta1, norm_seg_length)
         # scale each segment to the total polygon length
         le = le / le_nj
         le_sum = le_sum / le_nj
