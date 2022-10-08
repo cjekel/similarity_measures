@@ -122,8 +122,15 @@ class TestEverything(unittest.TestCase):
         self.assertTrue(r, 3.0)
 
     def test_P_Q_pcm(self):
-        Q[:, 1] -= 1
-        a = similaritymeasures.pcm(P, Q)
+        Qt = Q.copy()
+        Qt[:, 1] -= 1
+        a = similaritymeasures.pcm(P, Qt)
+        self.assertTrue(np.isclose(a, 0.0))
+
+    def test_P_Q_pcm_norm_seg_length(self):
+        Qt = Q.copy()
+        Qt[:, 1] -= 1
+        a = similaritymeasures.pcm(P, Qt, norm_seg_length=True)
         self.assertTrue(np.isclose(a, 0.0))
 
     def test_P_Q_dtw_minkowski_p1(self):
@@ -163,6 +170,10 @@ class TestEverything(unittest.TestCase):
 
     def test_random_pcm(self):
         _ = similaritymeasures.pcm(curve_a_rand, curve_b_rand)
+        self.assertTrue(True)
+
+    def test_random_pcm_norm_seg(self):
+        _ = similaritymeasures.pcm(curve_a_rand, curve_b_rand, True)
         self.assertTrue(True)
 
     def test_random_area(self):
