@@ -434,7 +434,7 @@ def curve_length_measure(exp_data, num_data):
     return np.sqrt(np.sum(r_sq))
 
 
-def frechet_dist(exp_data, num_data, p=2):
+def frechet_dist(exp_data, num_data, metric='euclidean', p=2, **kwargs):
     r"""
     Compute the discrete Frechet distance
 
@@ -496,19 +496,18 @@ def frechet_dist(exp_data, num_data, p=2):
     """
     n = len(exp_data)
     m = len(num_data)
+    c = distance.cdist(exp_data, num_data, metric=metric, p = p, **kwargs)
     ca = np.ones((n, m))
     ca = np.multiply(ca, -1)
-    ca[0, 0] = minkowski_distance(exp_data[0], num_data[0], p=p)
+    ca[0, 0] = c[0,0]
     for i in range(1, n):
-        ca[i, 0] = max(ca[i-1, 0], minkowski_distance(exp_data[i], num_data[0],
-                                                      p=p))
+        ca[i, 0] = max(ca[i-1, 0], c[i,0])
     for j in range(1, m):
-        ca[0, j] = max(ca[0, j-1], minkowski_distance(exp_data[0], num_data[j],
-                                                      p=p))
+        ca[0, j] = max(ca[0, j-1], c[0,j])
     for i in range(1, n):
         for j in range(1, m):
             ca[i, j] = max(min(ca[i-1, j], ca[i, j-1], ca[i-1, j-1]),
-                           minkowski_distance(exp_data[i], num_data[j], p=p))
+                           c[i,j])
     return ca[n-1, m-1]
 
 
