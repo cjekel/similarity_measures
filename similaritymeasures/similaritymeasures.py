@@ -1,7 +1,6 @@
 from __future__ import division
 import numpy as np
 from scipy.spatial import distance
-from scipy.spatial import minkowski_distance
 # MIT License
 #
 # Copyright (c) 2018,2019 Charles Jekel
@@ -434,7 +433,7 @@ def curve_length_measure(exp_data, num_data):
     return np.sqrt(np.sum(r_sq))
 
 
-def frechet_dist(exp_data, num_data, metric='euclidean'):
+def frechet_dist(exp_data, num_data, p=2):
     r"""
     Compute the discrete Frechet distance
 
@@ -496,18 +495,18 @@ def frechet_dist(exp_data, num_data, metric='euclidean'):
     """
     n = len(exp_data)
     m = len(num_data)
-    c = distance.cdist(exp_data, num_data, metric = metric)
+    c = distance.cdist(exp_data, num_data, metric='minkowski', p=p)
     ca = np.ones((n, m))
     ca = np.multiply(ca, -1)
-    ca[0, 0] = c[0,0]
+    ca[0, 0] = c[0, 0]
     for i in range(1, n):
-        ca[i, 0] = max(ca[i-1, 0], c[i,0])
+        ca[i, 0] = max(ca[i-1, 0], c[i, 0])
     for j in range(1, m):
-        ca[0, j] = max(ca[0, j-1], c[0,j])
+        ca[0, j] = max(ca[0, j-1], c[0, j])
     for i in range(1, n):
         for j in range(1, m):
             ca[i, j] = max(min(ca[i-1, j], ca[i, j-1], ca[i-1, j-1]),
-                           c[i,j])
+                           c[i, j])
     return ca[n-1, m-1]
 
 
