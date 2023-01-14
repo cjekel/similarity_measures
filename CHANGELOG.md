@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.0] - 2023-01-14
+
+### Changed
+
+- `frechet_dist` now uses scipy cdist to calculate the distances between points
+-  `frechet_dist` should be significantly faster due to cdist thanks to a contribution by [nucccc](https://github.com/nucccc)
+
 ## [0.6.0] - 2022-10-08
 ### Changed
 - `similaritymeasures.pcm` now produces different values! This was done to better follow the original algorithm. To get the same results from previous versions, set `norm_seg_length=True`. What this option does is scale each segment length by the maximum values of the curve (borrowed from the `curve_length_measure`). This scaling should not be needed with the PCM method because both curves are always scaled initially.
