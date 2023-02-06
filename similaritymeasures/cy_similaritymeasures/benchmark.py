@@ -44,5 +44,9 @@ t2 = timeit.repeat(run_cy_frechet, repeat = n_repeats, number = n_runs)
 print(t1)
 print(t2)
 
-print('average execution time for non cythonized version: %f' % (sum(t1) / len(t1)))
-print('average execution time for cythonized version: %f' % (sum(t2) / len(t2)))
+avg = sum(t1) / len(t1)
+cy_avg = sum(t2) / len(t2)
+improv_pct = (avg - cy_avg) / avg * 100
+print('average execution time for non cythonized version: %f' % avg)
+print('average execution time for cythonized version: %f' % cy_avg)
+print('improvement: %d %%' % improv_pct)
