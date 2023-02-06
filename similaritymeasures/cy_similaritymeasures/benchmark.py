@@ -1,3 +1,9 @@
+'''
+just a quick benchmaerking script to showcase cythonized vs
+non cythonized performances
+'''
+
+import timeit
 import numpy as np
 from similaritymeasures import frechet_dist
 from cy_similaritymeasures import frechet_dist as cy_frechet_dist
@@ -22,3 +28,21 @@ cy_res = cy_frechet_dist(curve1, curve2)
 print(res)
 print(cy_res)
 print(res == cy_res)
+
+def run_frechet():
+    return frechet_dist(curve1, curve2)
+
+def run_cy_frechet():
+    return cy_frechet_dist(curve1, curve2)
+
+n_repeats = 5
+n_runs = 200
+
+t1 = timeit.repeat(run_frechet, repeat = n_repeats, number = n_runs)
+
+t2 = timeit.repeat(run_cy_frechet, repeat = n_repeats, number = n_runs)
+print(t1)
+print(t2)
+
+print('average execution time for non cythonized version: %f' % (sum(t1) / len(t1)))
+print('average execution time for cythonized version: %f' % (sum(t2) / len(t2)))
