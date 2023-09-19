@@ -89,16 +89,13 @@ def is_simple_quad(ab, bc, cd, da):
     temp2 = np.cross(cd, da)
     temp3 = np.cross(da, ab)
     cross = np.array([temp0, temp1, temp2, temp3])
-    #   See that cross products are greater than or equal to zero
-    crossTF = cross >= 0
-    #   if the cross products are majority false, re compute the cross products
-    #   Because they don't necessarily need to lie in the same 'Z' direction
-    if sum(crossTF) <= 1:
+    #   See that majority of cross products is non-positive or non-negative
+    #   They don't necessarily need to lie in the same 'Z' direction
+    if sum(cross > 0) < sum(cross < 0):
         crossTF = cross <= 0
-    if sum(crossTF) > 2:
-        return True
     else:
-        return False
+        crossTF = cross >= 0
+    return sum(crossTF) > 2
 
 
 def makeQuad(x, y):

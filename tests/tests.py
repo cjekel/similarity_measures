@@ -161,6 +161,26 @@ class TestEverything(unittest.TestCase):
         quad = similaritymeasures.is_simple_quad(AB, BC, CD, DA)
         self.assertTrue(quad)
 
+    def test_simple_triangle_pos(self):
+        x = [0, 1, 1, 0]
+        y = [0, 0, 1, 0]
+        AB = [x[1]-x[0], y[1]-y[0]]
+        BC = [x[2]-x[1], y[2]-y[1]]
+        CD = [x[3]-x[2], y[3]-y[2]]
+        DA = [x[0]-x[3], y[0]-y[3]]
+        quad = similaritymeasures.is_simple_quad(AB, BC, CD, DA)
+        self.assertTrue(quad)
+
+    def test_simple_triangle_neg(self):
+        x = [0, 1, 1, 0]
+        y = [0, 1, 0, 0]
+        AB = [x[1]-x[0], y[1]-y[0]]
+        BC = [x[2]-x[1], y[2]-y[1]]
+        CD = [x[3]-x[2], y[3]-y[2]]
+        DA = [x[0]-x[3], y[0]-y[3]]
+        quad = similaritymeasures.is_simple_quad(AB, BC, CD, DA)
+        self.assertTrue(quad)
+
     def test_random_dtw(self):
         r, d = similaritymeasures.dtw(curve_a_rand, curve_b_rand)
         path = similaritymeasures.dtw_path(d)
