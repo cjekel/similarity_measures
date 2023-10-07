@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2023-10-07
+
+### Changed
+- `area_between_two_curves` now correctly calculates the area of four points that form a triangle (where two of the four points are the same). Thanks to a contribution by [mcnick](https://github.com/mcnick) in [PR35](https://github.com/cjekel/similarity_measures/pull/35). Note that this change may result in different area values from previous versions. Cases where this will happen is if one curve had a perfectly straight line between three points, or if one curve had the exact same data point twice.
+
 ## [0.7.0] - 2023-01-14
 
 ### Changed
