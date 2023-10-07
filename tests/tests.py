@@ -234,6 +234,18 @@ class TestEverything(unittest.TestCase):
         mse = similaritymeasures.mse(exp_data, num_data)
         self.assertTrue(np.isclose(mse, 0.41))
 
+    def test_area_triangle_1(self):
+        p = np.array([[0, 1, 2], [0, 1, 2]]).T
+        q = np.array([[0, 1, 2], [0, 0, 2]]).T
+        area = similaritymeasures.area_between_two_curves(p, q)
+        self.assertTrue(np.isclose(area, 1.0))
+
+    def test_area_triangle_2(self):
+        p = np.array([[0, 1, 2], [0, 1, 2]]).T
+        q = np.array([[0, 1, 2], [0, 0, 2]]).T
+        area = similaritymeasures.area_between_two_curves(q, p)
+        self.assertTrue(np.isclose(area, 1.0))
+
 
 if __name__ == '__main__':
 
