@@ -1,6 +1,8 @@
 from __future__ import division
 import numpy as np
 from scipy.spatial import distance
+
+import cython
 # MIT License
 #
 # Copyright (c) 2018,2019 Charles Jekel
@@ -490,6 +492,10 @@ def frechet_dist(exp_data, num_data, p=2):
     >>> df = frechet_dist(exp_data, num_data)
 
     """
+    i = cython.declare(cython.int)
+    j = cython.declare(cython.int)
+    n = cython.declare(cython.int)
+    m = cython.declare(cython.int)
     n = len(exp_data)
     m = len(num_data)
     c = distance.cdist(exp_data, num_data, metric='minkowski', p=p)
