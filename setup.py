@@ -2,6 +2,8 @@
 import io
 from distutils.core import setup
 
+from Cython.Build import cythonize
+
 # load the version from version.py
 version = {}
 with open("similaritymeasures/version.py") as fp:
@@ -12,7 +14,8 @@ setup(
     version=version["__version__"],
     author='Charles Jekel',
     author_email='cjekel@gmail.com',
-    packages=['similaritymeasures'],
+    #packages=['similaritymeasures'],
+    ext_modules=cythonize('similaritymeasures/similaritymeasures.py', language='c++'),
     url='https://github.com/cjekel/similarity_measures',
     license='MIT License',
     description='Quantify the difference between two arbitrary curves in space',  # noqa E501
@@ -22,5 +25,7 @@ setup(
     install_requires=[
         "numpy >= 1.14.0",
         "scipy >= 0.19.0",
+        "cython >= 3.0.3",
+        "Cython"
     ],
 )
