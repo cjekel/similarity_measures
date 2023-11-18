@@ -425,8 +425,8 @@ def curve_length_measure(exp_data, num_data):
         xtemp = np.interp(lieq, lc_sum, x_c)
         ytemp = np.interp(lieq, lc_sum, y_c)
 
-        r_sq[i] = np.log(1.0 + (np.abs(xtemp-x_e[i])/xmean))**2 + \
-            np.log(1.0 + (np.abs(ytemp-y_e[i])/ymean))**2
+        r_sq[i] = np.log(1.0 + (np.abs((xtemp-x_e[i])/xmean)))**2 + \
+            np.log(1.0 + (np.abs((ytemp-y_e[i])/ymean)))**2
     return np.sqrt(np.sum(r_sq))
 
 
