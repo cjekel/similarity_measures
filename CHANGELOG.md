@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.1.0] - 2023-11-18
 
 ### Changed
-- `curve_length_measure` not supports curves with negative means! Thanks to a contribution by [Schmetzler](https://github.com/Schmetzler) in [PR37](https://github.com/cjekel/similarity_measures/pull/37)
+- `curve_length_measure` now supports curves with negative means! Thanks to a contribution by [Schmetzler](https://github.com/Schmetzler) in [PR37](https://github.com/cjekel/similarity_measures/pull/37)
 
 ## [1.0.0] - 2023-10-07
 
