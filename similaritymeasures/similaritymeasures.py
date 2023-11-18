@@ -1,5 +1,7 @@
 from __future__ import division
-import numpy as np
+# import numpy as np
+import jax
+import jax.numpy as np
 from scipy.spatial import distance
 # MIT License
 #
@@ -569,7 +571,7 @@ def pcm(exp_data, num_data, norm_seg_length=False):
     [1]_.
 
     Parameters
-    ----------
+    ----------distance.cdist
     exp_data : ndarray (2-D)
         Curve from your experimental data.
     num_data : ndarray (2-D)
@@ -677,6 +679,14 @@ def pcm(exp_data, num_data, norm_seg_length=False):
     return np.min(pcm_dists)
 
 
+@jax.jit
+def cdist(x, y, metric=None):
+    assert x.ndim == y.ndim == 2
+    # if metric != 'euclidean':
+    #     raise NotImplementedError(f"{metric=}")
+    return np.sqrt(np.sum((x[:, None, :] - y[None, :, :]) ** 2, axis=-1))
+
+@jax.jit
 def dtw(exp_data, num_data, metric='euclidean', **kwargs):
     r"""
     Compute the Dynamic Time Warping distance.
@@ -782,19 +792,23 @@ def dtw(exp_data, num_data, metric='euclidean', **kwargs):
     >>> r, d = dtw(exp_data, num_data, metric='cityblock')
 
     """
-    c = distance.cdist(exp_data, num_data, metric=metric, **kwargs)
+    # c = distance.cdist(exp_data, num_data, metric=metric)
+    c = cdist(exp_data, num_data)
 
     d = np.zeros(c.shape)
-    d[0, 0] = c[0, 0]
+    d = d.at[0, 0].set(c[0, 0])
     n, m = c.shape
     for i in range(1, n):
-        d[i, 0] = d[i-1, 0] + c[i, 0]
+        d = d.at[i, 0].set(d[i-1, 0] + c[i, 0])
     for j in range(1, m):
-        d[0, j] = d[0, j-1] + c[0, j]
+        d = d.at[0, j].set(d[0, j-1] + c[0, j])
     for i in range(1, n):
         for j in range(1, m):
-            d[i, j] = c[i, j] + min((d[i-1, j], d[i, j-1], d[i-1, j-1]))
+            d = d.at[i, j].set(c[i, j] + np.min(np.array(d[i-1, j], d[i, j-1], d[i-1, j-1])))
     return d[-1, -1], d
+
+
+# dtw = jax.jit(dtw)
 
 
 def dtw_path(d):
