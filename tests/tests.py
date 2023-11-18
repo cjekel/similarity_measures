@@ -1,4 +1,5 @@
 import numpy as np
+import torch
 import unittest
 import similaritymeasures
 from scipy.spatial.distance import cdist
@@ -27,6 +28,8 @@ curve4 = np.array((x2, y2)).T
 P = np.array([[0, 0], [1, 1], [2, 2]])
 Q = P.copy()
 Q[:, 1] = Q[:, 1] + 1
+Pt = torch.from_numpy(P).double()
+Qt = torch.from_numpy(Q).double()
 
 r1 = 10
 r2 = 100
@@ -37,6 +40,8 @@ y1 = np.sin(theta)*r1
 y2 = np.sin(theta)*r2
 curve5 = np.array((x1, y1)).T
 curve6 = np.array((x2, y2)).T
+curve5t = torch.from_numpy(curve5)
+curve6t = torch.from_numpy(curve6)
 
 
 class TestEverything(unittest.TestCase):
@@ -95,8 +100,18 @@ class TestEverything(unittest.TestCase):
         r, _ = similaritymeasures.dtw(P, Q)
         self.assertTrue(r, 3.0)
 
+    def test_P_Q_dtw_torch(self):
+        r, _ = similaritymeasures.dtwtorch(Pt, Qt)
+        print(r)
+        self.assertTrue(r, 3.0)
+
     def test_c5_c6_dtw(self):
         r, _ = similaritymeasures.dtw(curve5, curve6)
+        self.assertTrue(np.isclose(r, 9000.0))
+
+    def test_c5_c6_dtw_torch(self):
+        r, _ = similaritymeasures.dtwtorch(curve5t, curve6t)
+        print(r)
         self.assertTrue(np.isclose(r, 9000.0))
 
     def test_c5_c6_df(self):
