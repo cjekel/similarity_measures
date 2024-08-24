@@ -417,16 +417,16 @@ def curve_length_measure(exp_data, num_data):
     xmean = np.mean(x_e)
     ymean = np.mean(y_e)
 
-    n = len(x_e)
+    factor = lc_nj/le_nj
 
-    r_sq = np.zeros(n)
-    for i in range(0, n):
-        lieq = le_sum[i]*(lc_nj/le_nj)
-        xtemp = np.interp(lieq, lc_sum, x_c)
-        ytemp = np.interp(lieq, lc_sum, y_c)
+    lieq = le_sum * factor
 
-        r_sq[i] = np.log(1.0 + (np.abs((xtemp-x_e[i])/xmean)))**2 + \
-            np.log(1.0 + (np.abs((ytemp-y_e[i])/ymean)))**2
+    xinterp = np.interp(lieq, lc_sum, x_c)
+    yinterp = np.interp(lieq, lc_sum, y_c)
+
+    r_sq = np.log(1.0 + (np.abs(xinterp-x_e)/xmean))**2 + \
+            np.log(1.0 + (np.abs(yinterp-y_e)/ymean))**2
+
     return np.sqrt(np.sum(r_sq))
 
 
