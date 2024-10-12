@@ -379,12 +379,6 @@ def curve_length_measure(exp_data, num_data):
     -----
     This uses the OF2 method from [2]_.
 
-    .. [2] A Andrade-Campos, R De-Carvalho, and R A F Valente. Novel criteria
-        for determination of material model parameters. International Journal
-        of Mechanical Sciences, 54(1):294-305, 2012. ISSN 0020-7403. DOI
-        https://doi.org/10.1016/j.ijmecsci.2011.11.010 URL:
-        http://www.sciencedirect.com/science/article/pii/S0020740311002451
-
     Examples
     --------
     >>> # Generate random experimental data
@@ -400,6 +394,13 @@ def curve_length_measure(exp_data, num_data):
     >>> num_data[:, 0] = x
     >>> num_data[:, 1] = y
     >>> r = curve_length_measure(exp_data, num_data)
+
+
+    .. [2] A Andrade-Campos, R De-Carvalho, and R A F Valente. Novel criteria
+        for determination of material model parameters. International Journal
+        of Mechanical Sciences, 54(1):294-305, 2012. ISSN 0020-7403. DOI
+        https://doi.org/10.1016/j.ijmecsci.2011.11.010 URL:
+        http://www.sciencedirect.com/science/article/pii/S0020740311002451
 
     """
     x_e = exp_data[:, 0]
