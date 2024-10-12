@@ -223,17 +223,15 @@ def area_between_two_curves(exp_data, num_data):
     area : float
         The area between exp_data and num_data curves.
 
-    References
-    ----------
-    .. [1] Jekel, C. F., Venter, G., Venter, M. P., Stander, N., & Haftka, R.
-        T. (2018). Similarity measures for identifying material parameters from
-        hysteresis loops using inverse analysis. International Journal of
-        Material Forming. https://doi.org/10.1007/s12289-018-1421-8
-
     Notes
     -----
     Your x locations of data points should be exp_data[:, 0], and the y
     locations of the data points should be exp_data[:, 1]. Same for num_data.
+
+    .. [1] Jekel, C. F., Venter, G., Venter, M. P., Stander, N., & Haftka, R.
+        T. (2018). Similarity measures for identifying material parameters from
+        hysteresis loops using inverse analysis. International Journal of
+        Material Forming. https://doi.org/10.1007/s12289-018-1421-8
     """
     # Calculate the area between two curves using quadrilaterals
     # Consider the test data to be data from an experimental test as exp_data
@@ -361,7 +359,7 @@ def curve_length_measure(exp_data, num_data):
     r"""
     Compute the curve length based distance between two curves.
 
-    This computes the curve length similarity measure according to [1]_. This
+    This computes the curve length similarity measure according to [2]_. This
     implementation follows the OF2 form, which is a self normalizing form
     based on the average value.
 
@@ -379,11 +377,9 @@ def curve_length_measure(exp_data, num_data):
 
     Notes
     -----
-    This uses the OF2 method from [1]_.
+    This uses the OF2 method from [2]_.
 
-    References
-    ----------
-    .. [1] A Andrade-Campos, R De-Carvalho, and R A F Valente. Novel criteria
+    .. [2] A Andrade-Campos, R De-Carvalho, and R A F Valente. Novel criteria
         for determination of material model parameters. International Journal
         of Mechanical Sciences, 54(1):294-305, 2012. ISSN 0020-7403. DOI
         https://doi.org/10.1016/j.ijmecsci.2011.11.010 URL:
@@ -434,7 +430,7 @@ def frechet_dist(exp_data, num_data, p=2):
     Compute the discrete Frechet distance
 
     Compute the Discrete Frechet Distance between two N-D curves according to
-    [1]_. The Frechet distance has been defined as the walking dog problem.
+    [3]_. The Frechet distance has been defined as the walking dog problem.
     From Wikipedia: "In mathematics, the Frechet distance is a measure of
     similarity between curves that takes into account the location and
     ordering of the points along the curves. It is named after Maurice Frechet.
@@ -456,13 +452,6 @@ def frechet_dist(exp_data, num_data, p=2):
     -------
     df : float
         discrete Frechet distance
-
-    References
-    ----------
-    .. [1] Thomas Eiter and Heikki Mannila. Computing discrete Frechet
-        distance. Technical report, 1994.
-        http://www.kr.tuwien.ac.at/staff/eiter/et-archive/cdtr9464.pdf
-        http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.90.937&rep=rep1&type=pdf
 
     Notes
     -----
@@ -488,6 +477,10 @@ def frechet_dist(exp_data, num_data, p=2):
     >>> num_data[:, 1] = y
     >>> df = frechet_dist(exp_data, num_data)
 
+    .. [3] Thomas Eiter and Heikki Mannila. Computing discrete Frechet
+        distance. Technical report, 1994.
+        http://www.kr.tuwien.ac.at/staff/eiter/et-archive/cdtr9464.pdf
+        http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.90.937&rep=rep1&type=pdf
     """
     n = len(exp_data)
     m = len(num_data)
@@ -510,7 +503,7 @@ def normalizeTwoCurves(x, y, w, z):
     """
     Normalize two curves for PCM method.
 
-    This normalizes the two curves for PCM method following [1]_.
+    This normalizes the two curves for PCM method following [4]_.
 
     Parameters
     ----------
@@ -534,19 +527,17 @@ def normalizeTwoCurves(x, y, w, z):
     etaP : array_like
         normalized y locations for second curve
 
-    References
-    ----------
-    .. [1] Katharina Witowski and Nielen Stander. "Parameter Identification of
-        Hysteretic Models Using Partial Curve Mapping", 12th AIAA Aviation
-        Technology, Integration, and Operations (ATIO) Conference and 14th
-        AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference,
-        Aviation Technology, Integration, and Operations (ATIO) Conferences.
-        doi: doi:10.2514/6.2012-5580.
 
     Examples
     --------
     >>> xi, eta, xiP, etaP = normalizeTwoCurves(x,y,w,z)
 
+    .. [4] Katharina Witowski and Nielen Stander. "Parameter Identification of
+        Hysteretic Models Using Partial Curve Mapping", 12th AIAA Aviation
+        Technology, Integration, and Operations (ATIO) Conference and 14th
+        AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference,
+        Aviation Technology, Integration, and Operations (ATIO) Conferences.
+        doi: doi:10.2514/6.2012-5580.
     """
     minX = np.min(x)
     maxX = np.max(x)
@@ -565,7 +556,7 @@ def pcm(exp_data, num_data, norm_seg_length=False):
     Compute the Partial Curve Mapping area.
 
     Computes the Partial Cuve Mapping (PCM) similarity measure as proposed by
-    [1]_.
+    [5]_.
 
     Parameters
     ----------
@@ -591,15 +582,6 @@ def pcm(exp_data, num_data, norm_seg_length=False):
     PCM distance was changed in version 0.6.0. To get the same results from
     previous versions, set `norm_seg_length=True`.
 
-    References
-    ----------
-    .. [1] Katharina Witowski and Nielen Stander. "Parameter Identification of
-        Hysteretic Models Using Partial Curve Mapping", 12th AIAA Aviation
-        Technology, Integration, and Operations (ATIO) Conference and 14th
-        AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference,
-        Aviation Technology, Integration, and Operations (ATIO) Conferences.
-        doi: doi:10.2514/6.2012-5580.
-
     Examples
     --------
     >>> # Generate random experimental data
@@ -615,6 +597,13 @@ def pcm(exp_data, num_data, norm_seg_length=False):
     >>> num_data[:, 0] = x
     >>> num_data[:, 1] = y
     >>> p = pcm(exp_data, num_data)
+
+    .. [5] Katharina Witowski and Nielen Stander. "Parameter Identification of
+        Hysteretic Models Using Partial Curve Mapping", 12th AIAA Aviation
+        Technology, Integration, and Operations (ATIO) Conference and 14th
+        AIAA/ISSMO Multidisciplinary Analysis and Optimization Conference,
+        Aviation Technology, Integration, and Operations (ATIO) Conferences.
+        doi: doi:10.2514/6.2012-5580.
     """
     # normalize the curves to the experimental data
     xi1, eta1, xi2, eta2 = normalizeTwoCurves(exp_data[:, 0], exp_data[:, 1],
@@ -681,7 +670,7 @@ def dtw(exp_data, num_data, metric='euclidean', **kwargs):
     Compute the Dynamic Time Warping distance.
 
     This computes a generic Dynamic Time Warping (DTW) distance and follows
-    the algorithm from [1]_. This can use all distance metrics that are
+    the algorithm from [6]_. This can use all distance metrics that are
     available in scipy.spatial.distance.cdist.
 
     Parameters
@@ -751,13 +740,6 @@ def dtw(exp_data, num_data, metric='euclidean', **kwargs):
     inequality.
     https://en.wikipedia.org/wiki/Triangle_inequality
 
-    References
-    ----------
-    .. [1] Senin, P., 2008. Dynamic time warping algorithm review. Information
-        and Computer Science Department University of Hawaii at Manoa Honolulu,
-        USA, 855, pp.1-23.
-        http://seninp.github.io/assets/pubs/senin_dtw_litreview_2008.pdf
-
     Examples
     --------
     >>> # Generate random experimental data
@@ -780,6 +762,10 @@ def dtw(exp_data, num_data, metric='euclidean', **kwargs):
 
     >>> r, d = dtw(exp_data, num_data, metric='cityblock')
 
+    .. [6] Senin, P., 2008. Dynamic time warping algorithm review. Information
+        and Computer Science Department University of Hawaii at Manoa Honolulu,
+        USA, 855, pp.1-23.
+        http://seninp.github.io/assets/pubs/senin_dtw_litreview_2008.pdf
     """
     c = distance.cdist(exp_data, num_data, metric=metric, **kwargs)
 
@@ -802,7 +788,7 @@ def dtw_path(d):
     matrix.
 
     This function returns the optimal DTW path using the back propagation
-    algorithm that is defined in [1]_. This path details the index from each
+    algorithm that is defined in [7]_. This path details the index from each
     curve that is being compared.
 
     Parameters
@@ -820,9 +806,7 @@ def dtw_path(d):
     Note that path[:, 0] represents the indices from exp_data, while
     path[:, 1] represents the indices from the num_data.
 
-    References
-    ----------
-    .. [1] Senin, P., 2008. Dynamic time warping algorithm review. Information
+    .. [7] Senin, P., 2008. Dynamic time warping algorithm review. Information
         and Computer Science Department University of Hawaii at Manoa Honolulu,
         USA, 855, pp.1-23.
         http://seninp.github.io/assets/pubs/senin_dtw_litreview_2008.pdf
