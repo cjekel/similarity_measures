@@ -1,4 +1,4 @@
 RMDIR "docs" /S /Q
 mkdir docs
-pdoc --html -f --output-dir .docs_test similaritymeasures
+pdoc similaritymeasures -o docs -d numpy
 robocopy .docs_test\similaritymeasures\ docs\ /E
