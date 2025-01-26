@@ -1,6 +1,8 @@
 from __future__ import division
 import numpy as np
 from scipy.spatial import distance
+
+import cython
 # MIT License
 #
 # Copyright (c) 2018,2019 Charles Jekel
@@ -24,6 +26,8 @@ from scipy.spatial import distance
 # SOFTWARE.
 
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
 def poly_area(x, y):
     r"""
     A function that computes the polygonal area via the shoelace formula.
@@ -57,6 +61,8 @@ def poly_area(x, y):
     return 0.5*np.abs(np.dot(x, np.roll(y, 1))-np.dot(y, np.roll(x, 1)))
 
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
 def is_simple_quad(ab, bc, cd, da):
     r"""
     Returns True if a quadrilateral is simple
@@ -98,6 +104,8 @@ def is_simple_quad(ab, bc, cd, da):
     return sum(crossTF) > 2
 
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
 def makeQuad(x, y):
     r"""
     Calculate the area from the x and y locations of a quadrilateral
@@ -165,6 +173,8 @@ def makeQuad(x, y):
     return area
 
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
 def get_arc_length(dataset):
     r"""
     Obtain arc length distances between every point in 2-D space
@@ -203,6 +213,8 @@ def get_arc_length(dataset):
     return arcLength, arcLengths
 
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
 def area_between_two_curves(exp_data, num_data):
     r"""
     Calculates the area between two curves.
@@ -250,6 +262,9 @@ def area_between_two_curves(exp_data, num_data):
     #
     # then you can calculate the area as
     # area = area_between_two_curves(exp_data, num_data)
+    i = cython.declare(cython.int)
+    n_exp = cython.declare(cython.int)
+    n_num = cython.declare(cython.int)
 
     n_exp = len(exp_data)
     n_num = len(num_data)
@@ -298,6 +313,8 @@ def area_between_two_curves(exp_data, num_data):
     return np.sum(area)
 
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
 def get_length(x, y, norm_seg_length=True):
     r"""
     Compute arc lengths of an x y curve.
@@ -329,6 +346,8 @@ def get_length(x, y, norm_seg_length=True):
     >>> le, le_total, le_cum = get_length(x, y)
 
     """
+    i = cython.declare(cython.int)
+    n = cython.declare(cython.int)
     n = len(x)
 
     if norm_seg_length:
@@ -355,6 +374,8 @@ def get_length(x, y, norm_seg_length=True):
     return le, np.sum(le), l_sum
 
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
 def curve_length_measure(exp_data, num_data):
     r"""
     Compute the curve length based distance between two curves.
@@ -426,6 +447,8 @@ def curve_length_measure(exp_data, num_data):
     return np.sqrt(np.sum(r_sq))
 
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
 def frechet_dist(exp_data, num_data, p=2):
     r"""
     Compute the discrete Frechet distance
@@ -483,6 +506,10 @@ def frechet_dist(exp_data, num_data, p=2):
         http://www.kr.tuwien.ac.at/staff/eiter/et-archive/cdtr9464.pdf
         http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.90.937&rep=rep1&type=pdf
     """
+    i = cython.declare(cython.int)
+    j = cython.declare(cython.int)
+    n = cython.declare(cython.int)
+    m = cython.declare(cython.int)
     n = len(exp_data)
     m = len(num_data)
     c = distance.cdist(exp_data, num_data, metric='minkowski', p=p)
@@ -500,6 +527,8 @@ def frechet_dist(exp_data, num_data, p=2):
     return ca[n-1, m-1]
 
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
 def normalizeTwoCurves(x, y, w, z):
     """
     Normalize two curves for PCM method.
@@ -552,6 +581,8 @@ def normalizeTwoCurves(x, y, w, z):
     return xi, eta, xiP, etaP
 
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
 def pcm(exp_data, num_data, norm_seg_length=False):
     """
     Compute the Partial Curve Mapping area.
@@ -666,6 +697,8 @@ def pcm(exp_data, num_data, norm_seg_length=False):
     return np.min(pcm_dists)
 
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
 def dtw(exp_data, num_data, metric='euclidean', **kwargs):
     r"""
     Compute the Dynamic Time Warping distance.
@@ -768,6 +801,8 @@ def dtw(exp_data, num_data, metric='euclidean', **kwargs):
         USA, 855, pp.1-23.
         http://seninp.github.io/assets/pubs/senin_dtw_litreview_2008.pdf
     """
+    i = cython.declare(cython.int)
+    j = cython.declare(cython.int)
     c = distance.cdist(exp_data, num_data, metric=metric, **kwargs)
 
     d = np.zeros(c.shape)
@@ -783,6 +818,8 @@ def dtw(exp_data, num_data, metric='euclidean', **kwargs):
     return d[-1, -1], d
 
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
 def dtw_path(d):
     r"""
     Calculates the optimal DTW path from a given DTW cumulative distance
@@ -845,6 +882,8 @@ def dtw_path(d):
     >>> plt.show()
 
     """
+    i = cython.declare(cython.int)
+    j = cython.declare(cython.int)
     path = []
     i, j = d.shape
     i = i - 1
@@ -872,6 +911,8 @@ def dtw_path(d):
     return path[::-1]
 
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
 def mae(exp_data, num_data):
     """
     Compute the Mean Absolute Error (MAE).
@@ -897,6 +938,8 @@ def mae(exp_data, num_data):
     return np.mean(c)
 
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
 def mse(exp_data, num_data):
     """
     Compute the Mean Squared Error (MAE).
