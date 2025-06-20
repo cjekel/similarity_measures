@@ -4,23 +4,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2025-06-20
+### Changed
+- Remove the setup.py in favor of a pyproject.toml. Old setup.py may have been showing depreciation warnings when installing from source. Thanks to a contribution by [mstoelzle](https://github.com/mstoelzle)
+
 ## [1.2.0] - 2024-10-12
+### Changed
 - `curve_length_measure` is now vectorized which should improve performance. Thanks to a contribution by [nucccc](https://github.com/nucccc)
 
 ## [1.1.0] - 2023-11-18
-
 ### Changed
 - `curve_length_measure` now supports curves with negative means! Thanks to a contribution by [Schmetzler](https://github.com/Schmetzler) in [PR37](https://github.com/cjekel/similarity_measures/pull/37)
 
 ## [1.0.0] - 2023-10-07
-
 ### Changed
 - `area_between_two_curves` now correctly calculates the area of four points that form a triangle (where two of the four points are the same). Thanks to a contribution by [mcnick](https://github.com/mcnick) in [PR35](https://github.com/cjekel/similarity_measures/pull/35). Note that this change may result in different area values from previous versions. Cases where this will happen is if one curve had a perfectly straight line between three points, or if one curve had the exact same data point twice.
 
 ## [0.7.0] - 2023-01-14
-
 ### Changed
-
 - `frechet_dist` now uses scipy cdist to calculate the distances between points
 -  `frechet_dist` should be significantly faster due to cdist thanks to a contribution by [nucccc](https://github.com/nucccc)
 
