@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2025-10-18
+### Changed
+- Fix `is_simple_quad` for numpy 2.0. Sometime in `numpy >= 2.0` a np.bool_ datatype was introduced. This new datatype broke the routine. Fix by [nucccc](https://github.com/nucccc)
+
 ## [1.3.0] - 2025-06-20
 ### Changed
 - Remove the setup.py in favor of a pyproject.toml. Old setup.py may have been showing depreciation warnings when installing from source. Thanks to a contribution by [mstoelzle](https://github.com/mstoelzle)
