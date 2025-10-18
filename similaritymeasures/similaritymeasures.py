@@ -57,7 +57,7 @@ def poly_area(x, y):
     return 0.5*np.abs(np.dot(x, np.roll(y, 1))-np.dot(y, np.roll(x, 1)))
 
 
-def is_simple_quad(ab, bc, cd, da):
+def is_simple_quad(ab, bc, cd, da) -> bool:
     r"""
     Returns True if a quadrilateral is simple
 
@@ -95,7 +95,7 @@ def is_simple_quad(ab, bc, cd, da):
         crossTF = cross <= 0
     else:
         crossTF = cross >= 0
-    return sum(crossTF) > 2
+    return bool(sum(crossTF) > 2)
 
 
 def makeQuad(x, y):
