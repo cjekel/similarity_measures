@@ -24,6 +24,19 @@ from scipy.spatial import distance
 # SOFTWARE.
 
 
+def _cross2d(a, b):
+    r"""
+    Compute the scalar cross product of two 2-D vectors.
+
+    NumPy deprecated calling ``np.cross`` with 2-D vectors in NumPy 2.0. This
+    helper preserves the previous 2-D behavior explicitly by returning the
+    z-component of the equivalent 3-D cross product.
+    """
+    a = np.asarray(a)
+    b = np.asarray(b)
+    return a[..., 0] * b[..., 1] - a[..., 1] * b[..., 0]
+
+
 def poly_area(x, y):
     r"""
     A function that computes the polygonal area via the shoelace formula.
@@ -83,11 +96,11 @@ def is_simple_quad(ab, bc, cd, da) -> bool:
     simple : bool
         True if quadrilateral is simple, False if complex
     """
-    #   Compute all four cross products
-    temp0 = np.cross(ab, bc)
-    temp1 = np.cross(bc, cd)
-    temp2 = np.cross(cd, da)
-    temp3 = np.cross(da, ab)
+    #   Compute all four 2-D cross products
+    temp0 = _cross2d(ab, bc)
+    temp1 = _cross2d(bc, cd)
+    temp2 = _cross2d(cd, da)
+    temp3 = _cross2d(da, ab)
     cross = np.array([temp0, temp1, temp2, temp3])
     #   See that majority of cross products is non-positive or non-negative
     #   They don't necessarily need to lie in the same 'Z' direction
